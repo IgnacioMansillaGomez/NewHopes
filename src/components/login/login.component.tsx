@@ -1,10 +1,10 @@
 import React from "react";
-import { Formulario } from "./Formulario-component";
+import { Register } from "../register/register.component";
 
 export const Login = () => {
   return (
     <>
-      <Formulario />
+      <div>Login</div>
     </>
   );
 };
