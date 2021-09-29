@@ -1,15 +1,16 @@
-// import React, { useState } from "react";
-// import Button from "@mui/material/Button";
-// export const formulario = () => {
-//   return (
-//     <>
-//       <form className="p-4 p-md-5 border rounded-3 bg-light">
 /* Primero siempre lo de react!!*/
 import * as React from "react";
 import { useState, useEffect } from "react";
 
 /*Segundo TODO lo que es libreria externa*/
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+  getRedirectResult,
+  signInWithRedirect,
+} from "firebase/auth";
 import { Avatar, Checkbox, FormControlLabel } from "@mui/material";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -23,7 +24,7 @@ import Container from "@mui/material/Container";
 import { FcGoogle } from "react-icons/fc";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 /*Tercer componentes propios */
-import {} from "../../bd/fireConfig";
+import { auth } from "../../bd/fireConfig";
 import { Login } from "../login/login.component";
 /*Y al final el css*/
 
@@ -58,7 +59,8 @@ export const Register = () => {
   //   };
   // }, [input]);
 
-  const auth = getAuth();
+  // const auth = getAuth();
+
   const crearUsuario = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -80,6 +82,27 @@ export const Register = () => {
         }
       });
   };
+
+  const provider = new GoogleAuthProvider();
+  auth.languageCode = "es";
+  const registroGoogle = () =>
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken;
+        const user = result.user;
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.email;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+      });
+
+  //LogOut
+  function logout() {
+    auth.signOut();
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -135,16 +158,14 @@ export const Register = () => {
             fullWidth
             sx={{ mt: 1, mb: 2 }}
             endIcon={<FcGoogle />}
+            onClick={registroGoogle}
           >
-            Registrarse con google
+            Ingresar con Google
           </Button>
           {mensajeError ? <div>{mensajeError}</div> : <span></span>}
           <Grid container>
             <Grid item>
-              {/* <Link href="#" variant="body2">
-                {"Ya tienes cuenta? Inicia sesion"}
-              </Link> */}
-              <Link to="/login">Hacia Login</Link>
+              <Link to="/login">Ya tienes cuenta? Inicia sesion</Link>
             </Grid>
           </Grid>
         </Box>
