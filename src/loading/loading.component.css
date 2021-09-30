@@ -1,0 +1,13 @@
+.bi-arrow-repeat {
+  animation: rotate 2s infinite;
+  color: blue;
+}
+@keyframes rotate {
+  50% {
+    transform: rotate(360deg);
+  }
+}
+.loading-container {
+  padding-top: 50px;
+  text-align: center;
+}
