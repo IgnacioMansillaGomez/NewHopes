@@ -4,14 +4,11 @@ import { useState, useEffect } from "react";
 
 /*Segundo TODO lo que es libreria externa*/
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
-  getRedirectResult,
-  signInWithRedirect,
 } from "firebase/auth";
-import { Avatar, Checkbox, FormControlLabel } from "@mui/material";
+import { Avatar } from "@mui/material";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -24,8 +21,7 @@ import Container from "@mui/material/Container";
 import { FcGoogle } from "react-icons/fc";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 /*Tercer componentes propios */
-import { auth } from "../../bd/fireConfig";
-import { Login } from "../login/login.component";
+import { auth } from "../../bd/fireAuth";
 /*Y al final el css*/
 
 export const Register = () => {
@@ -51,15 +47,6 @@ export const Register = () => {
       /**/
     };
   }, []);
-
-  // useEffect(() => {
-  //   effect;
-  //   return () => {
-  //     cleanup;
-  //   };
-  // }, [input]);
-
-  // const auth = getAuth();
 
   const crearUsuario = () => {
     createUserWithEmailAndPassword(auth, email, password)

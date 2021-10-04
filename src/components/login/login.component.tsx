@@ -22,6 +22,7 @@ import Container from "@mui/material/Container";
 import { FcGoogle } from "react-icons/fc";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+import { auth } from "../../bd/fireAuth.js";
 import { Register } from "../register/register.component";
 import { Avatar } from "@mui/material";
 
