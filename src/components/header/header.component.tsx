@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-import { Avatar, Checkbox, FormControlLabel } from "@mui/material";
 import { Container, Navbar } from "react-bootstrap";
 import { auth } from "../../bd/fireAuth";
 
@@ -26,7 +25,7 @@ export const Header = () => {
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
-            Usuario conectado : <span>Mark Otto</span>
+            Usuario conectado : <span>{usuario}</span>
           </Navbar.Text>
         </Navbar.Collapse>
         {usuario && <button onClick={cerrarSesion}>Cerrar Sesión</button>}

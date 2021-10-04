@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Col, Container, Row } from "react-bootstrap";
 import { GenericSerializer } from "../../api/generic.serializer";
 import { MascotasAPI } from "../../api/mascotas.api";
 import { Loading } from "../../loading/loading.component";
@@ -32,18 +33,19 @@ export const PetsList = () => {
     <>
       <Header />
       {loading && <Loading />}
-
-      {petsList.length > 0 && (
-        <ul>
-          {petsList.map((pet: any, id) => {
-            return (
-              <li key={id}>
-                <PetCard pet={pet} />
-              </li>
-            );
-          })}
-        </ul>
-      )}
+      <Container>
+        <Row>
+          <Col className="d-flex">
+            {petsList.length > 0 && (
+              <>
+                {petsList.map((pet: any, id) => {
+                  return <PetCard pet={pet} id={id} />;
+                })}
+              </>
+            )}
+          </Col>
+        </Row>
+      </Container>
       <GoBack />
     </>
   );

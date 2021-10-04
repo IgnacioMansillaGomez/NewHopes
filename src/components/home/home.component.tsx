@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-// import { Router } from "react-router";
 import { Header } from "../header/header.component";
 
 export const Home = () => {
@@ -15,8 +14,8 @@ export const Home = () => {
   return (
     <>
       <Header />
-      <button onClick={handleNew}>Nueva Adopción</button>
-      <button onClick={handlePetsList}>Listado Adopciones</button>
+      <button onClick={handleNew}>Nueva Mascota</button>
+      <button onClick={handlePetsList}>Listado Mascotas</button>
     </>
   );
 };
