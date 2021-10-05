@@ -38,6 +38,7 @@ export const PetsList = () => {
           <Col className="d-flex">
             {petsList.length > 0 && (
               <>
+                {/* usamos el metodo 'map' para recorrer el array petsList y por cada pet retornamos el componente PetCard pasandole como props "pet" el cual tiene el valor de UNA pet con su respectivo id en la prop "id" */}
                 {petsList.map((pet: any, id) => {
                   return <PetCard pet={pet} id={id} />;
                 })}

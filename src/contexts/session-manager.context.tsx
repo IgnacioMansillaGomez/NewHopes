@@ -46,7 +46,10 @@ export const SessionProvider: React.FC = (props) => {
         },
         function: ingresoUsuarioSesion(),
 
-        // // logout,
+         function :logout() {
+          auth.signOut()
+        }
+
         // // clear,
       }}
     >

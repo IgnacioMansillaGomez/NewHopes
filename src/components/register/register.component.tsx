@@ -49,16 +49,18 @@ export const Register = () => {
   useEffect(() => {
     return () => {
       console.log("Desmontanding...");
-      /**/
     };
   }, []);
 
+  //Funcion crear usuario
   const crearUsuario = () => {
+    //Promesa
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
       })
+      //Manejo de errores en creación de usuario
       .catch((error) => {
         // const errorCode = error.code;
         // const errorMessage = error.message;
@@ -70,13 +72,14 @@ export const Register = () => {
         } else if (error.code === "auth/email-already-in-use") {
           setMensajeError("El email ya se encuentra registrado");
         } else {
-          setMensajeError("No funca che ");
+          setMensajeError("No se ha podido completar la operación");
         }
       });
   };
 
-  const provider = new GoogleAuthProvider();
-  auth.languageCode = "es";
+  //Registro a través del provider Google
+  const provider = new GoogleAuthProvider(); //Definimos el provider
+  auth.languageCode = "es"; //Seteamos el idioma
   const registroGoogle = () =>
     signInWithPopup(auth, provider)
       .then((result) => {
@@ -86,17 +89,9 @@ export const Register = () => {
         setEmail(user);
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.email;
         const credential: any = GoogleAuthProvider.credentialFromError(error);
         setMensajeError(credential);
       });
-
-  //LogOut
-  function logout() {
-    auth.signOut();
-  }
 
   return (
     <ThemeProvider theme={theme}>
