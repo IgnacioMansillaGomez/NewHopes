@@ -1,61 +1,63 @@
+import React, { useEffect, useState, FunctionComponent } from "react";
 import { signInWithEmailAndPassword } from "@firebase/auth";
-import React, { useState } from "react";
 
 import { auth } from "../bd/fireAuth.js";
 
 //TIPOS PRIMERO
 type SessionType = {
-  uid: string | null;
+  uid: string;
   email: string | null;
-  photoURL?: string;
+  photoURL?: string; //Al ser opcional si no es String es decir no viene es undefined
 };
 
+//Esto es key y tipo porque es un type de typescript
 type SessionContextType = {
   session: SessionType;
-  ingresoUsuario?: () => Promise<any>;
+  ingresoUsuario: (email: string, password: string) => Promise<any>;
   logout?: () => void;
   clear?: () => void;
 };
 
 //Es Un componente
-export const SessionContext = React.createContext<SessionContextType | null>(
-  null
-);
+export const SessionContext = React.createContext<
+  SessionContextType | undefined
+>(undefined);
 
-export const SessionProvider: React.FC = (props) => {
-  // props: {children, ...}
-  const [session, setSession] = useState(null);
+export const SessionProvider: FunctionComponent = (props) => {
+  const [session, setSession] = useState<SessionType>({ uid: "", email: "" });
 
-  const ingresoUsuarioSesion = (email: string, password: string) => {
-    return signInWithEmailAndPassword(auth, email, password).then((res) => {
-      console.log(res);
-      // setSession(res.user.email);
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user != null) {
+        setSession({
+          uid: user.uid,
+          email: user.email,
+        });
+      }
     });
+  }, []);
+
+  const ingresoUsuario = async (email: string, password: string) => {
+    const res = await signInWithEmailAndPassword(auth, email, password);
+
+    setSession({ uid: res.user.uid, email: res.user.email });
+    return res;
   };
-
-  // logout() { return Promise }
-
+  const logout = () => {
+    auth.signOut();
+    setSession({ uid: "", email: "" });
+  };
   // clear() { limpia session }
 
+  const value = {
+    session,
+    ingresoUsuario,
+    logout,
+  };
+
   return (
-    <SessionContext.Provider
-      value={{
-        session: {
-          uid: "",
-          email: "",
-        },
-        function: ingresoUsuarioSesion(),
-
-         function :logout() {
-          auth.signOut()
-        }
-
-        // // clear,
-      }}
-    >
+    <SessionContext.Provider value={value}>
       {props.children}
     </SessionContext.Provider>
   );
-
-  //Es Un componente
 };

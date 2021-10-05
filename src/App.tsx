@@ -13,7 +13,7 @@ export function App() {
       <Router>
         <Switch>
           <Route path="/new-pet">
-            <NewPet />
+            <NewPet /> {/* Child de route */}
           </Route>
           <Route path="/pets-list">
             <PetsList />

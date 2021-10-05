@@ -1,15 +1,5 @@
 import React, { useContext, useState } from "react";
 
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-  GoogleAuthProvider,
-  getRedirectResult,
-  signInWithRedirect,
-} from "firebase/auth";
-
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -23,29 +13,39 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import { Avatar } from "@mui/material";
-import { SessionContext } from "../../contexts/session-manager.context.js";
+
+import { useHistory } from "react-router-dom";
+
+import { SessionContext } from "../../contexts/session-manager.context";
 
 export const Login: React.FC = (props) => {
   const theme = createTheme();
+  const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mensajeError, setMensajeError] = useState("");
   const sessionContext = useContext(SessionContext);
 
   const ingresoUsuario = () => {
-    if (sessionContext != null) {
-      sessionContext.ingresoUsuarioSesion(email, password).catch((error) => {
-        console.log(error);
-        if (error.code == "auth/wrong-password") {
-          setMensajeError("Contraseña inválida");
-        }
-        if (error.code == "auth/invalid-email") {
-          setMensajeError("Email inválido");
-        }
-        if (error.code == "auth/internal-error") {
-          setMensajeError("Campo contraseña no puede quedar vacío");
-        }
-      });
+    if (sessionContext !== undefined) {
+      sessionContext
+        .ingresoUsuario(email, password)
+        .then(() => {
+          history.push("/home");
+        })
+
+        .catch((error) => {
+          console.log(error);
+          if (error.code === "auth/wrong-password") {
+            setMensajeError("Contraseña inválida");
+          }
+          if (error.code === "auth/invalid-email") {
+            setMensajeError("Email inválido");
+          }
+          if (error.code === "auth/internal-error") {
+            setMensajeError("Campo contraseña no puede quedar vacío");
+          }
+        });
     }
   };
 
