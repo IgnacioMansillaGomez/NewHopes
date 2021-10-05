@@ -12,7 +12,9 @@ import { Avatar } from "@mui/material";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
+
 // import Link from "@mui/material/Link";
+
 import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -20,8 +22,11 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { FcGoogle } from "react-icons/fc";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+
 /*Tercer componentes propios */
+
 import { auth } from "../../bd/fireAuth";
+
 /*Y al final el css*/
 
 export const Register = () => {
@@ -30,7 +35,7 @@ export const Register = () => {
   const [password, setPassword] = useState("");
   const [mensajeError, setMensajeError] = useState("");
 
-  /*Monaje  , se puede usar con desmontaje*/
+  /*Montaje*/
   useEffect(() => {
     console.log("Se monto el component for first time");
   }, []);
@@ -77,13 +82,15 @@ export const Register = () => {
       .then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential?.accessToken;
-        const user = result.user;
+        const user: any = result.user.email;
+        setEmail(user);
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         const email = error.email;
-        const credential = GoogleAuthProvider.credentialFromError(error);
+        const credential: any = GoogleAuthProvider.credentialFromError(error);
+        setMensajeError(credential);
       });
 
   //LogOut

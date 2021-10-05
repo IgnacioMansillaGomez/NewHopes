@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import {
   getAuth,
@@ -19,12 +19,11 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { FcGoogle } from "react-icons/fc";
+
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-import { auth } from "../../bd/fireAuth.js";
-import { Register } from "../register/register.component";
 import { Avatar } from "@mui/material";
+import { SessionContext } from "../../contexts/session-manager.context.js";
 
 export const Login: React.FC = (props) => {
   const theme = createTheme();
@@ -34,18 +33,20 @@ export const Login: React.FC = (props) => {
   const sessionContext = useContext(SessionContext);
 
   const ingresoUsuario = () => {
-    sessionContext.ingresoUsuarioSesion(email, password).catch((error) => {
-      console.log(error);
-      if (error.code == "auth/wrong-password") {
-        setMensajeError("Contraseña inválida");
-      }
-      if (error.code == "auth/invalid-email") {
-        setMensajeError("Email inválido");
-      }
-      if (error.code == "auth/internal-error") {
-        setMensajeError("Campo contraseña no puede quedar vacío");
-      }
-    });
+    if (sessionContext != null) {
+      sessionContext.ingresoUsuarioSesion(email, password).catch((error) => {
+        console.log(error);
+        if (error.code == "auth/wrong-password") {
+          setMensajeError("Contraseña inválida");
+        }
+        if (error.code == "auth/invalid-email") {
+          setMensajeError("Email inválido");
+        }
+        if (error.code == "auth/internal-error") {
+          setMensajeError("Campo contraseña no puede quedar vacío");
+        }
+      });
+    }
   };
 
   return (

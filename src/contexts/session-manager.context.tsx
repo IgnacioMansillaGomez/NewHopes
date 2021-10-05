@@ -1,7 +1,8 @@
 import { signInWithEmailAndPassword } from "@firebase/auth";
 import React, { useState } from "react";
 
-import { auth } from "../bd/fireConfig";
+import { auth } from "../bd/fireAuth.js";
+
 //TIPOS PRIMERO
 type SessionType = {
   uid: string | null;
@@ -9,20 +10,18 @@ type SessionType = {
   photoURL?: string;
 };
 
-const session: SessionContextType = {
-  session: {
-    uid: null,
-    email: null,
-  },
-  ingresoUsuario: () => Promise,
-  // logout
-  // clear
+type SessionContextType = {
+  session: SessionType;
+  ingresoUsuario?: () => Promise<any>;
+  logout?: () => void;
+  clear?: () => void;
 };
 
 //Es Un componente
-export const SessionContext = React.createContext<SessionType | null>(null);
+export const SessionContext = React.createContext<SessionContextType | null>(
+  null
+);
 
-//Es Un componente
 export const SessionProvider: React.FC = (props) => {
   // props: {children, ...}
   const [session, setSession] = useState(null);
@@ -30,7 +29,7 @@ export const SessionProvider: React.FC = (props) => {
   const ingresoUsuarioSesion = (email: string, password: string) => {
     return signInWithEmailAndPassword(auth, email, password).then((res) => {
       console.log(res);
-      setSession(user);
+      // setSession(res.user.email);
     });
   };
 
@@ -41,13 +40,19 @@ export const SessionProvider: React.FC = (props) => {
   return (
     <SessionContext.Provider
       value={{
-        session: session,
-        ingresoUsuarioSesion,
-        // logout,
-        // clear,
+        session: {
+          uid: "",
+          email: "",
+        },
+        function: ingresoUsuarioSesion(),
+
+        // // logout,
+        // // clear,
       }}
     >
       {props.children}
     </SessionContext.Provider>
   );
+
+  //Es Un componente
 };

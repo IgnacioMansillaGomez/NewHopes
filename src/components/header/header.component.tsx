@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 
 import { Container, Navbar } from "react-bootstrap";
 import { auth } from "../../bd/fireAuth";
+import { SessionContext } from "../../contexts/session-manager.context";
 
 export const Header = () => {
   const [usuario, setUsuario] = useState<string | null>(null);
