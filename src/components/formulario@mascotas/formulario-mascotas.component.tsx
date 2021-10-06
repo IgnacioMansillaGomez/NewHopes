@@ -1,100 +1,143 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
+import React, { useState } from "react";
 
-import FormControl from "@mui/material/FormControl";
-
-import Input from "@mui/material/Input";
-import InputLabel from "@mui/material/InputLabel";
-import FormLabel from "@mui/material/FormLabel";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
-import NativeSelect from "@mui/material/NativeSelect/NativeSelect";
+import { Button, Col, Form, Row } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import { MascotasAPI } from "../../api/mascotas.api";
 
 export const FormularioAgregarMascotas = () => {
-  const [name, setName] = React.useState("");
-  const [age, setAge] = React.useState("");
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAge(event.target.value);
+  const [name, setName] = useState("");
+  const [size, setSize] = useState("chico");
+  const [specie, setSpecie] = useState("perro");
+  const [vaccinated, setVaccinated] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
+  const history = useHistory();
+  const handleGoList = () => {
+    history.push("/pets-list");
+  };
+  const handleNameChange = (event: any) => {
     setName(event.target.value);
-    setStates({
-      ...states,
-      [event.target.name]: event.target.checked,
+  };
+
+  const handleSpecieChange = (event: any) => {
+    setSpecie(event.target.value);
+  };
+
+  const handleSizesChange = (event: any) => {
+    setSize(event.target.value);
+  };
+
+  const handleVaccinatedChange = (event: any) => {
+    setVaccinated(event.target.checked);
+  };
+
+  const handleOnSave = () => {
+    const pet = {
+      nombre: name,
+      fecha_publicacion: new Date(),
+      especie: specie,
+      tamano: size,
+      vacunas: vaccinated,
+    };
+    MascotasAPI.createPet(pet).then((res) => {
+      console.log(res);
+      setShowSuccessMessage(true);
     });
   };
-  const [states, setStates] = React.useState({
-    adoptado: false,
-    castracion: false,
-    vacunas: false,
-  });
 
   return (
     <>
-      <Box
-        component="form"
-        sx={{
-          "& > :not(style)": { m: 1 },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <FormControl variant="standard">
-          <InputLabel htmlFor="txtNombreMascota">Nombre</InputLabel>
-          <Input id="txtNombreMascota" value={name} onChange={handleChange} />
-        </FormControl>
-        <FormControl component="fieldset" variant="standard">
-          <FormLabel component="legend">Seleccione el estado NO-Si</FormLabel>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={states.adoptado}
-                  onChange={handleChange}
-                  name="adoptado"
-                />
-              }
-              label="Adoptado"
-            />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={states.castracion}
-                  onChange={handleChange}
-                  name="castracion"
-                />
-              }
-              label="Castrado"
-            />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={states.vacunas}
-                  onChange={handleChange}
-                  name="vacunas"
-                />
-              }
-              label="Vacunado"
-            />
-          </FormGroup>
-        </FormControl>
-        <FormControl variant="standard">
-          <InputLabel variant="standard" htmlFor="uncontrolled-native">
-            Edad
-          </InputLabel>
-          <NativeSelect
-            defaultValue={1}
-            inputProps={{
-              name: "age",
-              id: "uncontrolled-native",
-            }}
-          >
-            <option value={10}>Ten</option>
-            <option value={20}>Twenty</option>
-            <option value={30}>Thirty</option>
-          </NativeSelect>
-        </FormControl>
-      </Box>
+      <div className="container">
+        <div className="row">
+          <div className="col-12 mb-5">
+            <h1 className="text-center">Carga de nueva mascota</h1>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-md-3">
+            <div className="form-floating mb-1">
+              <input
+                type="text"
+                className="form-control"
+                id="txtNombreMascota"
+                placeholder="Nombre mascota"
+                value={name}
+                onChange={handleNameChange}
+              />
+              <label htmlFor="txtNombreMascota">Nombre mascota</label>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-6 mt-4">
+            <div className="form-check-inline">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                checked={vaccinated}
+                id="chkVacunado"
+                onClick={handleVaccinatedChange}
+              />
+              <label className="form-check-label" htmlFor="chkVacunado">
+                Vacunas
+              </label>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-12">
+            <div className="col-md-8 mt-4">
+              <select
+                className="form-select"
+                aria-label="Especie"
+                onChange={handleSpecieChange}
+              >
+                <option value="perro" selected>
+                  Perro
+                </option>
+                <option value="gato">Gato</option>
+              </select>
+            </div>
+            <div className="col-md-4 mt-4">
+              <select
+                className="form-select"
+                aria-label="Tamano"
+                onChange={handleSizesChange}
+              >
+                <option value="chico" selected>
+                  Chico
+                </option>
+                <option value="mediano">Mediano</option>
+                <option value="grande">Grande</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <button
+              type="button"
+              className="btn btn-outline-success"
+              onClick={handleOnSave}
+            >
+              Crear Mascota
+            </button>
+          </div>
+        </div>
+        <div className="row">
+          {showSuccessMessage && (
+            <>
+              <div>Mascotita creada</div>
+              <div>
+                <button onClick={handleGoList}>
+                  --- Ir hacia listado de mascotas ---
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
     </>
   );
 };

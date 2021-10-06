@@ -35,16 +35,18 @@ export const PetsList = () => {
       {loading && <Loading />}
       <Container>
         <Row>
-          <Col className="d-flex">
-            {petsList.length > 0 && (
-              <>
-                {/* usamos el metodo 'map' para recorrer el array petsList y por cada pet retornamos el componente PetCard pasandole como props "pet" el cual tiene el valor de UNA pet con su respectivo id en la prop "id" */}
-                {petsList.map((pet: any, id) => {
-                  return <PetCard pet={pet} id={id} />;
-                })}
-              </>
-            )}
-          </Col>
+          {petsList.length > 0 && (
+            <>
+              {/* usamos el metodo 'map' para recorrer el array petsList y por cada pet retornamos el componente PetCard pasandole como props "pet" el cual tiene el valor de UNA pet , a cada elemento que dibuje en html el metodo 'map' hay que enviarle una KEY obligatoriamente para que react sepa detectar dicho elemento */}
+              {petsList.map((pet: any, id) => {
+                return (
+                  <Col className="md-3" key={id}>
+                    <PetCard pet={pet} />
+                  </Col>
+                );
+              })}
+            </>
+          )}
         </Row>
       </Container>
       <GoBack />

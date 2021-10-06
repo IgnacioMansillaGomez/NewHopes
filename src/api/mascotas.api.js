@@ -14,7 +14,12 @@ const getPet = (id) => {
   return item.get();
 };
 
+const createPet = (pet) => {
+  return itemCollection.add(pet);
+};
+
 export const MascotasAPI = {
+  createPet,
   getAllPets,
   getPet,
 };

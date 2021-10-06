@@ -11,11 +11,11 @@ export const PetCard = (props: any) => {
 
   return (
     <>
-      <Card sx={{ maxWidth: 345, margin: 5 }}>
+      <Card sx={{ maxWidth: 345, margin: 5, minWidth: 345 }}>
         <CardActionArea>
           <CardMedia
             component="img"
-            height="200"
+            height="300"
             alt="Imagen Animal"
             image={pet.img_url}
           />

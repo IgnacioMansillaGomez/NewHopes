@@ -12,6 +12,7 @@ import { Avatar } from "@mui/material";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
+import { useHistory } from "react-router-dom";
 
 // import Link from "@mui/material/Link";
 
@@ -34,7 +35,7 @@ export const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mensajeError, setMensajeError] = useState("");
-
+  const history = useHistory();
   /*Montaje*/
   useEffect(() => {
     console.log("Se monto el component for first time");
@@ -87,6 +88,7 @@ export const Register = () => {
         const token = credential?.accessToken;
         const user: any = result.user.email;
         setEmail(user);
+        history.push("/home");
       })
       .catch((error) => {
         const credential: any = GoogleAuthProvider.credentialFromError(error);
