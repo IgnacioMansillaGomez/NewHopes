@@ -1,5 +1,5 @@
 /* Primero siempre lo de react!!*/
-import * as React from "react";
+import React from "react";
 import { useState, useEffect } from "react";
 
 /*Segundo TODO lo que es libreria externa*/

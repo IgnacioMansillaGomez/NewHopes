@@ -1,0 +1,10 @@
+* {
+  max-width: 1440px;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.card-text-button {
+  padding: 90px;
+}

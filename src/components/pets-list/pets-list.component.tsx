@@ -33,23 +33,25 @@ export const PetsList = () => {
     <>
       <Header />
       {loading && <Loading />}
-      <Container>
-        <Row>
-          {petsList.length > 0 && (
-            <>
-              {/* usamos el metodo 'map' para recorrer el array petsList y por cada pet retornamos el componente PetCard pasandole como props "pet" el cual tiene el valor de UNA pet , a cada elemento que dibuje en html el metodo 'map' hay que enviarle una KEY obligatoriamente para que react sepa detectar dicho elemento */}
-              {petsList.map((pet: any, id) => {
-                return (
-                  <Col className="md-3" key={id}>
-                    <PetCard pet={pet} />
-                  </Col>
-                );
-              })}
-            </>
-          )}
-        </Row>
-      </Container>
-      <GoBack />
+      <div className="album py-5 bg-light">
+        <Container>
+          <GoBack />
+          <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {petsList.length > 0 && (
+              <>
+                {/* usamos el metodo 'map' para recorrer el array petsList y por cada pet retornamos el componente PetCard pasandole como props "pet" el cual tiene el valor de UNA pet , a cada elemento que dibuje en html el metodo 'map' hay que enviarle una KEY obligatoriamente para que react sepa detectar dicho elemento */}
+                {petsList.map((pet: any, id) => {
+                  return (
+                    <Col key={id}>
+                      <PetCard pet={pet} />
+                    </Col>
+                  );
+                })}
+              </>
+            )}
+          </div>
+        </Container>
+      </div>
     </>
   );
 };

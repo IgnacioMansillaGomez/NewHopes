@@ -6,6 +6,7 @@ import { SessionProvider } from "./contexts/session-manager.context";
 import { Home } from "./components/home/home.component";
 import { NewPet } from "./components/new-pet/new-pet.component";
 import { PetsList } from "./components/pets-list/pets-list.component";
+import { FullViewPet } from "./components/full-view-pet/full-view.component";
 
 export function App() {
   return (
@@ -26,6 +27,9 @@ export function App() {
           </Route>
           <Route path="/home">
             <Home />
+          </Route>
+          <Route path="/full-view-pet/:id">
+            <FullViewPet />
           </Route>
           <Route path="/">
             <Home />
