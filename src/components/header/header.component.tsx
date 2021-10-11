@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 
 import { Container, Navbar } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { SessionContext } from "../../contexts/session-manager.context";
+
+import "./header.component.css";
 
 export const Header = () => {
   const session = useContext(SessionContext);
@@ -15,11 +17,14 @@ export const Header = () => {
   return (
     <Navbar bg="dark" variant="dark">
       <Container>
-        <Navbar.Brand>New Hopes</Navbar.Brand>
+        <Link to="/home" className="header__brand-link">
+          <Navbar.Brand>New Hopes</Navbar.Brand>
+        </Link>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
-            Usuario conectado : <span>{session?.session.email}</span>
+            {session?.session.uid && <span>{session?.session.email}</span>}
+            {!session?.session.uid && <Link to="/login">Ingresar</Link>}
           </Navbar.Text>
         </Navbar.Collapse>
         {session?.session.email && (

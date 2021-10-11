@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { GenericSerializer } from "../../api/generic.serializer";
 import { MascotasAPI } from "../../api/mascotas.api";
-import { Loading } from "../../loading/loading.component";
+import { Loading } from "../loading/loading.component";
 import { GoBack } from "../go-back/go-back.component";
 import { Header } from "../header/header.component";
 import { PetCard } from "../pet-card/pet-card.component";

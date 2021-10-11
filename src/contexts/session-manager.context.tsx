@@ -3,6 +3,7 @@ import { signInWithEmailAndPassword } from "@firebase/auth";
 
 import { auth } from "../bd/fireAuth.js";
 
+const ADMIN_USER = "MeAsUaC6GROctPebR6TsaWsxyQo2";
 //TIPOS PRIMERO
 type SessionType = {
   uid: string;
@@ -16,6 +17,7 @@ type SessionContextType = {
   ingresoUsuario: (email: string, password: string) => Promise<any>;
   logout?: () => void;
   clear?: () => void;
+  isAdmin: () => boolean;
 };
 
 //Es Un componente
@@ -49,10 +51,15 @@ export const SessionProvider: FunctionComponent = (props) => {
   };
   // clear() { limpia session }
 
+  const isAdmin = () => {
+    return session.uid === ADMIN_USER;
+  };
+
   const value = {
     session,
     ingresoUsuario,
     logout,
+    isAdmin,
   };
 
   return (

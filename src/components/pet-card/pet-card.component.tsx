@@ -17,7 +17,6 @@ export const PetCard = (props: any) => {
 
   useEffect(() => {
     RazasAPI.getRace(pet.id_raza).then((response) => {
-      debugger;
       const raza = GenericSerializer.serialize(response);
       setRaza(raza);
     });

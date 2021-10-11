@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { GenericSerializer } from "../../api/generic.serializer";
 import { MascotasAPI } from "../../api/mascotas.api";
-import { Loading } from "../../loading/loading.component";
+import { Loading } from "../loading/loading.component";
 import { Header } from "../header/header.component";
 import { DEFAULT_PET_IMAGE } from "../../constants/constants";
 import { RazasAPI } from "../../api/razas.api";
@@ -23,7 +23,6 @@ export const FullViewPet = () => {
     MascotasAPI.getPet(id).then((respons) => {
       if (respons) {
         const pet = GenericSerializer.serialize(respons);
-        debugger;
         setPet(pet);
       } else {
         console.log("No hay nada");
@@ -32,11 +31,10 @@ export const FullViewPet = () => {
   }, []);
 
   useEffect(() => {
-    debugger;
     if (pet) {
       RazasAPI.getRace(pet.id_raza).then((response) => {
         const raza = GenericSerializer.serialize(response);
-        debugger;
+
         setRaza(raza);
       });
     }

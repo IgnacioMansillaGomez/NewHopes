@@ -17,6 +17,7 @@ import { Avatar } from "@mui/material";
 import { useHistory } from "react-router-dom";
 
 import { SessionContext } from "../../contexts/session-manager.context";
+import { Header } from "../header/header.component";
 
 export const Login: React.FC = (props) => {
   const theme = createTheme();
@@ -51,6 +52,7 @@ export const Login: React.FC = (props) => {
 
   return (
     <ThemeProvider theme={theme}>
+      <Header />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

@@ -16,7 +16,7 @@ import { useHistory } from "react-router-dom";
 import { GenericSerializer } from "../../api/generic.serializer";
 import { MascotasAPI } from "../../api/mascotas.api";
 import { RazasAPI } from "../../api/razas.api";
-import { Loading } from "../../loading/loading.component";
+import { Loading } from "../loading/loading.component";
 
 export const FormularioAgregarMascotas = () => {
   const [name, setName] = useState("");

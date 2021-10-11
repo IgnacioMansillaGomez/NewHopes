@@ -7,6 +7,7 @@ import { Home } from "./components/home/home.component";
 import { NewPet } from "./components/new-pet/new-pet.component";
 import { PetsList } from "./components/pets-list/pets-list.component";
 import { FullViewPet } from "./components/full-view-pet/full-view.component";
+import { NotAllowed } from "./components/not-allowed/not-allowed.component";
 
 export function App() {
   return (
@@ -30,6 +31,9 @@ export function App() {
           </Route>
           <Route path="/full-view-pet/:id">
             <FullViewPet />
+          </Route>
+          <Route path="/not-allowed">
+            <NotAllowed />
           </Route>
           <Route path="/">
             <Home />
