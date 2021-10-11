@@ -3,8 +3,6 @@ import { getFirestore } from "../bd/fireData";
 const dataBase = getFirestore(); //Asignamos el modulo getFirestore() a la constante dataBase.
 const itemCollection = dataBase.collection("mascotas"); //Accedemos a la colección que pasamos como parametro en este 'mascotas' y lo asignamos a la variable itemCollection
 
-const itemRacesCollection = dataBase.collection("razas");
-
 /* Arrow Function que retorna una QuerySnapshot que es el estado actual que tiene itemCollection en la base de datos */
 const getAllPets = () => {
   return itemCollection.get();
@@ -20,13 +18,8 @@ const createPet = (pet) => {
   return itemCollection.add(pet);
 };
 
-const getAllRaces = () => {
-  return itemRacesCollection.get();
-};
-
 export const MascotasAPI = {
   createPet,
   getAllPets,
   getPet,
-  getAllRaces,
 };

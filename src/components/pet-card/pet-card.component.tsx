@@ -1,5 +1,5 @@
 // import { Card, CardGroup, Col, Row } from "react-bootstrap";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -8,9 +8,20 @@ import { CardActionArea } from "@mui/material";
 import { Link } from "react-router-dom";
 import { minHeight } from "@mui/system";
 import { DEFAULT_PET_IMAGE } from "../../constants/constants";
+import { RazasAPI } from "../../api/razas.api";
+import { GenericSerializer } from "../../api/generic.serializer";
 
 export const PetCard = (props: any) => {
-  const [pet, setPet] = React.useState(props.pet);
+  const [pet, setPet] = useState(props.pet);
+  const [raza, setRaza] = useState<any>({ nombre_raza: "" });
+
+  useEffect(() => {
+    RazasAPI.getRace(pet.id_raza).then((response) => {
+      debugger;
+      const raza = GenericSerializer.serialize(response);
+      setRaza(raza);
+    });
+  }, []);
 
   return (
     <Card sx={{ maxWidth: 345, margin: 5, minWidth: 345, minHeight: 469 }}>
@@ -32,7 +43,7 @@ export const PetCard = (props: any) => {
               <li>Especie: {pet.especie}</li>
               <li>Tamaño: {pet.tamano}</li>
               <li>Vacunas: {pet.vacunas ? "Si" : "No"} esta vacunado.</li>
-              <li>Raza:</li>
+              <li>Raza:{raza.nombre_raza}</li>
             </ul>
           </Typography>
         </CardContent>
