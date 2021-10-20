@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {
+  Alert,
+  Button,
+  ButtonBase,
   FormControl,
   FormControlLabel,
   FormLabel,
@@ -17,6 +20,7 @@ import { GenericSerializer } from "../../api/generic.serializer";
 import { MascotasAPI } from "../../api/mascotas.api";
 import { RazasAPI } from "../../api/razas.api";
 import { Loading } from "../loading/loading.component";
+import { SkipNextOutlined } from "@mui/icons-material";
 
 export const FormularioAgregarMascotas = () => {
   const [name, setName] = useState("");
@@ -25,7 +29,10 @@ export const FormularioAgregarMascotas = () => {
   const [razaId, setRazaId] = useState();
   const [razas, setRazas] = useState([]);
   const [allRazas, setAllRazas] = useState([]);
-  const [vaccinated, setVaccinated] = useState(false);
+  const [hair, setHair] = useState("corto");
+  const [vaccinated, setVaccinated] = useState(0);
+  const [edad, setEdad] = useState(0);
+  const [sexo, setSexo] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -79,21 +86,32 @@ export const FormularioAgregarMascotas = () => {
   };
 
   const handleVaccinatedChange = (event: any) => {
-    setVaccinated(event.target.checked);
+    setVaccinated(event.target.value);
   };
 
-  // const handleRace = (event: any) => {
-  //   setRaza(event.target.checked);
-  // };
+  const handleHairChange = (event: any) => {
+    setHair(event.target.value);
+  };
+
+  const handleAgeChange = (event: any) => {
+    setEdad(event.target.value);
+  };
+
+  const handleSexoChange = (event: any) => {
+    setSexo(event.target.value);
+  };
 
   const handleOnSave = () => {
     const pet = {
       nombre: name,
-      fecha_publicacion: new Date(),
+      fecha_publicacion: new Date().toDateString(),
       especie: specie,
       tamano: size,
       vacunas: vaccinated,
       id_raza: razaId,
+      pelaje: hair,
+      edad_anos: edad,
+      sexo: sexo,
     };
     MascotasAPI.createPet(pet).then((res) => {
       console.log(res);
@@ -105,248 +123,204 @@ export const FormularioAgregarMascotas = () => {
     <>
       {loading && <Loading />}
       {!loading && (
-        <div className="container ">
+        <div className="container">
           <div className="row">
             <div className="col-12 mb-5">
               <h1 className="text-center">Carga de nueva mascota</h1>
             </div>
           </div>
-          <div className="form-group row">
-            <div className="col-10">
-              <TextField
-                id="standard-basic"
-                label="Nombre Mascota"
-                variant="standard"
-                onChange={handleNameChange}
-              />
+          <div className="col-md-9 offset-md-3">
+            <div className="form-group row ">
+              <div className="col-6">
+                <TextField
+                  fullWidth
+                  id="standard-basic"
+                  label="Nombre Mascota"
+                  variant="standard"
+                  onChange={handleNameChange}
+                />
+              </div>
             </div>
-          </div>
-          <div className="form-group row mt-4">
-            <div className="col-10">
-              <FormControl component="fieldset">
-                <FormLabel component="legend">Especie</FormLabel>
-                <RadioGroup
-                  row
-                  aria-label="gender"
-                  name="cboSpecie"
-                  onChange={handleSpecieChange}
-                  defaultValue={specie}
-                >
-                  <FormControlLabel
-                    value="perro"
-                    control={<Radio size="small" />}
-                    label="Perro"
-                  />
-                  <FormControlLabel
-                    value="gato"
-                    control={<Radio size="small" />}
-                    label="Gato"
-                  />
-                </RadioGroup>
-              </FormControl>
+            <div className="form-group row mt-4">
+              <div className="col-10">
+                <FormControl component="fieldset">
+                  <FormLabel component="legend">Especie</FormLabel>
+                  <RadioGroup
+                    row
+                    aria-label="gender"
+                    name="cboSpecie"
+                    onChange={handleSpecieChange}
+                    defaultValue={specie}
+                  >
+                    <FormControlLabel
+                      value="perro"
+                      control={<Radio size="small" />}
+                      label="Perro"
+                    />
+                    <FormControlLabel
+                      value="gato"
+                      control={<Radio size="small" />}
+                      label="Gato"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </div>
             </div>
-          </div>
 
-          <div className="form-group row mt-3">
-            <div className="col-10">
-              <FormControl component="fieldset">
-                <FormLabel component="legend">Tamaño</FormLabel>
-                <RadioGroup
-                  row
-                  aria-label="Tamaño"
-                  name="cboTamano"
-                  onChange={handleSizesChange}
+            {/* Vacunas */}
+
+            <div className="form-group row ">
+              <div className="col-3">
+                <FormControl variant="standard" sx={{ mt: 3, minWidth: 190 }}>
+                  <InputLabel id="demo-simple-select-standard-label">
+                    Vacunas
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-standard-label"
+                    id="demo-simple-select-standard"
+                    value={vaccinated}
+                    onChange={handleVaccinatedChange}
+                    label="Vacunas"
+                  >
+                    <MenuItem value={0}>Sin vacunas</MenuItem>
+                    <MenuItem value={1}>Con vacunas</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+
+              {/* Raza */}
+
+              <div className="col-3">
+                <FormControl variant="standard" sx={{ mt: 3, minWidth: 190 }}>
+                  <InputLabel id="demo-simple-select-standard-label">
+                    Raza
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-standard-label"
+                    id="demo-simple-select-standard"
+                    onChange={handleOnChangeRace}
+                    label="Raza"
+                  >
+                    {razas.map((item: any, idx) => {
+                      return (
+                        <MenuItem value={item.id} key={idx}>
+                          {item.nombre_raza}
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+                </FormControl>
+              </div>
+            </div>
+
+            {/* Pelaje */}
+
+            <div className="form-group row">
+              <div className="col-3">
+                <FormControl variant="standard" sx={{ mt: 3, minWidth: 190 }}>
+                  <InputLabel id="demo-simple-select-standard-label">
+                    Pelaje
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-standard-label"
+                    id="demo-simple-select-standard"
+                    onChange={handleHairChange}
+                    label="Pelaje"
+                  >
+                    <MenuItem value="Corto">Corto</MenuItem>
+                    <MenuItem value="Medio">Medio</MenuItem>
+                    <MenuItem value="Largo">Largo</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+
+              {/* Edad */}
+
+              <div className="col-3">
+                <FormControl variant="standard" sx={{ mt: 3, minWidth: 190 }}>
+                  <InputLabel id="demo-simple-select-standard-label">
+                    Edad
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-standard-label"
+                    id="demo-simple-select-standard"
+                    value={edad}
+                    onChange={handleAgeChange}
+                    label="Edad"
+                  >
+                    <MenuItem value={0}>Menos de 1 año</MenuItem>
+                    <MenuItem value={1}>1 año</MenuItem>
+                    <MenuItem value={2}>2 años</MenuItem>
+                    <MenuItem value={3}>3 años</MenuItem>
+                    <MenuItem value={4}>4 años</MenuItem>
+                    <MenuItem value={5}>5 años</MenuItem>
+                    <MenuItem value={6}>6 años</MenuItem>
+                    <MenuItem value={7}>7 años</MenuItem>
+                    <MenuItem value={8}>8 años</MenuItem>
+                    <MenuItem value={9}>9 años</MenuItem>
+                    <MenuItem value={10}>10 o más años</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+            </div>
+
+            {/* Tamaño */}
+
+            <div className="form-group row mt-3">
+              <div className="col-10">
+                <FormControl component="fieldset" sx={{ mt: 3 }}>
+                  <FormLabel component="legend">Tamaño</FormLabel>
+                  <RadioGroup
+                    row
+                    aria-label="Tamaño"
+                    name="cboTamano"
+                    onChange={handleSizesChange}
+                  >
+                    <FormControlLabel
+                      value="chico"
+                      control={<Radio size="small" />}
+                      label="Chico"
+                    />
+                    <FormControlLabel
+                      value="mediano"
+                      control={<Radio size="small" />}
+                      label="Mediano"
+                    />
+                    <FormControlLabel
+                      value="grande"
+                      control={<Radio size="small" />}
+                      label="Grande"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </div>
+            </div>
+            {/* Boton */}
+            <div className="form-group row mt-5">
+              <div className="col-6">
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={handleOnSave}
+                  fullWidth
                 >
-                  <FormControlLabel
-                    value="chico"
-                    control={<Radio size="small" />}
-                    label="Chico"
-                  />
-                  <FormControlLabel
-                    value="mediano"
-                    control={<Radio size="small" />}
-                    label="Mediano"
-                  />
-                  <FormControlLabel
-                    value="grande"
-                    control={<Radio size="small" />}
-                    label="Grande"
-                  />
-                </RadioGroup>
-              </FormControl>
-            </div>
-          </div>
-          <div className="form-group row">
-            <div className="col-10">
-              <FormControl variant="standard" sx={{ mt: 1, minWidth: 190 }}>
-                <InputLabel id="demo-simple-select-standard-label">
-                  Raza
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-standard-label"
-                  id="demo-simple-select-standard"
-                  onChange={handleOnChangeRace}
-                  label="Años"
-                >
-                  {razas.map((item: any, idx) => {
-                    return (
-                      <MenuItem value={item.id} key={idx}>
-                        {item.nombre_raza}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
-            </div>
-          </div>
-          <div className="form-group row">
-            <div className="col-10">
-              <FormControl variant="standard" sx={{ mt: 3, minWidth: 190 }}>
-                <InputLabel id="demo-simple-select-standard-label">
-                  Pelaje
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-standard-label"
-                  id="demo-simple-select-standard"
-                  // value
-                  // onChange
-                  label="Pelaje"
-                >
-                  <MenuItem value="">
-                    <em>Mestizo</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-          </div>
-          <div className="form-group row">
-            <label className="col-4">Radio Buttons</label>
-            <div className="col-8">
-              <div className="custom-control custom-radio custom-control-inline">
-                <input
-                  name="radio"
-                  id="radio_0"
-                  type="radio"
-                  className="custom-control-input"
-                  value="rabbit"
-                />
-                <label htmlFor="radio_0" className="custom-control-label">
-                  Rabbit
-                </label>
+                  Crear Mascota
+                </Button>
               </div>
-              <div className="custom-control custom-radio custom-control-inline">
-                <input
-                  name="radio"
-                  id="radio_1"
-                  type="radio"
-                  className="custom-control-input"
-                  value="duck"
-                />
-                <label htmlFor="radio_1" className="custom-control-label">
-                  Duck
-                </label>
+              <div className="row">
+                {showSuccessMessage && (
+                  <>
+                    <Alert variant="filled" severity="success">
+                      Mascota Creada
+                    </Alert>
+                    <div>
+                      <button onClick={handleGoList}>
+                        --- Ir hacia listado de mascotas ---
+                      </button>
+                    </div>
+                  </>
+                )}
               </div>
-              <div className="custom-control custom-radio custom-control-inline">
-                <input
-                  name="radio"
-                  id="radio_2"
-                  type="radio"
-                  className="custom-control-input"
-                  value="fish"
-                />
-                <label htmlFor="radio_2" className="custom-control-label">
-                  Fish
-                </label>
-              </div>
-            </div>
-          </div>
-          <div className="form-group row">
-            <label className="col-4">Adoptado</label>
-            <div className="col-8">
-              <div className="custom-control custom-checkbox custom-control-inline">
-                <input
-                  name="chkAdoptado"
-                  id="chkAdoptado_0"
-                  type="checkbox"
-                  required
-                  className="custom-control-input"
-                  value=""
-                />
-                <label htmlFor="chkAdoptado_0" className="custom-control-label">
-                  Si
-                </label>
-              </div>
-              <div className="custom-control custom-checkbox custom-control-inline">
-                <input
-                  name="chkAdoptado"
-                  id="chkAdoptado_1"
-                  type="checkbox"
-                  required
-                  className="custom-control-input"
-                  value=""
-                />
-                <label htmlFor="chkAdoptado_1" className="custom-control-label">
-                  No
-                </label>
-              </div>
-            </div>
-          </div>
-          <div className="form-group row">
-            <label htmlFor="cboRaza" className="col-4 col-form-label">
-              Raza
-            </label>
-            <div className="col-8">
-              <select
-                id="cboRaza"
-                name="cboRaza"
-                required
-                className="custom-select"
-              >
-                <option value="">Mestizo</option>
-              </select>
-            </div>
-          </div>
-          <div className="form-group row">
-            <label htmlFor="cboPelo" className="col-4 col-form-label">
-              Pelo
-            </label>
-            <div className="col-8">
-              <select
-                id="cboPelo"
-                name="cboPelo"
-                className="custom-select"
-                required
-              >
-                <option value="">Corto</option>
-                <option value="">Medio</option>
-                <option value="">Largo</option>
-                <option value="">Muy Largo</option>
-              </select>
-            </div>
-          </div>
-          {/* </form> */}
-          <div className="form-group row">
-            <div className="offset-4 col-8">
-              <button
-                type="button"
-                className="btn btn-outline-success"
-                onClick={handleOnSave}
-              >
-                Crear Mascota
-              </button>
-            </div>
-            <div className="row">
-              {showSuccessMessage && (
-                <>
-                  <div>Mascotita creada</div>
-                  <div>
-                    <button onClick={handleGoList}>
-                      --- Ir hacia listado de mascotas ---
-                    </button>
-                  </div>
-                </>
-              )}
             </div>
           </div>
         </div>

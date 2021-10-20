@@ -18,8 +18,13 @@ const createPet = (pet) => {
   return itemCollection.add(pet);
 };
 
+const deletePet = (id) => {
+  itemCollection.doc(id).delete();
+};
+
 export const MascotasAPI = {
   createPet,
   getAllPets,
   getPet,
+  deletePet,
 };

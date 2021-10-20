@@ -42,7 +42,9 @@ export const PetCard = (props: any) => {
               <li>Especie: {pet.especie}</li>
               <li>Tamaño: {pet.tamano}</li>
               <li>Vacunas: {pet.vacunas ? "Si" : "No"} esta vacunado.</li>
-              <li>Raza:{raza.nombre_raza}</li>
+              <li>Raza: {raza.nombre_raza}</li>
+              <li>Edad: {pet.edad_anos} años</li>
+              <li>Pelo: {pet.pelaje}</li>
             </ul>
           </Typography>
         </CardContent>
