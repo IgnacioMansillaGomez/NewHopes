@@ -184,12 +184,12 @@ export const FormularioMascota = (props: any) => {
                     onChange={handleSexoChange}
                   >
                     <FormControlLabel
-                      value={false}
+                      value={true}
                       control={<Radio size="small" />}
                       label="Macho"
                     />
                     <FormControlLabel
-                      value={true}
+                      value={false}
                       control={<Radio size="small" />}
                       label="Hembra"
                     />

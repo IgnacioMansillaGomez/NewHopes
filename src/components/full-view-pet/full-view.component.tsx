@@ -10,16 +10,14 @@ import { MascotasAPI } from "../../api/mascotas.api";
 import { Loading } from "../loading/loading.component";
 import { Header } from "../header/header.component";
 import { DEFAULT_PET_IMAGE } from "../../constants/constants";
-import { RazasAPI } from "../../api/razas.api";
-import { FormularioMascota } from "../formulario-mascota/formulario-mascota.component";
-import { FormularioEditar } from "../formulario-editar.component/formulario-editar.component";
-import { useRaza } from "../../hooks/use-raza.hook";
 import { FormularioEditarDos } from "../form/formularioEDITAR";
+import { MessageModal } from "../message-modal/message-moda.component";
 
 export const FullViewPet = () => {
   const { id }: any = useParams();
   const [pet, setPet] = useState<any>();
   const history = useHistory();
+  const [deletePetMessage, setDeletePetMessage] = useState(false);
 
   useEffect(() => {
     MascotasAPI.getPet(id).then((respons) => {
@@ -31,11 +29,17 @@ export const FullViewPet = () => {
   }, []);
 
   const handleDeletePet = () => {
-    if (window.confirm("¿Esta seguro de eliminar esta mascota?")) {
-      MascotasAPI.deletePet(id);
-      alert("Se elimino la mascota");
+    setDeletePetMessage(true);
+  };
+
+  const closeDeletePetMessage = () => {
+    setDeletePetMessage(false);
+  };
+
+  const deletePet = () => {
+    MascotasAPI.deletePet(id).then(() => {
       history.push("/pets-list");
-    }
+    });
   };
 
   return (
@@ -77,6 +81,13 @@ export const FullViewPet = () => {
               </Button>
             </div>
           </div>
+          <MessageModal
+            show={deletePetMessage}
+            title="Eliminar Mascota"
+            text="¿Esta seguro de querer borrar esta mascota?"
+            handleOnClose={closeDeletePetMessage}
+            handleOnSuccess={deletePet}
+          />
         </div>
       )}
       {!pet && <Loading />}

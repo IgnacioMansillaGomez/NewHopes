@@ -33,7 +33,7 @@ export const PetsList = () => {
     <>
       <Header />
       {loading && <Loading />}
-      <div className="album py-5 bg-light">
+      <div className="album py-5">
         <Container>
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {petsList.length > 0 && (
@@ -47,6 +47,9 @@ export const PetsList = () => {
                   );
                 })}
               </>
+            )}
+            {petsList.length === 0 && !loading && (
+              <div>No hay mascotas para mostrar</div>
             )}
           </div>
         </Container>

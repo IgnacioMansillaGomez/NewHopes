@@ -13,6 +13,8 @@ export const PetCard = (props: any) => {
   const [pet, setPet] = useState(props.pet);
   const raza = useRaza(pet.id_raza);
 
+  debugger;
+
   return (
     <Card sx={{ maxWidth: 345, margin: 5, minWidth: 345, minHeight: 469 }}>
       <CardActionArea>
@@ -31,7 +33,7 @@ export const PetCard = (props: any) => {
           <Typography variant="body2" color="text.secondary">
             <ul>
               <li>Especie: {pet.especie}</li>
-              <li>Sexo: {pet.sexo ? "Macho" : "Hembra"}</li>
+              <li>Sexo: {pet.sexo === "true" ? "Macho" : "Hembra"}</li>
               <li>Tamaño: {pet.tamano}</li>
               <li>Raza: {raza?.nombre_raza || undefined}</li>
               <li>Edad: {pet.edad_anos} años</li>

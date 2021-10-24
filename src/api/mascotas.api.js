@@ -19,7 +19,7 @@ const createPet = (pet) => {
 };
 
 const deletePet = (id) => {
-  itemCollection.doc(id).delete();
+  return itemCollection.doc(id).delete();
 };
 
 export const MascotasAPI = {
