@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import {
   Alert,
   Button,
-  ButtonBase,
+  Collapse,
   FormControl,
   FormControlLabel,
   FormLabel,
+  IconButton,
   InputLabel,
   MenuItem,
   Radio,
-  radioClasses,
   RadioGroup,
   Select,
   TextField,
@@ -20,9 +20,11 @@ import { GenericSerializer } from "../../api/generic.serializer";
 import { MascotasAPI } from "../../api/mascotas.api";
 import { RazasAPI } from "../../api/razas.api";
 import { Loading } from "../loading/loading.component";
-import { SkipNextOutlined } from "@mui/icons-material";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import CloseIcon from "@mui/icons-material/Close";
+import { GoBack } from "../go-back/go-back.component";
 
-export const FormularioAgregarMascotas = () => {
+export const FormularioMascota = (props: any) => {
   const [name, setName] = useState("");
   const [size, setSize] = useState("chico");
   const [specie, setSpecie] = useState("perro");
@@ -30,11 +32,12 @@ export const FormularioAgregarMascotas = () => {
   const [razas, setRazas] = useState([]);
   const [allRazas, setAllRazas] = useState([]);
   const [hair, setHair] = useState("corto");
-  const [vaccinated, setVaccinated] = useState(0);
+  const [vaccinated, setVaccinated] = useState(false);
   const [edad, setEdad] = useState(0);
   const [sexo, setSexo] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(true);
   const history = useHistory();
   const handleGoList = () => {
     history.push("/pets-list");
@@ -67,6 +70,8 @@ export const FormularioAgregarMascotas = () => {
     setRazas(filteredRaces);
     setLoading(false);
   };
+
+  // -----------------------------------INICIO FUNCION IMAGEN ---------------------
 
   const handleNameChange = (event: any) => {
     setName(event.target.value);
@@ -124,12 +129,13 @@ export const FormularioAgregarMascotas = () => {
       {loading && <Loading />}
       {!loading && (
         <div className="container">
-          <div className="row">
-            <div className="col-12 mb-5">
+          <div className="row mt-3">
+            <div className="col-md-12">
+              <GoBack />
               <h1 className="text-center">Carga de nueva mascota</h1>
             </div>
           </div>
-          <div className="col-md-9 offset-md-3">
+          <div className="col-md-8 offset-md-4 mt-4">
             <div className="form-group row ">
               <div className="col-6">
                 <TextField
@@ -142,7 +148,7 @@ export const FormularioAgregarMascotas = () => {
               </div>
             </div>
             <div className="form-group row mt-4">
-              <div className="col-10">
+              <div className="col-3">
                 <FormControl component="fieldset">
                   <FormLabel component="legend">Especie</FormLabel>
                   <RadioGroup
@@ -161,6 +167,31 @@ export const FormularioAgregarMascotas = () => {
                       value="gato"
                       control={<Radio size="small" />}
                       label="Gato"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </div>
+
+              {/* Sexo */}
+
+              <div className="col-3">
+                <FormControl component="fieldset">
+                  <FormLabel component="legend">Sexo</FormLabel>
+                  <RadioGroup
+                    row
+                    aria-label="Sexo"
+                    name="cboSexo"
+                    onChange={handleSexoChange}
+                  >
+                    <FormControlLabel
+                      value={false}
+                      control={<Radio size="small" />}
+                      label="Macho"
+                    />
+                    <FormControlLabel
+                      value={true}
+                      control={<Radio size="small" />}
+                      label="Hembra"
                     />
                   </RadioGroup>
                 </FormControl>
@@ -267,7 +298,7 @@ export const FormularioAgregarMascotas = () => {
             {/* Tamaño */}
 
             <div className="form-group row mt-3">
-              <div className="col-10">
+              <div className="col-6">
                 <FormControl component="fieldset" sx={{ mt: 3 }}>
                   <FormLabel component="legend">Tamaño</FormLabel>
                   <RadioGroup
@@ -294,32 +325,56 @@ export const FormularioAgregarMascotas = () => {
                   </RadioGroup>
                 </FormControl>
               </div>
-            </div>
-            {/* Boton */}
-            <div className="form-group row mt-5">
-              <div className="col-6">
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={handleOnSave}
-                  fullWidth
-                >
-                  Crear Mascota
-                </Button>
-              </div>
-              <div className="row">
-                {showSuccessMessage && (
-                  <>
-                    <Alert variant="filled" severity="success">
-                      Mascota Creada
-                    </Alert>
-                    <div>
-                      <button onClick={handleGoList}>
-                        --- Ir hacia listado de mascotas ---
-                      </button>
-                    </div>
-                  </>
-                )}
+              <div className="col-6"></div>
+
+              {/* Boton */}
+
+              <div className="form-group row mt-5">
+                <div className="col-6">
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleOnSave}
+                    fullWidth
+                  >
+                    Crear Mascota
+                  </Button>
+                </div>
+                <div className="row">
+                  {showSuccessMessage && (
+                    <>
+                      <Collapse in={open}>
+                        <Alert
+                          action={
+                            <IconButton
+                              aria-label="close"
+                              color="inherit"
+                              size="small"
+                              onClick={() => {
+                                setOpen(false);
+                              }}
+                            >
+                              <CloseIcon fontSize="inherit" />
+                            </IconButton>
+                          }
+                          sx={{ mb: 2 }}
+                        >
+                          ¡ Mascota agregada con éxito !
+                        </Alert>
+                      </Collapse>
+
+                      <div>
+                        <Button
+                          variant="contained"
+                          endIcon={<ArrowForwardIcon />}
+                          onClick={handleGoList}
+                        >
+                          Ir hacia listado de Mascotas
+                        </Button>
+                      </div>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           </div>

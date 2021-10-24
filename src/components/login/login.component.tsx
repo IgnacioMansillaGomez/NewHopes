@@ -18,6 +18,7 @@ import { useHistory } from "react-router-dom";
 
 import { SessionContext } from "../../contexts/session-manager.context";
 import { Header } from "../header/header.component";
+import { ModalAdopcion } from "../modal-adopcion/modal-adopcion.component";
 
 export const Login: React.FC = (props) => {
   const theme = createTheme();
@@ -32,7 +33,7 @@ export const Login: React.FC = (props) => {
       sessionContext
         .ingresoUsuario(email, password)
         .then(() => {
-          history.push("/home");
+          history.push("/");
         })
 
         .catch((error) => {
@@ -78,6 +79,8 @@ export const Login: React.FC = (props) => {
             autoComplete="email"
             autoFocus
             onChange={(e) => setEmail(e.target.value)}
+            variant="standard"
+            sx={{ mt: 3 }}
           />
           <TextField
             margin="normal"
@@ -89,6 +92,8 @@ export const Login: React.FC = (props) => {
             id="password"
             autoComplete="current-password"
             onChange={(e) => setPassword(e.target.value)}
+            variant="standard"
+            sx={{ mt: 3 }}
           />
           <Button
             type="button"
@@ -101,7 +106,7 @@ export const Login: React.FC = (props) => {
           </Button>
           {mensajeError ? <div>{mensajeError}</div> : <span></span>}
           <Grid container>
-            <Grid item>
+            <Grid item className="mt-3">
               <Link to="/register">No tienes cuenta? Registrate aqui!</Link>
             </Grid>
           </Grid>

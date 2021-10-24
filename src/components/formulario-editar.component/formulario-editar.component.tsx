@@ -3,9 +3,11 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { RazasAPI } from "../../api/razas.api";
 import { GenericSerializer } from "../../api/generic.serializer";
+import { Raza, useRaza } from "../../hooks/use-raza.hook";
 
 export const FormularioEditar = (props: any) => {
   const [pet, setPet] = useState(props.pet);
+  const raza = useRaza(pet.id_raza);
 
   return (
     <div className="container">
@@ -31,7 +33,7 @@ export const FormularioEditar = (props: any) => {
             <TextField
               id="standard-read-only-input"
               label="Especie"
-              defaultValue={pet.specie ? "Perro" : "Gato"}
+              value={pet.especie}
               InputProps={{
                 readOnly: true,
               }}
@@ -47,7 +49,7 @@ export const FormularioEditar = (props: any) => {
             <TextField
               id="standard-read-only-input"
               label="Vacunas"
-              defaultValue={pet.vaccinated ? "Vacunado" : "No Vacunado"}
+              defaultValue={pet.vacunas ? "Vacunado" : "No Vacunado"}
               InputProps={{
                 readOnly: true,
               }}
@@ -60,11 +62,12 @@ export const FormularioEditar = (props: any) => {
           <div className="col-lg-6">
             <TextField
               id="standard-read-only-input"
-              label="Raza"
-              defaultValue={pet.id_raza}
+              defaultValue=""
+              value={raza?.nombre_raza}
               InputProps={{
                 readOnly: true,
               }}
+              label="Raza"
               variant="standard"
             />
           </div>
@@ -117,10 +120,9 @@ export const FormularioEditar = (props: any) => {
           <div className="col-lg-6">
             <TextField
               id="standard-read-only-input"
-              label="Fecha Publicación"
-              defaultValue={
-                pet.fecha_publicacion ? pet.fecha_publicacion : "Desconocida"
-              }
+              label="Sexo"
+              defaultValue={pet.sexo ? "Macho" : "Hembra"}
+              // ? pet.fecha_publicacion : "Desconocida"
               InputProps={{
                 readOnly: true,
               }}

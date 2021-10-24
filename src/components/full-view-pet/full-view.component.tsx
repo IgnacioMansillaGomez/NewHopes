@@ -11,14 +11,16 @@ import { Loading } from "../loading/loading.component";
 import { Header } from "../header/header.component";
 import { DEFAULT_PET_IMAGE } from "../../constants/constants";
 import { RazasAPI } from "../../api/razas.api";
-import { FormularioAgregarMascotas } from "../formulario-mascotas/formulario-mascotas.component";
+import { FormularioMascota } from "../formulario-mascota/formulario-mascota.component";
 import { FormularioEditar } from "../formulario-editar.component/formulario-editar.component";
+import { useRaza } from "../../hooks/use-raza.hook";
+import { FormularioEditarDos } from "../form/formularioEDITAR";
 
 export const FullViewPet = () => {
   const { id }: any = useParams();
   const [pet, setPet] = useState<any>();
-  const [raza, setRaza] = useState<any>({ nombre_raza: "" });
   const history = useHistory();
+
   useEffect(() => {
     MascotasAPI.getPet(id).then((respons) => {
       if (respons) {
@@ -27,15 +29,6 @@ export const FullViewPet = () => {
       }
     });
   }, []);
-
-  useEffect(() => {
-    if (pet) {
-      RazasAPI.getRace(pet.id_raza).then((response) => {
-        const raza = GenericSerializer.serialize(response);
-        setRaza(raza);
-      });
-    }
-  }, [pet]);
 
   const handleDeletePet = () => {
     if (window.confirm("¿Esta seguro de eliminar esta mascota?")) {
@@ -58,19 +51,28 @@ export const FullViewPet = () => {
               ></img>
             </div>
             <div className="col-6">
-              <FormularioEditar pet={pet} />
+              <FormularioEditarDos pet={pet} />
             </div>
             <div className="col-1">
               <Button
                 variant="outlined"
                 startIcon={<DeleteIcon />}
                 onClick={handleDeletePet}
+                sx={{
+                  color: "red",
+                }}
               >
                 Eliminar
               </Button>
             </div>
             <div className="col-1">
-              <Button variant="outlined" startIcon={<DeleteIcon />}>
+              <Button
+                variant="outlined"
+                startIcon={<DeleteIcon />}
+                sx={{
+                  color: "#e6be0b",
+                }}
+              >
                 Editar
               </Button>
             </div>

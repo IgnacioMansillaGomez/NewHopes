@@ -17,25 +17,21 @@ import {
   Typography,
 } from "@mui/material";
 import { color } from "@mui/system";
+import { UserAvatar } from "../user-avatar/user-avatar.component";
 
 export const Header = () => {
   const session = useContext(SessionContext);
   const history = useHistory();
-  const logout = () => {
-    session && session.logout && session.logout();
-    history.push("/login");
-  };
 
   return (
     <Navbar bg="dark" variant="dark">
       <Container>
-        <Link to="/home" className="header__brand-link">
+        <Link to="/" className="header__brand-link">
           <Navbar.Brand>New Hopes</Navbar.Brand>
         </Link>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
-            {session?.session.uid && <span>{session?.session.email}</span>}
             {!session?.session.uid && (
               <Link to="/login">
                 <Button
@@ -50,17 +46,7 @@ export const Header = () => {
             )}
           </Navbar.Text>
         </Navbar.Collapse>
-        {session?.session.email && (
-          <Button
-            variant="contained"
-            size="small"
-            onClick={logout}
-            sx={{ m: 0.5, color: "white" }}
-            endIcon={<LogoutIcon color="action" />}
-          >
-            Cerrar Sesion
-          </Button>
-        )}
+        {session?.session.email && <UserAvatar />}
       </Container>
     </Navbar>
   );

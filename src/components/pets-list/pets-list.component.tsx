@@ -35,7 +35,6 @@ export const PetsList = () => {
       {loading && <Loading />}
       <div className="album py-5 bg-light">
         <Container>
-          <GoBack />
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {petsList.length > 0 && (
               <>
