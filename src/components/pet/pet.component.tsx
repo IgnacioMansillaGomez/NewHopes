@@ -5,12 +5,14 @@ import { FormularioMascota } from "../formulario-mascota/formulario-mascota.comp
 import { Header } from "../header/header.component";
 import { MascotasAPI } from "../../api/mascotas.api";
 import { GenericSerializer } from "../../api/generic.serializer";
+import { Loading } from "../loading/loading.component";
 
 export const Pet = () => {
   const { id }: any = useParams();
   const [pet, setPet] = useState<any>();
   const history = useHistory();
   const sessionContext = useContext(SessionContext);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const sesion = sessionContext?.session;
@@ -27,15 +29,19 @@ export const Pet = () => {
         if (respons) {
           const pet = GenericSerializer.serialize(respons);
           setPet(pet);
+          setLoading(false);
         }
       });
+    } else {
+      setLoading(false);
     }
   }, [id]);
 
   return (
     <>
       <Header />
-      <FormularioMascota pet={pet} />
+      {!loading && <FormularioMascota pet={pet} />}
+      {loading && <Loading />}
     </>
   );
 };

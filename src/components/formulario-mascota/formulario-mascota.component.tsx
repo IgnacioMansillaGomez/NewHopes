@@ -23,25 +23,30 @@ import { Loading } from "../loading/loading.component";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CloseIcon from "@mui/icons-material/Close";
 import { GoBack } from "../go-back/go-back.component";
+import "./formulario-mascota.style.css";
 
 export const FormularioMascota = (props: any) => {
-  const [name, setName] = useState("");
-  const [size, setSize] = useState("chico");
-  const [specie, setSpecie] = useState("perro");
-  const [razaId, setRazaId] = useState();
+  const { pet } = props;
+  const [petId, setPetId] = useState(pet ? pet.id : undefined);
+  const [name, setName] = useState(pet ? pet.nombre : "");
+  const [size, setSize] = useState(pet ? pet.tamano : "chico");
+  const [specie, setSpecie] = useState(pet ? pet.especie : "perro");
+  const [razaId, setRazaId] = useState(pet ? pet.id_raza : undefined);
   const [razas, setRazas] = useState([]);
   const [allRazas, setAllRazas] = useState([]);
-  const [hair, setHair] = useState("corto");
-  const [vaccinated, setVaccinated] = useState(false);
-  const [edad, setEdad] = useState(0);
-  const [sexo, setSexo] = useState(false);
+  const [hair, setHair] = useState(pet ? pet.pelaje : "Corto");
+  const [vaccinated, setVaccinated] = useState(
+    pet && pet.vacunas === 1 ? true : false
+  );
+  const [edad, setEdad] = useState(pet ? pet.edad_anos : 0);
+  const [sexo, setSexo] = useState(pet ? pet.sexo === "false" : false);
+  const [colorPelaje, setColorPelaje] = useState(pet ? pet.color : "Blanco");
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(true);
+  const [error, setError] = useState("");
+
   const history = useHistory();
-  const handleGoList = () => {
-    history.push("/pets-list");
-  };
 
   useEffect(() => {
     setLoading(true);
@@ -51,6 +56,10 @@ export const FormularioMascota = (props: any) => {
   useEffect(() => {
     filterRaces(specie);
   }, [allRazas]);
+
+  const handleGoList = () => {
+    history.push("/pets-list");
+  };
 
   const getRaces = () => {
     RazasAPI.getAllRaces().then((response: any) => {
@@ -70,8 +79,6 @@ export const FormularioMascota = (props: any) => {
     setRazas(filteredRaces);
     setLoading(false);
   };
-
-  // -----------------------------------INICIO FUNCION IMAGEN ---------------------
 
   const handleNameChange = (event: any) => {
     setName(event.target.value);
@@ -106,6 +113,23 @@ export const FormularioMascota = (props: any) => {
     setSexo(event.target.value);
   };
 
+  const handleColorPelaje = (event: any) => {
+    setColorPelaje(event.target.value);
+  };
+
+  const validar = () => {
+    if (name.trim() === "") {
+      setError("Ingrese un nombre");
+      return;
+    }
+    setError("");
+  };
+
+  const handleGoValidar = () => {
+    validar();
+    handleOnSave();
+  };
+
   const handleOnSave = () => {
     const pet = {
       nombre: name,
@@ -117,11 +141,17 @@ export const FormularioMascota = (props: any) => {
       pelaje: hair,
       edad_anos: edad,
       sexo: sexo,
+      color: colorPelaje,
     };
-    MascotasAPI.createPet(pet).then((res) => {
-      console.log(res);
-      setShowSuccessMessage(true);
-    });
+    if (petId) {
+      MascotasAPI.updatePet(petId, pet).then((res) => {
+        setShowSuccessMessage(true);
+      });
+    } else {
+      MascotasAPI.createPet(pet).then((res) => {
+        setShowSuccessMessage(true);
+      });
+    }
   };
 
   return (
@@ -144,6 +174,7 @@ export const FormularioMascota = (props: any) => {
                   label="Nombre Mascota"
                   variant="standard"
                   onChange={handleNameChange}
+                  value={name}
                 />
               </div>
             </div>
@@ -182,6 +213,7 @@ export const FormularioMascota = (props: any) => {
                     aria-label="Sexo"
                     name="cboSexo"
                     onChange={handleSexoChange}
+                    defaultValue={sexo}
                   >
                     <FormControlLabel
                       value={true}
@@ -209,9 +241,9 @@ export const FormularioMascota = (props: any) => {
                   <Select
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
-                    value={vaccinated}
                     onChange={handleVaccinatedChange}
                     label="Vacunas"
+                    value={vaccinated ? 1 : 0}
                   >
                     <MenuItem value={0}>Sin vacunas</MenuItem>
                     <MenuItem value={1}>Con vacunas</MenuItem>
@@ -231,6 +263,7 @@ export const FormularioMascota = (props: any) => {
                     id="demo-simple-select-standard"
                     onChange={handleOnChangeRace}
                     label="Raza"
+                    value={razaId}
                   >
                     {razas.map((item: any, idx) => {
                       return (
@@ -250,13 +283,14 @@ export const FormularioMascota = (props: any) => {
               <div className="col-3">
                 <FormControl variant="standard" sx={{ mt: 3, minWidth: 190 }}>
                   <InputLabel id="demo-simple-select-standard-label">
-                    Pelaje
+                    Largo Pelaje
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
                     onChange={handleHairChange}
                     label="Pelaje"
+                    value={hair}
                   >
                     <MenuItem value="Corto">Corto</MenuItem>
                     <MenuItem value="Medio">Medio</MenuItem>
@@ -275,9 +309,9 @@ export const FormularioMascota = (props: any) => {
                   <Select
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
-                    value={edad}
                     onChange={handleAgeChange}
                     label="Edad"
+                    value={edad}
                   >
                     <MenuItem value={0}>Menos de 1 año</MenuItem>
                     <MenuItem value={1}>1 año</MenuItem>
@@ -298,7 +332,7 @@ export const FormularioMascota = (props: any) => {
             {/* Tamaño */}
 
             <div className="form-group row mt-3">
-              <div className="col-6">
+              <div className="col-3">
                 <FormControl component="fieldset" sx={{ mt: 3 }}>
                   <FormLabel component="legend">Tamaño</FormLabel>
                   <RadioGroup
@@ -306,6 +340,7 @@ export const FormularioMascota = (props: any) => {
                     aria-label="Tamaño"
                     name="cboTamano"
                     onChange={handleSizesChange}
+                    value={size}
                   >
                     <FormControlLabel
                       value="chico"
@@ -325,7 +360,29 @@ export const FormularioMascota = (props: any) => {
                   </RadioGroup>
                 </FormControl>
               </div>
-              <div className="col-6"></div>
+
+              {/* COLOR PELAJE */}
+
+              <div className="col-3">
+                <FormControl variant="standard" sx={{ mt: 3, minWidth: 190 }}>
+                  <InputLabel id="demo-simple-select-standard-label">
+                    Color Pelaje
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-standard-label"
+                    id="demo-simple-select-standard"
+                    onChange={handleColorPelaje}
+                    label="Color Pelaje"
+                    value={colorPelaje}
+                  >
+                    <MenuItem value="Blanco">Blanco</MenuItem>
+                    <MenuItem value="Medio">Gris</MenuItem>
+                    <MenuItem value="Marrón">Chocolate</MenuItem>
+                    <MenuItem value="Negro">Negro</MenuItem>
+                    <MenuItem value="Dorado">Dorado</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
 
               {/* Boton */}
 
@@ -334,14 +391,14 @@ export const FormularioMascota = (props: any) => {
                   <Button
                     variant="contained"
                     color="secondary"
-                    onClick={handleOnSave}
+                    onClick={handleGoValidar}
                     fullWidth
                   >
-                    Crear Mascota
+                    {petId ? "Editar" : "Crear"} Mascota
                   </Button>
                 </div>
                 <div className="row">
-                  {showSuccessMessage && (
+                  {showSuccessMessage ? (
                     <>
                       <Collapse in={open}>
                         <Alert
@@ -359,7 +416,7 @@ export const FormularioMascota = (props: any) => {
                           }
                           sx={{ mb: 2 }}
                         >
-                          ¡ Mascota agregada con éxito !
+                          ¡ Mascota {petId ? "Editada" : "Agregada"} con éxito !
                         </Alert>
                       </Collapse>
 
@@ -373,6 +430,10 @@ export const FormularioMascota = (props: any) => {
                         </Button>
                       </div>
                     </>
+                  ) : (
+                    <div className="customer-form-error text-center">
+                      {error}
+                    </div>
                   )}
                 </div>
               </div>

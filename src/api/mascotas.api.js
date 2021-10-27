@@ -22,9 +22,14 @@ const deletePet = (id) => {
   return itemCollection.doc(id).delete();
 };
 
+const updatePet = (id, pet) => {
+  return itemCollection.doc(id).update(pet);
+};
+
 export const MascotasAPI = {
   createPet,
   getAllPets,
   getPet,
   deletePet,
+  updatePet,
 };
