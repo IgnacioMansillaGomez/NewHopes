@@ -8,11 +8,13 @@ export const AdminReports = () => {
   const sessionContext = useContext(SessionContext);
 
   useEffect(() => {
-    const sesion = sessionContext?.session;
-    if (sesion?.uid === "") {
-      history.push("/login");
-    } else if (!sessionContext?.isAdmin()) {
-      history.push("/not-allowed");
+    if (sessionContext && sessionContext.session) {
+      const sesion = sessionContext?.session;
+      if (sesion?.uid === "") {
+        history.push("/login");
+      } else if (!sessionContext?.isAdmin()) {
+        history.push("/not-allowed");
+      }
     }
   }, [sessionContext]);
 

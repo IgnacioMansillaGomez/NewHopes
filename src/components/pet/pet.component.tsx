@@ -15,11 +15,13 @@ export const Pet = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const sesion = sessionContext?.session;
-    if (sesion?.uid === "") {
-      history.push("/login");
-    } else if (!sessionContext?.isAdmin()) {
-      history.push("/not-allowed");
+    if (sessionContext && sessionContext.session) {
+      const sesion = sessionContext?.session;
+      if (sesion?.uid === "") {
+        history.push("/login");
+      } else if (!sessionContext?.isAdmin()) {
+        history.push("/not-allowed");
+      }
     }
   }, [sessionContext]);
 

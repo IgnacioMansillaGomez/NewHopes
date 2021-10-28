@@ -13,7 +13,7 @@ type SessionType = {
 
 //Esto es key y tipo porque es un type de typescript
 type SessionContextType = {
-  session: SessionType;
+  session: SessionType | undefined;
   ingresoUsuario: (email: string, password: string) => Promise<any>;
   logout?: () => void;
   clear?: () => void;
@@ -26,7 +26,7 @@ export const SessionContext = React.createContext<
 >(undefined);
 
 export const SessionProvider: FunctionComponent = (props) => {
-  const [session, setSession] = useState<SessionType>({ uid: "", email: "" });
+  const [session, setSession] = useState<SessionType | undefined>(undefined);
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -34,6 +34,11 @@ export const SessionProvider: FunctionComponent = (props) => {
         setSession({
           uid: user.uid,
           email: user.email,
+        });
+      } else {
+        setSession({
+          uid: "",
+          email: "",
         });
       }
     });
@@ -52,7 +57,7 @@ export const SessionProvider: FunctionComponent = (props) => {
   // clear() { limpia session }
 
   const isAdmin = () => {
-    return session.uid === ADMIN_USER;
+    return session?.uid === ADMIN_USER;
   };
 
   const value = {

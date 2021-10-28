@@ -35,7 +35,7 @@ export const Header = () => {
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
             <Navbar.Text>
-              {!session?.session.uid && (
+              {!session?.session?.uid && (
                 <Link to="/login">
                   <Button
                     variant="contained"
@@ -56,7 +56,7 @@ export const Header = () => {
               )}
             </Navbar.Text>
           </Navbar.Collapse>
-          {session?.session.email && <UserAvatar />}
+          {session?.session?.email && <UserAvatar />}
         </Container>
       </Navbar>
     </div>
