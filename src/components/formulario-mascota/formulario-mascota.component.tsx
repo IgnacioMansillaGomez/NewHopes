@@ -7,6 +7,7 @@ import {
   FormControlLabel,
   FormLabel,
   IconButton,
+  Input,
   InputLabel,
   MenuItem,
   Radio,
@@ -14,7 +15,7 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-
+import LoadingButton from "@mui/lab/LoadingButton";
 import { useHistory } from "react-router-dom";
 import { GenericSerializer } from "../../api/generic.serializer";
 import { MascotasAPI } from "../../api/mascotas.api";
@@ -22,8 +23,10 @@ import { RazasAPI } from "../../api/razas.api";
 import { Loading } from "../loading/loading.component";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CloseIcon from "@mui/icons-material/Close";
+import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import { GoBack } from "../go-back/go-back.component";
 import "./formulario-mascota.style.css";
+import { ImagesAPI } from "../../api/images.api";
 
 export const FormularioMascota = (props: any) => {
   const { pet } = props;
@@ -41,6 +44,8 @@ export const FormularioMascota = (props: any) => {
   const [edad, setEdad] = useState(pet ? pet.edad_anos : 0);
   const [sexo, setSexo] = useState(pet ? pet.sexo === "false" : false);
   const [colorPelaje, setColorPelaje] = useState(pet ? pet.color : "Blanco");
+  const [imageUrl, setImageUrl] = useState("");
+  const [loadingImage, setLoadingImage] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(true);
@@ -117,17 +122,27 @@ export const FormularioMascota = (props: any) => {
     setColorPelaje(event.target.value);
   };
 
-  const validar = () => {
-    if (name.trim() === "") {
-      setError("Ingrese un nombre");
-      return;
-    }
-    setError("");
+  const handleFile = (event: any) => {
+    setLoadingImage(true);
+    const fileName = Date.now().toString();
+    ImagesAPI.uploadImage(fileName, event.target.files[0]).then(
+      (response: any) => {
+        setLoadingImage(false);
+        setImageUrl(response);
+      }
+    );
   };
 
-  const handleGoValidar = () => {
-    validar();
-    handleOnSave();
+  const validar = (e: any) => {
+    e.preventDefault();
+    if (name.trim() === "") {
+      setError("Ingrese un nombre");
+
+      return;
+    } else {
+      handleOnSave();
+      setError("");
+    }
   };
 
   const handleOnSave = () => {
@@ -142,6 +157,7 @@ export const FormularioMascota = (props: any) => {
       edad_anos: edad,
       sexo: sexo,
       color: colorPelaje,
+      img_url: imageUrl,
     };
     if (petId) {
       MascotasAPI.updatePet(petId, pet).then((res) => {
@@ -384,6 +400,33 @@ export const FormularioMascota = (props: any) => {
                 </FormControl>
               </div>
 
+              {/* Carga Imagen */}
+
+              <div className="form-group row mt-3">
+                <div className="col-6">
+                  <label htmlFor="contained-button-file">
+                    <input
+                      accept="image/jpeg"
+                      id="contained-button-file"
+                      type="file"
+                      style={{
+                        display: "none",
+                      }}
+                      onChange={(event) => handleFile(event)}
+                    />
+                    <LoadingButton
+                      loading={loadingImage}
+                      loadingPosition="end"
+                      startIcon={<PhotoCameraIcon />}
+                      variant="contained"
+                      component="span"
+                      fullWidth
+                    >
+                      Subir Imagen
+                    </LoadingButton>
+                  </label>
+                </div>
+              </div>
               {/* Boton */}
 
               <div className="form-group row mt-5">
@@ -391,10 +434,11 @@ export const FormularioMascota = (props: any) => {
                   <Button
                     variant="contained"
                     color="secondary"
-                    onClick={handleGoValidar}
+                    onClick={validar}
                     fullWidth
+                    disabled={loadingImage}
                   >
-                    {petId ? "Editar" : "Crear"} Mascota
+                    {petId ? "Guardar" : "Crear"} Mascota
                   </Button>
                 </div>
                 <div className="row">
@@ -431,9 +475,7 @@ export const FormularioMascota = (props: any) => {
                       </div>
                     </>
                   ) : (
-                    <div className="customer-form-error text-center">
-                      {error}
-                    </div>
+                    <div className="pet-form-error">{error}</div>
                   )}
                 </div>
               </div>

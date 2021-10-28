@@ -1,5 +1,6 @@
-.customer-form-error {
+.pet-form-error {
   color: red;
   font-weight: bold;
   padding-top: 10px;
+  text-align: left;
 }

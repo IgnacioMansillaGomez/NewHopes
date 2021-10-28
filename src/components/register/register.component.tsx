@@ -115,6 +115,7 @@ export const Register = () => {
             margin="normal"
             required
             fullWidth
+            variant="standard"
             type="email"
             id="email"
             label="Correo electrónico"
@@ -127,6 +128,7 @@ export const Register = () => {
             margin="normal"
             required
             fullWidth
+            variant="standard"
             name="password"
             label="Contraseña"
             type="password"

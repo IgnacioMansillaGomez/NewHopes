@@ -9,7 +9,7 @@ export const CarouselPet = (props: any) => {
     <Carousel className="p-0 wh-100 vh-5 ">
       {pets.map((pet: any) => {
         return (
-          <Carousel.Item interval={4000}>
+          <Carousel.Item interval={2000}>
             <div
               style={{
                 backgroundImage: `url('${
@@ -22,7 +22,7 @@ export const CarouselPet = (props: any) => {
             ></div>
             <Carousel.Caption>
               <h3>{pet.nombre}</h3>
-              <p>{pet.sexo}</p>
+              <p>{pet.tamano}</p>
             </Carousel.Caption>
           </Carousel.Item>
         );

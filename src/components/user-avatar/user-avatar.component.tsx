@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Logout, PersonAdd, Settings } from "@mui/icons-material";
+import { Logout } from "@mui/icons-material";
 import {
   Avatar,
   Box,
