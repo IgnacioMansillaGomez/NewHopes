@@ -89,7 +89,6 @@ export const AdminPetList = () => {
                             sx={{
                               color: "#eb9234",
                             }}
-                            j
                             onClick={() => handleOnEditPet(pet.id)}
                           />
                           <DeletePetButton
