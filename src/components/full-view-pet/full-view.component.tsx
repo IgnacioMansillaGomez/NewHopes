@@ -11,13 +11,13 @@ import { MessageModal } from "../message-modal/message-moda.component";
 import EditIcon from "@mui/icons-material/Edit";
 import { FullViewInformacion } from "../full-view-informacion/full-view-informacion.component";
 import { SessionContext } from "../../contexts/session-manager.context";
+import { DeletePetButton } from "../delete-pet-button/delete-pet-button.component";
 
 export const FullViewPet = () => {
   const { id }: any = useParams();
   const [pet, setPet] = useState<any>();
   const history = useHistory();
   const sessionContext = useContext(SessionContext);
-  const [deletePetMessage, setDeletePetMessage] = useState(false);
 
   useEffect(() => {
     MascotasAPI.getPet(id).then((respons) => {
@@ -28,22 +28,12 @@ export const FullViewPet = () => {
     });
   }, []);
 
-  const handleDeletePet = () => {
-    setDeletePetMessage(true);
-  };
-
   const handleOnEdit = () => {
     history.push(`/edit-pet/${pet.id}`);
   };
 
-  const closeDeletePetMessage = () => {
-    setDeletePetMessage(false);
-  };
-
-  const deletePet = () => {
-    MascotasAPI.deletePet(id).then(() => {
-      history.push("/pets-list");
-    });
+  const handleOnDeletePet = () => {
+    history.push("/pets-list");
   };
 
   return (
@@ -63,13 +53,6 @@ export const FullViewPet = () => {
               <FullViewInformacion pet={pet} />
             </div>
           </div>
-          <MessageModal
-            show={deletePetMessage}
-            title="Eliminar Mascota"
-            text="¿Esta seguro de querer borrar esta mascota?"
-            handleOnClose={closeDeletePetMessage}
-            handleOnSuccess={deletePet}
-          />
         </div>
       )}
       {!pet && <Loading />}
@@ -77,16 +60,11 @@ export const FullViewPet = () => {
         <div className="container">
           <div className="row">
             <div className="col-2">
-              <Button
-                variant="outlined"
-                startIcon={<DeleteIcon />}
-                onClick={handleDeletePet}
-                sx={{
-                  color: "red",
-                }}
-              >
-                Eliminar
-              </Button>
+              <DeletePetButton
+                pet={pet}
+                onDeleteSuccess={handleOnDeletePet}
+                size="big"
+              />
             </div>
             <div className="col-2">
               <Button

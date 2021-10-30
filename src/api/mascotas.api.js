@@ -26,10 +26,16 @@ const updatePet = (id, pet) => {
   return itemCollection.doc(id).update(pet);
 };
 
+const getAllNotAdoptedPets = () => {
+  const filter = itemCollection.where("adoptado", "==", "false");
+  return filter.get();
+};
+
 export const MascotasAPI = {
   createPet,
   getAllPets,
   getPet,
   deletePet,
   updatePet,
+  getAllNotAdoptedPets,
 };

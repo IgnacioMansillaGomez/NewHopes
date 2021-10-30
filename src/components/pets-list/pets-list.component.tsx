@@ -19,7 +19,7 @@ export const PetsList = () => {
 
   const getPets = () => {
     setLoading(true);
-    MascotasAPI.getAllPets().then((response: any) => {
+    MascotasAPI.getAllNotAdoptedPets().then((response: any) => {
       if (response.size !== 0) {
         const pets = GenericSerializer.serializeAll(response);
         setPetsList(pets);

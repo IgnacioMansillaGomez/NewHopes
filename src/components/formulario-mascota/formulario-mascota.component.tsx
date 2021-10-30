@@ -33,7 +33,7 @@ export const FormularioMascota = (props: any) => {
   const [petId, setPetId] = useState(pet ? pet.id : undefined);
   const [name, setName] = useState(pet ? pet.nombre : "");
   const [size, setSize] = useState(pet ? pet.tamano : "chico");
-  const [specie, setSpecie] = useState(pet ? pet.especie : "perro");
+  const [specie, setSpecie] = useState(pet ? pet.especie : "Perro");
   const [razaId, setRazaId] = useState(pet ? pet.id_raza : undefined);
   const [razas, setRazas] = useState([]);
   const [allRazas, setAllRazas] = useState([]);
@@ -79,7 +79,7 @@ export const FormularioMascota = (props: any) => {
 
   const filterRaces = (raceFilter: string) => {
     const filteredRaces = allRazas.filter((element: any) => {
-      return element.tipo === raceFilter;
+      return element.tipo === raceFilter.toLowerCase();
     });
     setRazas(filteredRaces);
     setLoading(false);
@@ -158,6 +158,7 @@ export const FormularioMascota = (props: any) => {
       sexo: sexo,
       color: colorPelaje,
       img_url: imageUrl,
+      adoptado: "false",
     };
     if (petId) {
       MascotasAPI.updatePet(petId, pet).then((res) => {
@@ -178,7 +179,9 @@ export const FormularioMascota = (props: any) => {
           <div className="row mt-3">
             <div className="col-md-12">
               <GoBack />
-              <h1 className="text-center">Carga de nueva mascota</h1>
+              <h1 className="text-center">
+                {petId ? "Editar" : "Cargar"} mascota
+              </h1>
             </div>
           </div>
           <div className="col-md-8 offset-md-4 mt-4">
@@ -206,12 +209,12 @@ export const FormularioMascota = (props: any) => {
                     defaultValue={specie}
                   >
                     <FormControlLabel
-                      value="perro"
+                      value="Perro"
                       control={<Radio size="small" />}
                       label="Perro"
                     />
                     <FormControlLabel
-                      value="gato"
+                      value="Gato"
                       control={<Radio size="small" />}
                       label="Gato"
                     />
