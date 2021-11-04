@@ -177,14 +177,14 @@ export const FormularioMascota = (props: any) => {
       {!loading && (
         <div className="container">
           <div className="row mt-3">
-            <div className="col-md-12">
+            <div className="col-lg-12">
               <GoBack />
               <h1 className="text-center">
                 {petId ? "Editar" : "Cargar"} mascota
               </h1>
             </div>
           </div>
-          <div className="col-md-8 offset-md-4 mt-4">
+          <div className="col-lg-8 offset-lg-4 mt-4">
             <div className="form-group row ">
               <div className="col-6">
                 <TextField
@@ -348,10 +348,39 @@ export const FormularioMascota = (props: any) => {
               </div>
             </div>
 
-            {/* Tamaño */}
+            {/* COLOR PELAJE */}
 
             <div className="form-group row mt-3">
-              <div className="col-3">
+              <div className="col-6">
+                <FormControl
+                  variant="standard"
+                  sx={{ mt: 3, minWidth: 190 }}
+                  fullWidth
+                >
+                  <InputLabel id="demo-simple-select-standard-label">
+                    Color Pelaje
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-standard-label"
+                    id="demo-simple-select-standard"
+                    onChange={handleColorPelaje}
+                    label="Color Pelaje"
+                    value={colorPelaje}
+                  >
+                    <MenuItem value="Blanco">Blanco</MenuItem>
+                    <MenuItem value="Medio">Gris</MenuItem>
+                    <MenuItem value="Marrón">Chocolate</MenuItem>
+                    <MenuItem value="Negro">Negro</MenuItem>
+                    <MenuItem value="Dorado">Dorado</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+            </div>
+
+            {/* Tamaño */}
+
+            <div className="form-group row mt-0">
+              <div className="col-6">
                 <FormControl component="fieldset" sx={{ mt: 3 }}>
                   <FormLabel component="legend">Tamaño</FormLabel>
                   <RadioGroup
@@ -376,37 +405,19 @@ export const FormularioMascota = (props: any) => {
                       control={<Radio size="small" />}
                       label="Grande"
                     />
+                    <FormControlLabel
+                      value="otro"
+                      control={<Radio size="small" />}
+                      label="Otro"
+                    />
                   </RadioGroup>
-                </FormControl>
-              </div>
-
-              {/* COLOR PELAJE */}
-
-              <div className="col-3">
-                <FormControl variant="standard" sx={{ mt: 3, minWidth: 190 }}>
-                  <InputLabel id="demo-simple-select-standard-label">
-                    Color Pelaje
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                    onChange={handleColorPelaje}
-                    label="Color Pelaje"
-                    value={colorPelaje}
-                  >
-                    <MenuItem value="Blanco">Blanco</MenuItem>
-                    <MenuItem value="Medio">Gris</MenuItem>
-                    <MenuItem value="Marrón">Chocolate</MenuItem>
-                    <MenuItem value="Negro">Negro</MenuItem>
-                    <MenuItem value="Dorado">Dorado</MenuItem>
-                  </Select>
                 </FormControl>
               </div>
 
               {/* Carga Imagen */}
 
               <div className="form-group row mt-3">
-                <div className="col-6">
+                <div className="col-lg-6">
                   <label htmlFor="contained-button-file">
                     <input
                       accept="image/jpeg"
@@ -423,16 +434,16 @@ export const FormularioMascota = (props: any) => {
                       startIcon={<PhotoCameraIcon />}
                       variant="contained"
                       component="span"
-                      fullWidth
                     >
                       Subir Imagen
                     </LoadingButton>
                   </label>
                 </div>
               </div>
+
               {/* Boton */}
 
-              <div className="form-group row mt-5">
+              <div className="form-group row mt-4">
                 <div className="col-6">
                   <Button
                     variant="contained"
@@ -472,6 +483,7 @@ export const FormularioMascota = (props: any) => {
                           variant="contained"
                           endIcon={<ArrowForwardIcon />}
                           onClick={handleGoList}
+                          fullWidth
                         >
                           Ir hacia listado de Mascotas
                         </Button>

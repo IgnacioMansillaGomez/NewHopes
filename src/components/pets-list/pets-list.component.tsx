@@ -9,6 +9,7 @@ import { PetCard } from "../pet-card/pet-card.component";
 import { DEFAULT_PET_IMAGE } from "../../constants/constants";
 import "./pet-list.style.css";
 import { CarouselPet } from "../carousel/carousel.component";
+import { Footer } from "../../footer/footer.component";
 export const PetsList = () => {
   const [petsList, setPetsList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -78,6 +79,7 @@ export const PetsList = () => {
           )}
         </div>
       </div>
+      <Footer />
     </div>
 
     // </div>

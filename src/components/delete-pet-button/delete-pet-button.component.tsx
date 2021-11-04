@@ -50,7 +50,7 @@ export const DeletePetButton = (props: any) => {
             onClick={handleDeletePet}
             loading={deleteLoading}
           >
-            {size !== "small" ? "Borrar" : ""}
+            {size !== "small" ? "Borrar" : "BORRAR"}
           </LoadingButton>
           <MessageModal
             show={deletePetMessage}

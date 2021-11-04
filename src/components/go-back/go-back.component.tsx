@@ -10,13 +10,13 @@ export const GoBack = () => {
   };
   return (
     <div className="row">
-      <div className="col-1">
+      <div className="col-2">
         <Button
           variant="contained"
           startIcon={<ArrowBackSharpIcon />}
           onClick={handleBack}
         >
-          Volver
+          Volver atrás
         </Button>
       </div>
     </div>

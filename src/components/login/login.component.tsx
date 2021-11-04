@@ -19,6 +19,7 @@ import { useHistory } from "react-router-dom";
 import { SessionContext } from "../../contexts/session-manager.context";
 import { Header } from "../header/header.component";
 import { ModalAdopcion } from "../modal-adopcion/modal-adopcion.component";
+import { Footer } from "../../footer/footer.component";
 
 export const Login: React.FC = (props) => {
   const theme = createTheme();
@@ -112,6 +113,7 @@ export const Login: React.FC = (props) => {
           </Grid>
         </Box>
       </Container>
+      <Footer />
     </ThemeProvider>
   );
 };

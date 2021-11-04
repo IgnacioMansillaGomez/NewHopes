@@ -1,3 +1,7 @@
+.formulario {
+  border: 2px solid #f2f2f2;
+}
+
 .pet-form-error {
   color: red;
   font-weight: bold;

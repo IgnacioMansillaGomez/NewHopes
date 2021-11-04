@@ -1,10 +1,14 @@
+import React, { useState } from "react";
 import { AccountCircle } from "@mui/icons-material";
 import {
+  Alert,
   Box,
   Button,
+  Collapse,
   FormControl,
   FormControlLabel,
   FormLabel,
+  IconButton,
   InputLabel,
   MenuItem,
   Radio,
@@ -13,13 +17,15 @@ import {
   TextField,
 } from "@mui/material";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
-import React, { useState } from "react";
+import "./formulario-adopcion.style.css";
 import MailIcon from "@mui/icons-material/Mail";
 import HomeIcon from "@mui/icons-material/Home";
+import CloseIcon from "@mui/icons-material/Close";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import PetsIcon from "@mui/icons-material/Pets";
 import WorkIcon from "@mui/icons-material/Work";
 import FaceIcon from "@mui/icons-material/Face";
+import HomeWorkIcon from "@mui/icons-material/HomeWork";
 import { Form } from "react-bootstrap";
 import SendIcon from "@mui/icons-material/Send";
 import { useParams } from "react-router-dom";
@@ -35,11 +41,14 @@ export const FormularioAdopcion = (props: any) => {
   const [ciudad, setCiudad] = useState("");
   const [calle, setCalle] = useState("");
   const [mascotas, setMascotas] = useState("");
-  const [cantidadMascotas, setCantidadMascotas] = useState("");
+  const [cantidadMascotas, setCantidadMascotas] = useState(0);
   const [ocupacion, setOcupacion] = useState("");
-  const [vivienda, setVivienda] = useState("");
+  const [vivienda, setVivienda] = useState("Casa");
   const [ninos, setNinos] = useState("");
-  const [cantidadNinos, setCantidadNinos] = useState("");
+  const [cantidadNinos, setCantidadNinos] = useState(0);
+  const [error, setError] = useState("");
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [open, setOpen] = useState(true);
 
   const handleNombreChange = (e: any) => {
     setNombreAdoptante(e.target.value);
@@ -92,6 +101,52 @@ export const FormularioAdopcion = (props: any) => {
     setCantidadNinos(e.target.value);
   };
 
+  const validar = (e: any) => {
+    e.preventDefault();
+    const emailPattern =
+      /^[a-zA-Z0-9._]+[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/;
+
+    if (nombreAdoptante.trim() === "") {
+      setError("Ingrese nombre");
+      return;
+    }
+    if (apellidoAdoptante.trim() === "") {
+      setError("Ingrese apellido");
+      return;
+    }
+    if (sexo === "") {
+      setError("Debe seleccionar un sexo");
+      return;
+    }
+    if (cellPhone.trim() === "") {
+      setError("Debe ingresar su telefono celular");
+      return;
+    }
+    if (ciudad.trim() === "") {
+      setError("Debe ingresar una ciudad");
+      return;
+    }
+    if (calle.trim() === "") {
+      setError("Debe ingresar una calle");
+      return;
+    }
+    if (mascotas.trim() === "") {
+      setError("Debe indicar si posee mascota/as");
+      return;
+    }
+    if (ninos.trim() === "") {
+      setError("Debe si hay niños/as en su hogar");
+      return;
+    }
+    if (!emailPattern.test(email)) {
+      setError("Ingrese un e-mail valido");
+      return;
+    } else {
+      handleOnSend();
+      setError("");
+    }
+  };
+
   const handleOnSend = () => {
     const peticion = {
       nombre_adoptante: nombreAdoptante,
@@ -111,7 +166,7 @@ export const FormularioAdopcion = (props: any) => {
       id_mascota_peticion: id,
     };
     AdopcionesAPI.createAdoption(peticion).then((res) => {
-      console.log(res);
+      setShowSuccessMessage(true);
     });
   };
   return (
@@ -154,7 +209,7 @@ export const FormularioAdopcion = (props: any) => {
           </div>
         </div>
 
-        {/* Sexo e Estado civil */}
+        {/* Sexo */}
 
         <div className="row mt-4">
           <div className="col-10">
@@ -165,6 +220,7 @@ export const FormularioAdopcion = (props: any) => {
                 aria-label="Genero"
                 name="row-radio-buttons-group"
                 onChange={handleChangeSexo}
+                id="genero"
               >
                 <FormControlLabel
                   value="Femenino"
@@ -186,10 +242,10 @@ export const FormularioAdopcion = (props: any) => {
           </div>
         </div>
 
-        {/* TELEFONO Y E-MAIL */}
+        {/* TELEFONO */}
 
         <div className="row mt-3">
-          <div className="col-6">
+          <div className="col-12">
             <Box sx={{ display: "flex", alignItems: "flex-end" }}>
               <PhoneAndroidIcon
                 sx={{ color: "action.active", mr: 1, my: 0.5 }}
@@ -202,11 +258,15 @@ export const FormularioAdopcion = (props: any) => {
                 value={cellPhone}
                 onChange={handleCellPhoneChange}
                 type="number"
+                fullWidth
               />
             </Box>
           </div>
+        </div>
 
-          <div className="col-6">
+        <div className="row mt-5">
+          {/* E-MAIL */}
+          <div className="col-12">
             <Box sx={{ display: "flex", alignItems: "flex-end" }}>
               <MailIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
               <TextField
@@ -217,6 +277,7 @@ export const FormularioAdopcion = (props: any) => {
                 value={email}
                 onChange={handleEmailChange}
                 type="email"
+                fullWidth
               />
             </Box>
           </div>
@@ -259,14 +320,17 @@ export const FormularioAdopcion = (props: any) => {
           <div className="col-6">
             <Box sx={{ display: "flex", alignItems: "flex-end" }}>
               <FormControl component="fieldset">
-                <FormLabel component="legend">¿Tiene mascota/as *?</FormLabel>
+                <FormLabel component="legend">
+                  <PetsIcon sx={{ color: "action.active", mr: 1, my: 0.7 }} />
+                  ¿Tiene mascota/as *?
+                </FormLabel>
                 <RadioGroup
                   row
                   aria-label="Genero"
                   name="row-radio-buttons-group"
                   onChange={handleMascotasChange}
+                  sx={{ display: "flex", justifyContent: "center" }}
                 >
-                  <PetsIcon sx={{ color: "action.active", mr: 1, my: 0.7 }} />
                   <FormControlLabel
                     value="Si"
                     control={<Radio size="small" />}
@@ -282,29 +346,66 @@ export const FormularioAdopcion = (props: any) => {
             </Box>
           </div>
           <div className="col-6">
-            <FormControl variant="standard" sx={{ m: 1, mt: 0, minWidth: 120 }}>
-              <FormLabel component="legend">¿Cuantas *?</FormLabel>
-              <Select
-                labelId="demo-simple-select-standard-label"
-                id="demo-simple-select-standard"
-                value={cantidadMascotas}
-                onChange={handleCantidadMascotasChange}
-                label=""
-              >
-                <MenuItem value={1}>1</MenuItem>
-                <MenuItem value={2}>2</MenuItem>
-                <MenuItem value={3}>3</MenuItem>
-                <MenuItem value={4}>4</MenuItem>
-                <MenuItem value={5}>Más de 4</MenuItem>
-              </Select>
-            </FormControl>
+            <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+              <FormControl component="fieldset">
+                <FormLabel component="legend">
+                  <FaceIcon sx={{ color: "action.active", mr: 1, my: 0.7 }} />
+                  ¿Niños en su hogar *?
+                </FormLabel>
+                <RadioGroup
+                  row
+                  aria-label="Genero"
+                  name="row-radio-buttons-group"
+                  onChange={handleNinosChange}
+                  value={ninos}
+                  sx={{ display: "flex", justifyContent: "center" }}
+                >
+                  <FormControlLabel
+                    value="Si"
+                    control={<Radio size="small" />}
+                    label="Si"
+                  />
+                  <FormControlLabel
+                    value="No"
+                    control={<Radio size="small" />}
+                    label="No"
+                  />
+                </RadioGroup>
+              </FormControl>
+            </Box>
           </div>
+          {/* <div className="row mt-5">
+            <div className="col-12">
+              <FormControl
+                variant="standard"
+                sx={{ m: 1, mt: 0, minWidth: 120 }}
+                fullWidth
+              >
+                <FormLabel component="legend">¿Cuantas *?</FormLabel>
+                <Select
+                  labelId="demo-simple-select-standard-label"
+                  id="demo-simple-select-standard"
+                  value={cantidadMascotas}
+                  onChange={handleCantidadMascotasChange}
+                  defaultValue={cantidadMascotas}
+                  label=""
+                >
+                  <MenuItem value={0}>0</MenuItem>
+                  <MenuItem value={1}>1</MenuItem>
+                  <MenuItem value={2}>2</MenuItem>
+                  <MenuItem value={3}>3</MenuItem>
+                  <MenuItem value={4}>4</MenuItem>
+                  <MenuItem value={5}>Más de 4</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+          </div> */}
         </div>
 
-        {/* Ocupacion y tipo vivienda */}
+        {/* Ocupacion */}
 
         <div className="row mt-3">
-          <div className="col-6">
+          <div className="col-12">
             <Box sx={{ display: "flex", alignItems: "flex-end" }}>
               <WorkIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
               <TextField
@@ -315,64 +416,45 @@ export const FormularioAdopcion = (props: any) => {
                 value={ocupacion}
                 onChange={handleOcupacionChange}
                 type="text"
+                fullWidth
               />
             </Box>
           </div>
+        </div>
 
-          {/* tipo vivienda */}
+        {/* tipo vivienda */}
 
-          <div className="col-6">
-            <FormControl variant="standard" sx={{ m: 1, mt: 0, minWidth: 120 }}>
-              <InputLabel id="demo-simple-select-standard-label">
-                Tipo Vivienda
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-standard-label"
-                id="demo-simple-select-standard"
-                value={vivienda}
-                onChange={handleViviendaChange}
-                fullWidth={true}
-                label="Tipo vivienda"
+        <div className="row mt-5">
+          <div className="col-12">
+            <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+              <HomeWorkIcon sx={{ color: "action.active", mr: 1, my: 1 }} />
+              <FormControl
+                variant="standard"
+                sx={{ m: 1, mt: 0, minWidth: 120 }}
+                fullWidth
               >
-                <MenuItem value="Casa">Casa</MenuItem>
-                <MenuItem value="Departamento">Departamento</MenuItem>
-                <MenuItem value="Otro">Otro</MenuItem>
-              </Select>
-            </FormControl>
+                <InputLabel id="demo-simple-select-standard-label">
+                  Tipo Vivienda
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-standard-label"
+                  id="demo-simple-select-standard"
+                  value={vivienda}
+                  onChange={handleViviendaChange}
+                  label="Tipo vivienda"
+                >
+                  <MenuItem value="Casa">Casa</MenuItem>
+                  <MenuItem value="Departamento">Departamento</MenuItem>
+                  <MenuItem value="Otro">Otro</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
           </div>
         </div>
 
         {/* Niños y cantidad niños */}
 
-        <div className="row mt-5">
-          <div className="col-6">
-            <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-              <FormControl component="fieldset">
-                <FormLabel component="legend">
-                  ¿Hay niños en su hogar *?
-                </FormLabel>
-                <RadioGroup
-                  row
-                  aria-label="Genero"
-                  name="row-radio-buttons-group"
-                  onChange={handleNinosChange}
-                  value={ninos}
-                >
-                  <FaceIcon sx={{ color: "action.active", mr: 1, my: 0.7 }} />
-                  <FormControlLabel
-                    value="Si"
-                    control={<Radio size="small" />}
-                    label="Si"
-                  />
-                  <FormControlLabel
-                    value="No"
-                    control={<Radio size="small" />}
-                    label="No"
-                  />
-                </RadioGroup>
-              </FormControl>
-            </Box>
-          </div>
+        {/* <div className="row mt-5">
           <div className="col-6">
             <FormControl variant="standard" sx={{ m: 1, mt: 0, minWidth: 120 }}>
               <FormLabel component="legend">¿Cuantos/as *?</FormLabel>
@@ -381,8 +463,10 @@ export const FormularioAdopcion = (props: any) => {
                 id="demo-simple-select-standard"
                 value={cantidadNinos}
                 onChange={handleCantidadNinosChange}
+                defaultValue={cantidadNinos}
                 label=""
               >
+                <MenuItem value={0}>0</MenuItem>
                 <MenuItem value={1}>1</MenuItem>
                 <MenuItem value={2}>2</MenuItem>
                 <MenuItem value={3}>3</MenuItem>
@@ -391,7 +475,7 @@ export const FormularioAdopcion = (props: any) => {
               </Select>
             </FormControl>
           </div>
-        </div>
+        </div> */}
 
         {/* Comentarios */}
         <div className="row mt-5">
@@ -406,12 +490,12 @@ export const FormularioAdopcion = (props: any) => {
         {/* Boton Enviar */}
       </div>
       <div className="row mt-5">
-        <div className="col-9">
+        <div className="col-6">
           <Button
             variant="contained"
             color="success"
             endIcon={<SendIcon />}
-            onClick={handleOnSend}
+            onClick={validar}
           >
             Enviar Formulario
           </Button>
@@ -424,6 +508,37 @@ export const FormularioAdopcion = (props: any) => {
           >
             Cancelar
           </Button>
+        </div>
+        <div className="row">
+          <div className="col-12">
+            {showSuccessMessage ? (
+              <>
+                <Collapse in={open}>
+                  <Alert
+                    action={
+                      <IconButton
+                        aria-label="close"
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                          setOpen(false);
+                        }}
+                      >
+                        <CloseIcon fontSize="inherit" />
+                      </IconButton>
+                    }
+                    sx={{ mb: 2 }}
+                  >
+                    ¡Formulario enviado exitosamente!
+                  </Alert>
+                </Collapse>
+              </>
+            ) : (
+              <div className="adopcion-form">
+                <span className="adopcion-form-error">{error}</span>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </>

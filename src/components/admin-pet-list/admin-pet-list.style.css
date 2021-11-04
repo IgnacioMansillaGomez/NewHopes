@@ -1,0 +1,13 @@
+.link-table {
+  text-decoration: none;
+  color: #d15b0d;
+}
+.link-table:hover {
+  color: #e67f3b;
+  text-decoration: underline;
+}
+
+.titulo {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  text-decoration: underline;
+}

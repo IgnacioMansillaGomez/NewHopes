@@ -2,6 +2,8 @@ import React, { useContext, useEffect } from "react";
 import { SessionContext } from "../../contexts/session-manager.context";
 import { useHistory } from "react-router-dom";
 import { Header } from "../header/header.component";
+import { Footer } from "../../footer/footer.component";
+import { PieReport } from "../pie-report/pie-report.component";
 
 export const AdminAdopciones = () => {
   const history = useHistory();
@@ -26,6 +28,12 @@ export const AdminAdopciones = () => {
           <h1>Adopciones para Admins</h1>
         </div>
       </div>
+      <div className="row">
+        <div className="col">
+          <PieReport />
+        </div>
+      </div>
+      <Footer />
     </>
   );
 };

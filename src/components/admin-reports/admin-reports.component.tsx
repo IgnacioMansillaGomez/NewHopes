@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { SessionContext } from "../../contexts/session-manager.context";
 import { useHistory } from "react-router-dom";
 import { Header } from "../header/header.component";
+import { Footer } from "../../footer/footer.component";
 
 export const AdminReports = () => {
   const history = useHistory();
@@ -26,6 +27,7 @@ export const AdminReports = () => {
           <h1>Reportecitos para admin</h1>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

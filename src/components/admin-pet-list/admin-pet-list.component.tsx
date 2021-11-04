@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { SessionContext } from "../../contexts/session-manager.context";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Header } from "../header/header.component";
 import { MascotasAPI } from "../../api/mascotas.api";
 import { GenericSerializer } from "../../api/generic.serializer";
@@ -9,6 +9,10 @@ import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { DeletePetButton } from "../delete-pet-button/delete-pet-button.component";
+
+import "./admin-pet-list.style.css";
+import { AdminTable } from "../admin-table/admin-table.component";
+import { Footer } from "../../footer/footer.component";
 
 export const AdminPetList = () => {
   const history = useHistory();
@@ -51,10 +55,10 @@ export const AdminPetList = () => {
   return (
     <>
       <Header />
-      <div className="container">
-        <div className="row">
+      <div className="container ">
+        <div className="row mt-5 mb-4 text-center titulo">
           <div className="col">
-            <h2>Listado todas mascotas</h2>
+            <h2>Listado todas nuestras mascotas</h2>
           </div>
         </div>
         <div className="row">
@@ -68,7 +72,10 @@ export const AdminPetList = () => {
                     <th scope="col">#</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Especie</th>
+                    <th scope="col">Tamaño</th>
+                    <th scope="col">Edad</th>
                     <th scope="col">Adoptado</th>
+                    <th scope="col"></th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
@@ -77,24 +84,37 @@ export const AdminPetList = () => {
                     return (
                       <tr key={indice}>
                         <th scope="col">{indice + 1}</th>
-                        <th scope="col">{pet.nombre}</th>
+                        <th scope="col">
+                          <Link
+                            to={`/full-view-pet/${pet.id}`}
+                            className="link-table"
+                          >
+                            {pet.nombre}
+                          </Link>
+                        </th>
                         <th scope="col">{pet.especie}</th>
+                        <th scope="col">{pet.tamano}</th>
+                        <th scope="col">{pet.edad_anos} años</th>
                         <th scope="col">
                           {pet.adoptado === "true" ? "Si" : "No"}
                         </th>
+                        <th scope="col"></th>
+
                         <th scope="col">
                           <Button
                             startIcon={<EditIcon />}
                             title="Editar"
                             sx={{
                               color: "#eb9234",
+                              marginRight: 8,
                             }}
                             onClick={() => handleOnEditPet(pet.id)}
-                          />
-                          <DeletePetButton
-                            pet={pet}
-                            onDeleteSuccess={getPets}
-                          />
+                          >
+                            Editar
+                          </Button>
+                          <DeletePetButton pet={pet} onDeleteSuccess={getPets}>
+                            Borrar
+                          </DeletePetButton>
                         </th>
                       </tr>
                     );
@@ -105,6 +125,10 @@ export const AdminPetList = () => {
           )}
         </div>
       </div>
+      <div className="container">
+        <AdminTable />
+      </div>
+      <Footer />
     </>
   );
 };

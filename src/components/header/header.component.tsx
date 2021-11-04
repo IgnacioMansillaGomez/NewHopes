@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 
-import { Container, Navbar } from "react-bootstrap";
+import { Container, Image, Navbar } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import { SessionContext } from "../../contexts/session-manager.context";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -24,14 +24,21 @@ export const Header = () => {
   const history = useHistory();
 
   return (
-    <div className="container-fluid p-0">
-      <Navbar bg="dark" variant="dark">
+    <div className="container p-0">
+      <Navbar variant="dark" className="back">
         <Container>
           <Link to="/" className="header__brand-link">
             <Navbar.Brand style={{ fontSize: "1.7rem" }}>
               New Hopes
             </Navbar.Brand>
           </Link>
+          <img
+            src="./images/logis.png"
+            width="30"
+            height="30"
+            className="d-inline-block align-top"
+            srcSet="../images/logis.png"
+          />
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
             <Navbar.Text>

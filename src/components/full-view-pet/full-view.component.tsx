@@ -12,6 +12,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { FullViewInformacion } from "../full-view-informacion/full-view-informacion.component";
 import { SessionContext } from "../../contexts/session-manager.context";
 import { DeletePetButton } from "../delete-pet-button/delete-pet-button.component";
+import { Footer } from "../../footer/footer.component";
 
 export const FullViewPet = () => {
   const { id }: any = useParams();
@@ -40,7 +41,7 @@ export const FullViewPet = () => {
     <>
       <Header />
       {pet && (
-        <div className="container-fluid mt-5">
+        <div className="container mt-5">
           <div className="row">
             <div className="col-lg-6">
               <img
@@ -49,7 +50,7 @@ export const FullViewPet = () => {
                 alt="Imagen Mascota"
               ></img>
             </div>
-            <div className="col-6">
+            <div className="col-lg-6">
               <FullViewInformacion pet={pet} />
             </div>
           </div>
@@ -81,6 +82,7 @@ export const FullViewPet = () => {
           </div>
         </div>
       )}
+      <Footer />
     </>
   );
 };

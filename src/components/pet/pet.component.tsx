@@ -6,6 +6,7 @@ import { Header } from "../header/header.component";
 import { MascotasAPI } from "../../api/mascotas.api";
 import { GenericSerializer } from "../../api/generic.serializer";
 import { Loading } from "../loading/loading.component";
+import { Footer } from "../../footer/footer.component";
 
 export const Pet = () => {
   const { id }: any = useParams();
@@ -44,6 +45,7 @@ export const Pet = () => {
       <Header />
       {!loading && <FormularioMascota pet={pet} />}
       {loading && <Loading />}
+      <Footer />
     </>
   );
 };

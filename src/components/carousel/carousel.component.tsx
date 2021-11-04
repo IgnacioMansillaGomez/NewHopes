@@ -22,7 +22,6 @@ export const CarouselPet = (props: any) => {
             ></div>
             <Carousel.Caption>
               <h3>{pet.nombre}</h3>
-              <p>{pet.tamano}</p>
             </Carousel.Caption>
           </Carousel.Item>
         );

@@ -1,5 +1,7 @@
 .home {
-  background-color: #8ec5fc;
+  /* background-color: #8ec5fc;
   background-image: linear-gradient(62deg, #8ec5fc 0%, #e0c3fc 100%);
-  min-height: 100vh;
+  min-height: 100vh; */
+  /* background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); */
+  background-image: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
 }

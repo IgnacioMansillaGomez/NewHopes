@@ -144,7 +144,7 @@ export const FullViewInformacion = (props: any) => {
         <div className="form-group row mt-3">
           <div className="col-6">
             <ListGroup variant="flush">
-              <ListGroup.Item>El color de mi pelaje</ListGroup.Item>
+              <ListGroup.Item>El color de mi pelaje es</ListGroup.Item>
             </ListGroup>
           </div>
           <div className="col-6">
@@ -152,7 +152,7 @@ export const FullViewInformacion = (props: any) => {
               fullWidth
               id="standard-basic"
               variant="standard"
-              defaultValue={pet.color_pelaje}
+              defaultValue={pet.color}
               InputProps={{
                 readOnly: true,
               }}
