@@ -1,6 +1,11 @@
 import React from "react";
 import { Login } from "./components/login/login.component";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  BrowserRouter,
+} from "react-router-dom";
 import { Register } from "./components/register/register.component";
 import { SessionProvider } from "./contexts/session-manager.context";
 import { Pet } from "./components/pet/pet.component";
@@ -15,40 +20,42 @@ import { AdminReports } from "./components/admin-reports/admin-reports.component
 export function App() {
   return (
     <SessionProvider>
-      <Router>
-        <Switch>
-          <Route path="/new-pet">
-            <Pet />
-          </Route>
-          <Route path="/edit-pet/:id">
-            <Pet />
-          </Route>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/register">
-            <Register />
-          </Route>
-          <Route path="/full-view-pet/:id">
-            <FullViewPet />
-          </Route>
-          <Route path="/not-allowed">
-            <NotAllowed />
-          </Route>
-          <Route path="/admin-adopciones">
-            <AdminAdopciones />
-          </Route>
-          <Route path="/admin-pet-list">
-            <AdminPetList />
-          </Route>
-          <Route path="/admin-reports">
-            <AdminReports />
-          </Route>
-          <Route path="/">
-            <PetsList />
-          </Route>
-        </Switch>
-      </Router>
+      <BrowserRouter basename={process.env.PUBLIC_URL + "/"}>
+        <Router>
+          <Switch>
+            <Route path="/new-pet">
+              <Pet />
+            </Route>
+            <Route path="/edit-pet/:id">
+              <Pet />
+            </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/register">
+              <Register />
+            </Route>
+            <Route path="/full-view-pet/:id">
+              <FullViewPet />
+            </Route>
+            <Route path="/not-allowed">
+              <NotAllowed />
+            </Route>
+            <Route path="/admin-adopciones">
+              <AdminAdopciones />
+            </Route>
+            <Route path="/admin-pet-list">
+              <AdminPetList />
+            </Route>
+            <Route path="/admin-reports">
+              <AdminReports />
+            </Route>
+            <Route path="/">
+              <PetsList />
+            </Route>
+          </Switch>
+        </Router>
+      </BrowserRouter>
     </SessionProvider>
   );
 }

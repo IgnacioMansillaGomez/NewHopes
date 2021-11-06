@@ -4,7 +4,7 @@ import { Button } from "@mui/material";
 import { MascotasAPI } from "../../api/mascotas.api";
 import { useHistory } from "react-router-dom";
 import { MessageModal } from "../message-modal/message-moda.component";
-import { AdopcionesAPI } from "../../api/adopciones.api";
+import { SolicitudesAPI } from "../../api/solicitudes.api";
 import { GenericSerializer } from "../../api/generic.serializer";
 import { LoadingButton } from "@mui/lab";
 
@@ -24,11 +24,11 @@ export const DeletePetButton = (props: any) => {
   const deletePet = () => {
     setDeleteLoading(true);
     setDeletePetMessage(false);
-    AdopcionesAPI.getRequestByPet(pet.id).then((response) => {
+    SolicitudesAPI.getRequestByPet(pet.id).then((response) => {
       if (response.size !== 0) {
         const solicitudes = GenericSerializer.serializeAll(response);
         solicitudes.forEach((solicitud: any) => {
-          AdopcionesAPI.deleteRequest(solicitud.id);
+          SolicitudesAPI.deleteRequest(solicitud.id);
         });
       }
     });

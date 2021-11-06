@@ -1,6 +1,6 @@
 import { getFirestore } from "../bd/fireData";
 const dataBase = getFirestore();
-const itemCollection = dataBase.collection("adopciones");
+const itemCollection = dataBase.collection("solicitudes");
 
 const createAdoption = (peticion) => {
   return itemCollection.add(peticion);
@@ -11,12 +11,17 @@ const getRequestByPet = (id) => {
   return filter.get();
 };
 
+const getAllRequest = () => {
+  return itemCollection.get();
+};
+
 const deleteRequest = (id) => {
   return itemCollection.doc(id).delete();
 };
 
-export const AdopcionesAPI = {
+export const SolicitudesAPI = {
   createAdoption,
   getRequestByPet,
   deleteRequest,
+  getAllRequest,
 };

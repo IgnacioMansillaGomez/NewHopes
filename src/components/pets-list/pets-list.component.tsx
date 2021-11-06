@@ -7,9 +7,10 @@ import { GoBack } from "../go-back/go-back.component";
 import { Header } from "../header/header.component";
 import { PetCard } from "../pet-card/pet-card.component";
 import { DEFAULT_PET_IMAGE } from "../../constants/constants";
-import "./pet-list.style.css";
 import { CarouselPet } from "../carousel/carousel.component";
 import { Footer } from "../../footer/footer.component";
+
+import "./pet-list.style.css";
 export const PetsList = () => {
   const [petsList, setPetsList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -51,7 +52,7 @@ export const PetsList = () => {
       </div>
 
       <div className="container bg-light">
-        <div className="row">
+        <div className="row pet-list__main">
           {/* <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-1"> */}
 
           {petsList.length > 0 && (

@@ -29,7 +29,7 @@ import HomeWorkIcon from "@mui/icons-material/HomeWork";
 import { Form } from "react-bootstrap";
 import SendIcon from "@mui/icons-material/Send";
 import { useParams } from "react-router-dom";
-import { AdopcionesAPI } from "../../api/adopciones.api";
+import { SolicitudesAPI } from "../../api/solicitudes.api";
 
 export const FormularioAdopcion = (props: any) => {
   const { id }: any = useParams();
@@ -164,8 +164,9 @@ export const FormularioAdopcion = (props: any) => {
       ninos_adoptante: ninos,
       cantidad_ninos_adoptante: cantidadNinos,
       id_mascota_peticion: id,
+      estado: "Pendiente",
     };
-    AdopcionesAPI.createAdoption(peticion).then((res) => {
+    SolicitudesAPI.createAdoption(peticion).then((res) => {
       setShowSuccessMessage(true);
     });
   };
@@ -174,7 +175,7 @@ export const FormularioAdopcion = (props: any) => {
       <div className="container">
         <div className="row">
           <div className="col-12">
-            <h2>¡ Completa el formulario con tus datos !</h2>
+            <h2>¡Completa el formulario con tus datos!</h2>
           </div>
         </div>
 

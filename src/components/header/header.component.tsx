@@ -33,11 +33,10 @@ export const Header = () => {
             </Navbar.Brand>
           </Link>
           <img
-            src="./images/logis.png"
+            src={process.env.PUBLIC_URL + "/img/logo-grande.jpg"}
             width="30"
             height="30"
             className="d-inline-block align-top"
-            srcSet="../images/logis.png"
           />
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
