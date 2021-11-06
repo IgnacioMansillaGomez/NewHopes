@@ -71,7 +71,7 @@ export const PetsList = () => {
               <div className="row bg-success">
                 <div className="col-12">
                   <h2 className="text-center display-3 fw-bolder">
-                    ¡ No hay mascotas para mostrar !
+                    ¡No hay mascotas para mostrar!
                   </h2>
                 </div>
               </div>

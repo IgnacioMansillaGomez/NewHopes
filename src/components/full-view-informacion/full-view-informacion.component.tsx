@@ -160,19 +160,27 @@ export const FullViewInformacion = (props: any) => {
           </div>
         </div>
         {/* Boton */}
-        <div className="form-group row mt-5 offset-1">
-          <div className="col-lg-10">
-            <Button
-              variant="contained"
-              color="secondary"
-              fullWidth
-              onClick={handleShow}
-            >
-              ¡Quiero Adoptar!
-            </Button>
+        {pet.adoptado ? (
+          pet.adoptado === "false" && (
+            <div className="form-group row mt-5 offset-1">
+              <div className="col-lg-10">
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  fullWidth
+                  onClick={handleShow}
+                >
+                  ¡Quiero Adoptar!
+                </Button>
+              </div>
+              <ModalAdopcion show={showModal} handleClose={handleClose} />
+            </div>
+          )
+        ) : (
+          <div className="form-group row mt-5 offset-1">
+            <p>¡Ya me han adoptado!</p>
           </div>
-          <ModalAdopcion show={showModal} handleClose={handleClose} />
-        </div>
+        )}
       </div>
     </div>
   );
