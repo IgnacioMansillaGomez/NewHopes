@@ -6,8 +6,6 @@ import { FormularioAdopcion } from "../formulario-adopcion/formulario-adopcion.c
 import "./modal-adopcion.style.css";
 
 export const ModalAdopcion = (props: any) => {
-  console.log(props);
-
   return (
     <>
       <Modal show={props.show} handleClose={props.handleClose}>

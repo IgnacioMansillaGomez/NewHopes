@@ -7,6 +7,9 @@ import { Loading } from "../loading/loading.component";
 import { Footer } from "../../footer/footer.component";
 import { SolicitudesAPI } from "../../api/solicitudes.api";
 import { MascotasAPI } from "../../api/mascotas.api";
+import { AdminModalAdopcion } from "../admin-modal-adopcion/admin-modal-adopcion.component";
+import { Button } from "@mui/material";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
 export const AdminAdopciones = () => {
   const history = useHistory();
@@ -15,6 +18,20 @@ export const AdminAdopciones = () => {
   const [solicitudes, setSolicitudes] = useState([]);
   const [pets, setPets] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [solicitudSeleccionada, setSolicitudSeleccionada] = useState({});
+  const [showModal, setShowModal] = useState(false);
+
+  const handleClose = (_: any, shouldRefresh?: false) => {
+    setShowModal(false);
+    if (shouldRefresh) {
+      getSolicitudes();
+    }
+  };
+
+  const handleShow = (solicitud: any) => {
+    setSolicitudSeleccionada(solicitud);
+    setShowModal(true);
+  };
 
   useEffect(() => {
     if (sessionContext && sessionContext.session) {
@@ -93,6 +110,7 @@ export const AdminAdopciones = () => {
                       <th scope="col">Nombre Mascota</th>
                       <th scope="col">Nombre Adoptante</th>
                       <th scope="col">Estado Actual</th>
+                      <th scope="col"></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -103,11 +121,30 @@ export const AdminAdopciones = () => {
                           <th scope="col">{solicitud.pet.nombre}</th>
                           <th scope="col">{solicitud.nombre_adoptante}</th>
                           <th scope="col">{solicitud.estado}</th>
+                          <th scope="col">
+                            <Button
+                              startIcon={<RemoveRedEyeIcon />}
+                              title="Editar"
+                              sx={{
+                                color: "#eb9234",
+                                marginRight: 8,
+                              }}
+                              onClick={() => handleShow(solicitud)}
+                            >
+                              Ver
+                            </Button>
+                          </th>
                         </tr>
                       );
                     })}
                   </tbody>
                 </table>
+                <AdminModalAdopcion
+                  show={showModal}
+                  handleClose={handleClose}
+                  solicitud={solicitudSeleccionada}
+                  solicitudesProcesadas={solicitudesProcesadas}
+                />
               </>
             )}
           </div>

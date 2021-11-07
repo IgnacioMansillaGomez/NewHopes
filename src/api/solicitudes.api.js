@@ -1,4 +1,7 @@
+import { doc } from "firebase/firestore";
 import { getFirestore } from "../bd/fireData";
+import { query, where } from "firebase/firestore";
+import { writeBatch } from "firebase/firestore";
 const dataBase = getFirestore();
 const itemCollection = dataBase.collection("solicitudes");
 
@@ -9,6 +12,18 @@ const createAdoption = (peticion) => {
 const getRequestByPet = (id) => {
   const filter = itemCollection.where("id_mascota_peticion", "==", id);
   return filter.get();
+};
+
+const rejectRequest = (id) => {
+  return itemCollection.doc(id).update({ estado: "Rechazada" });
+};
+
+const approveRequest = (id) => {
+  return itemCollection.doc(id).update({ estado: "Aceptada" });
+};
+
+const markFinalized = (id) => {
+  return itemCollection.doc(id).update({ estado: "Finalizada" });
 };
 
 const getAllRequest = () => {
@@ -24,4 +39,7 @@ export const SolicitudesAPI = {
   getRequestByPet,
   deleteRequest,
   getAllRequest,
+  rejectRequest,
+  approveRequest,
+  markFinalized,
 };
