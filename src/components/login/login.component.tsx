@@ -53,67 +53,71 @@ export const Login: React.FC = (props) => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Header />
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "ButtonFace" }}></Avatar>
-          <Typography component="h1" variant="h5">
-            Ingresar
-          </Typography>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            type="email"
-            id="email"
-            label="Correo electrónico"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            onChange={(e) => setEmail(e.target.value)}
-            variant="standard"
-            sx={{ mt: 3 }}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Contraseña"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={(e) => setPassword(e.target.value)}
-            variant="standard"
-            sx={{ mt: 3 }}
-          />
-          <Button
-            type="button"
-            fullWidth
-            variant="contained"
-            onClick={ingresoUsuario}
-            sx={{ mt: 3 }}
-          >
-            Ingresar
-          </Button>
-          {mensajeError ? <div>{mensajeError}</div> : <span></span>}
-          <Grid container>
-            <Grid item className="mt-3">
-              <Link to="/register">No tienes cuenta? Registrate aqui!</Link>
-            </Grid>
-          </Grid>
-        </Box>
-      </Container>
-      <Footer />
-    </ThemeProvider>
+    <>
+      <div className="row login-cont__main">
+        <div className="col">
+          <Header />
+          <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <Box
+              sx={{
+                marginTop: 8,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Avatar sx={{ m: 1, bgcolor: "ButtonFace" }}></Avatar>
+              <Typography component="h1" variant="h5">
+                Ingresar
+              </Typography>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                type="email"
+                id="email"
+                label="Correo electrónico"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                onChange={(e) => setEmail(e.target.value)}
+                variant="standard"
+                sx={{ mt: 3 }}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Contraseña"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={(e) => setPassword(e.target.value)}
+                variant="standard"
+                sx={{ mt: 3 }}
+              />
+              <Button
+                type="button"
+                fullWidth
+                variant="contained"
+                onClick={ingresoUsuario}
+                sx={{ mt: 3 }}
+              >
+                Ingresar
+              </Button>
+              {mensajeError ? <div>{mensajeError}</div> : <span></span>}
+              <Grid container>
+                <Grid item className="mt-3">
+                  <Link to="/register">No tienes cuenta? Registrate aqui!</Link>
+                </Grid>
+              </Grid>
+            </Box>
+          </Container>
+          <Footer />
+        </div>
+      </div>
+    </>
   );
 };

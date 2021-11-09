@@ -17,49 +17,53 @@ import { AdminPetList } from "./components/admin-pet-list/admin-pet-list.compone
 import { AdminAdopciones } from "./components/admin-adopciones/admin-adopciones.component";
 import { AdminReports } from "./components/admin-reports/admin-reports.component";
 import { Adopciones } from "./components/adopciones/adopciones.component";
+import { ThemeProvider } from "@mui/material";
+import Theme from "./components/main-theme/main-theme.component";
 
 export function App() {
   return (
-    <SessionProvider>
-      <BrowserRouter basename={process.env.PUBLIC_URL + "/"}>
-        <Router>
-          <Switch>
-            <Route path="/new-pet">
-              <Pet />
-            </Route>
-            <Route path="/edit-pet/:id">
-              <Pet />
-            </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/register">
-              <Register />
-            </Route>
-            <Route path="/full-view-pet/:id">
-              <FullViewPet />
-            </Route>
-            <Route path="/not-allowed">
-              <NotAllowed />
-            </Route>
-            <Route path="/admin-adopciones">
-              <AdminAdopciones />
-            </Route>
-            <Route path="/admin-pet-list">
-              <AdminPetList />
-            </Route>
-            <Route path="/admin-reports">
-              <AdminReports />
-            </Route>
-            <Route path="/adopciones">
-              <Adopciones />
-            </Route>
-            <Route path="/">
-              <PetsList />
-            </Route>
-          </Switch>
-        </Router>
-      </BrowserRouter>
-    </SessionProvider>
+    <ThemeProvider theme={Theme}>
+      <SessionProvider>
+        <BrowserRouter basename={process.env.PUBLIC_URL + "/"}>
+          <Router>
+            <Switch>
+              <Route path="/new-pet">
+                <Pet />
+              </Route>
+              <Route path="/edit-pet/:id">
+                <Pet />
+              </Route>
+              <Route path="/login">
+                <Login />
+              </Route>
+              <Route path="/register">
+                <Register />
+              </Route>
+              <Route path="/full-view-pet/:id">
+                <FullViewPet />
+              </Route>
+              <Route path="/not-allowed">
+                <NotAllowed />
+              </Route>
+              <Route path="/admin-adopciones">
+                <AdminAdopciones />
+              </Route>
+              <Route path="/admin-pet-list">
+                <AdminPetList />
+              </Route>
+              <Route path="/admin-reports">
+                <AdminReports />
+              </Route>
+              <Route path="/adopciones">
+                <Adopciones />
+              </Route>
+              <Route path="/">
+                <PetsList />
+              </Route>
+            </Switch>
+          </Router>
+        </BrowserRouter>
+      </SessionProvider>
+    </ThemeProvider>
   );
 }

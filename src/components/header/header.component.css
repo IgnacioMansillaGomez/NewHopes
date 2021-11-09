@@ -2,10 +2,11 @@
   text-decoration: none;
 }
 .back {
-  background: rgb(204, 196, 252);
+  /* background: rgb(204, 196, 252);
   background: radial-gradient(
     circle,
     rgba(204, 196, 252, 1) 0%,
     rgba(175, 172, 198, 1) 0%
-  );
+  ); */
+  background-color: rgb(209, 119, 158);
 }

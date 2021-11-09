@@ -14,6 +14,8 @@ import { SessionContext } from "../../contexts/session-manager.context";
 import { DeletePetButton } from "../delete-pet-button/delete-pet-button.component";
 import { Footer } from "../../footer/footer.component";
 
+import "./full-view.style.css";
+
 export const FullViewPet = () => {
   const { id }: any = useParams();
   const [pet, setPet] = useState<any>();
@@ -42,7 +44,7 @@ export const FullViewPet = () => {
       <Header />
       {pet && (
         <div className="container mt-5">
-          <div className="row">
+          <div className="row full-view__main">
             <div className="col-lg-6">
               <img
                 src={pet.img_url ? pet.img_url : DEFAULT_PET_IMAGE}
@@ -59,7 +61,7 @@ export const FullViewPet = () => {
       {!pet && <Loading />}
       {sessionContext && sessionContext.isAdmin() && (
         <div className="container">
-          <div className="row">
+          <div className="row full-view__main">
             <div className="col-2">
               <DeletePetButton
                 pet={pet}

@@ -48,13 +48,7 @@ export const Header = () => {
                     size="medium"
                     sx={{
                       m: 0,
-                      color: "white",
-                      background: "#9d84bf",
-                      "&:hover": {
-                        background: "#5f4a7d",
-                      },
                     }}
-                    endIcon={<LoginIcon sx={{ color: "#a83291" }} />}
                   >
                     Ingresar
                   </Button>

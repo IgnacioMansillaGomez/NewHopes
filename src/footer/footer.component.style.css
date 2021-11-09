@@ -1,10 +1,11 @@
 .cont {
-  background: rgb(204, 196, 252);
+  /* background: rgb(204, 196, 252);
   background: linear-gradient(
     0deg,
     rgba(204, 196, 252, 1) 0%,
     rgba(167, 156, 231, 1) 0%
-  );
+  ); */
+  background-color: #d26e9a;
 }
 .text {
   font-size: 1.2rem;

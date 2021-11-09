@@ -7,6 +7,8 @@ import { Button } from "@mui/material";
 import { ModalAdopcion } from "../modal-adopcion/modal-adopcion.component";
 import { useRaza } from "../../hooks/use-raza.hook";
 
+import "./full-view-informacion.style.css";
+
 export const FullViewInformacion = (props: any) => {
   const [pet, setPet] = useState(props.pet);
   const raza = useRaza(pet.id_raza);
@@ -19,8 +21,8 @@ export const FullViewInformacion = (props: any) => {
   const handleChangeRaza = (event: any, child: React.ReactNode) => {};
 
   return (
-    <div className="container">
-      <div className="row">
+    <div className="container full-view-informacion__main">
+      <div className="row ">
         <div className="col-lg-10 mb-5">
           <h1 className="text-center">¡Conoce a {pet.nombre}!</h1>
         </div>
