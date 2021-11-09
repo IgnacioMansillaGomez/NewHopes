@@ -49,6 +49,13 @@ export const UserAvatar = () => {
   const handleAdminReports = () => {
     history.push("/admin-reports");
   };
+  const handlePetList = () => {
+    history.push("/");
+  };
+
+  const handleMyAdoptions = () => {
+    history.push("/adopciones");
+  };
 
   return (
     <React.Fragment>
@@ -137,7 +144,7 @@ export const UserAvatar = () => {
         )}
 
         {sessionContext && !sessionContext.isAdmin() && (
-          <MenuItem>
+          <MenuItem onClick={handlePetList}>
             <ListItemIcon>
               <PetsIcon fontSize="small" />
             </ListItemIcon>
@@ -146,7 +153,7 @@ export const UserAvatar = () => {
         )}
 
         {sessionContext && !sessionContext.isAdmin() && (
-          <MenuItem>
+          <MenuItem onClick={handleMyAdoptions}>
             <ListItemIcon>
               <FeaturedPlayListIcon fontSize="small" />
             </ListItemIcon>

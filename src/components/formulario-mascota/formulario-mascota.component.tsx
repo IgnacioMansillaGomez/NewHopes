@@ -46,6 +46,7 @@ export const FormularioMascota = (props: any) => {
   const [colorPelaje, setColorPelaje] = useState(pet ? pet.color : "Blanco");
   const [imageUrl, setImageUrl] = useState("");
   const [loadingImage, setLoadingImage] = useState(false);
+  const [savingPet, setSavingPet] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(true);
@@ -160,8 +161,10 @@ export const FormularioMascota = (props: any) => {
       img_url: imageUrl,
       adoptado: "false",
     };
+    setSavingPet(true);
     if (petId) {
       MascotasAPI.updatePet(petId, pet).then((res) => {
+        setSavingPet(false);
         setShowSuccessMessage(true);
       });
     } else {
@@ -429,11 +432,11 @@ export const FormularioMascota = (props: any) => {
                       onChange={(event) => handleFile(event)}
                     />
                     <LoadingButton
-                      loading={loadingImage}
-                      loadingPosition="end"
                       startIcon={<PhotoCameraIcon />}
                       variant="contained"
                       component="span"
+                      loading={loadingImage || savingPet}
+                      loadingPosition="end"
                     >
                       Subir Imagen
                     </LoadingButton>
@@ -450,7 +453,7 @@ export const FormularioMascota = (props: any) => {
                     color="secondary"
                     onClick={validar}
                     fullWidth
-                    disabled={loadingImage}
+                    disabled={loadingImage || savingPet}
                   >
                     {petId ? "Guardar" : "Crear"} Mascota
                   </Button>
@@ -474,7 +477,7 @@ export const FormularioMascota = (props: any) => {
                           }
                           sx={{ mb: 2 }}
                         >
-                          ¡ Mascota {petId ? "Editada" : "Agregada"} con éxito !
+                          ¡Mascota {petId ? "Editada" : "Agregada"} con éxito!
                         </Alert>
                       </Collapse>
 

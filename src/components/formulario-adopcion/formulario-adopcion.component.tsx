@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { AccountCircle } from "@mui/icons-material";
 import {
   Alert,
@@ -30,9 +30,12 @@ import { Form } from "react-bootstrap";
 import SendIcon from "@mui/icons-material/Send";
 import { useParams } from "react-router-dom";
 import { SolicitudesAPI } from "../../api/solicitudes.api";
+import { SessionContext } from "../../contexts/session-manager.context";
 
 export const FormularioAdopcion = (props: any) => {
   const { id }: any = useParams();
+  const sessionContext = useContext(SessionContext);
+
   const [nombreAdoptante, setNombreAdoptante] = useState("");
   const [apellidoAdoptante, setApellidoAdoptante] = useState("");
   const [sexo, setSexo] = useState("");
@@ -165,6 +168,7 @@ export const FormularioAdopcion = (props: any) => {
       cantidad_ninos_adoptante: cantidadNinos,
       id_mascota_peticion: id,
       estado: "Pendiente",
+      id_usuario: sessionContext?.session?.uid,
     };
     SolicitudesAPI.createAdoption(peticion).then((res) => {
       setShowSuccessMessage(true);
@@ -375,32 +379,6 @@ export const FormularioAdopcion = (props: any) => {
               </FormControl>
             </Box>
           </div>
-          {/* <div className="row mt-5">
-            <div className="col-12">
-              <FormControl
-                variant="standard"
-                sx={{ m: 1, mt: 0, minWidth: 120 }}
-                fullWidth
-              >
-                <FormLabel component="legend">¿Cuantas *?</FormLabel>
-                <Select
-                  labelId="demo-simple-select-standard-label"
-                  id="demo-simple-select-standard"
-                  value={cantidadMascotas}
-                  onChange={handleCantidadMascotasChange}
-                  defaultValue={cantidadMascotas}
-                  label=""
-                >
-                  <MenuItem value={0}>0</MenuItem>
-                  <MenuItem value={1}>1</MenuItem>
-                  <MenuItem value={2}>2</MenuItem>
-                  <MenuItem value={3}>3</MenuItem>
-                  <MenuItem value={4}>4</MenuItem>
-                  <MenuItem value={5}>Más de 4</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-          </div> */}
         </div>
 
         {/* Ocupacion */}

@@ -34,6 +34,11 @@ const deleteRequest = (id) => {
   return itemCollection.doc(id).delete();
 };
 
+const getMyRequest = (id) => {
+  const filter = itemCollection.where("id_usuario", "==", id);
+  return filter.get();
+};
+
 export const SolicitudesAPI = {
   createAdoption,
   getRequestByPet,
@@ -42,4 +47,5 @@ export const SolicitudesAPI = {
   rejectRequest,
   approveRequest,
   markFinalized,
+  getMyRequest,
 };

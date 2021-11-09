@@ -116,7 +116,18 @@ export const AdminAdopciones = () => {
                   <tbody>
                     {solicitudesProcesadas.map((solicitud: any, indice) => {
                       return (
-                        <tr key={indice}>
+                        <tr
+                          key={indice}
+                          className={
+                            solicitud.estado === "Pendiente"
+                              ? "table-white"
+                              : solicitud.estado === "Aceptada"
+                              ? "table-success"
+                              : solicitud.estado === "Rechazada"
+                              ? "table-danger"
+                              : "table-secondary"
+                          }
+                        >
                           <th scope="col">{solicitud.fecha_emision}</th>
                           <th scope="col">{solicitud.pet.nombre}</th>
                           <th scope="col">{solicitud.nombre_adoptante}</th>
@@ -126,7 +137,7 @@ export const AdminAdopciones = () => {
                               startIcon={<RemoveRedEyeIcon />}
                               title="Editar"
                               sx={{
-                                color: "#eb9234",
+                                color: "#A79CE7",
                                 marginRight: 8,
                               }}
                               onClick={() => handleShow(solicitud)}

@@ -53,7 +53,7 @@ export const AdminPetList = () => {
   };
 
   return (
-    <>
+    <div className="admin-pet__main">
       <Header />
       <div className="container ">
         <div className="row mt-5 mb-4 text-center titulo">
@@ -125,10 +125,9 @@ export const AdminPetList = () => {
           )}
         </div>
       </div>
-      <div className="container">
-        <AdminTable />
-      </div>
+
       <Footer />
-    </>
+      <AdminTable />
+    </div>
   );
 };

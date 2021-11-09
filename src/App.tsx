@@ -16,6 +16,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { AdminPetList } from "./components/admin-pet-list/admin-pet-list.component";
 import { AdminAdopciones } from "./components/admin-adopciones/admin-adopciones.component";
 import { AdminReports } from "./components/admin-reports/admin-reports.component";
+import { Adopciones } from "./components/adopciones/adopciones.component";
 
 export function App() {
   return (
@@ -49,6 +50,9 @@ export function App() {
             </Route>
             <Route path="/admin-reports">
               <AdminReports />
+            </Route>
+            <Route path="/adopciones">
+              <Adopciones />
             </Route>
             <Route path="/">
               <PetsList />
