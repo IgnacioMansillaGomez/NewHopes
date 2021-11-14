@@ -1,6 +1,6 @@
 import { createTheme } from "@mui/material/styles";
 import { purple, pink } from "@mui/material/colors";
-
+import "typeface-cormorant";
 const primaryColor = pink[800];
 const secondaryColor = pink[200];
 
@@ -18,6 +18,14 @@ const Theme = createTheme({
       dark: "rgb(170, 100, 123)",
       contrastText: "#000",
     },
+    background: {
+      default: "#F7EEF1",
+      paper: "#fcf7fc",
+    },
+  },
+  typography: {
+    fontFamily: "Roboto",
+    fontSize: 15,
   },
 });
 

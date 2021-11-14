@@ -9,8 +9,10 @@ import PetsIcon from "@mui/icons-material/Pets";
 import WorkIcon from "@mui/icons-material/Work";
 import FaceIcon from "@mui/icons-material/Face";
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
-import { Form } from "react-bootstrap";
+
+import CancelIcon from "@mui/icons-material/Cancel";
 import SendIcon from "@mui/icons-material/Send";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 import "./admin-solicitud-card.style.css";
 import { SolicitudesAPI } from "../../api/solicitudes.api";
@@ -82,13 +84,13 @@ export const AdminSolicitudCard = (props: any) => {
         <div className="row mt-5">
           <div className="col-6">
             <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-              <AccountCircle sx={{ color: "action.active", mr: 1, my: 0.5 }} />
+              <AccountCircle sx={{ color: "action.active", mr: 1, my: 0 }} />
               {solicitud.nombre_adoptante}
             </Box>
           </div>
           <div className="col-6">
             <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-              <AccountCircle sx={{ color: "action.active", mr: 1, my: 0.5 }} />
+              <AccountCircle sx={{ color: "action.active", mr: 1, my: 0 }} />
               {solicitud.apellido_adoptante}
             </Box>
           </div>
@@ -203,20 +205,10 @@ export const AdminSolicitudCard = (props: any) => {
           </div>
         </div>
 
-        {/* Comentarios */}
-        <div className="row mt-5">
-          <div className="col-12">
-            <Form.Group className="mb-3">
-              <Form.Label>Cuentanos sobre ti</Form.Label>
-              {solicitud.comentario_adoptante}
-            </Form.Group>
-          </div>
-        </div>
-
         {/* Boton Enviar */}
       </div>
       <div className="row mt-5">
-        <div className="col-3">
+        <div className="col-12 d-flex justify-content-around">
           {/* estados: Pendiente, Aceptada, Rechazada, Finalizada */}
           {solicitud.estado === "Pendiente" && (
             <>
@@ -224,7 +216,7 @@ export const AdminSolicitudCard = (props: any) => {
               <Button
                 variant="contained"
                 color="success"
-                endIcon={<SendIcon />}
+                endIcon={<CheckCircleIcon />}
                 onClick={openApproveRequestMsg}
               >
                 Aceptar Solicitud
@@ -232,18 +224,13 @@ export const AdminSolicitudCard = (props: any) => {
               <Button
                 variant="contained"
                 color="error"
-                endIcon={<SendIcon />}
+                endIcon={<CancelIcon />}
                 onClick={openRejectRequestMsg}
               >
                 Rechazar Solicitud
               </Button>
             </>
           )}
-        </div>
-        <div className="col-3">
-          <Button variant="contained" color="error" onClick={handleClose}>
-            Cancelar
-          </Button>
         </div>
       </div>
       <MessageModal

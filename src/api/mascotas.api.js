@@ -31,6 +31,18 @@ const getAllNotAdoptedPets = () => {
   return filter.get();
 };
 
+const getPetsPagination = () => {
+  return itemCollection.orderBy("nombre", "asc").limit(5).get();
+};
+
+const getLastPagination = (last) => {
+  return itemCollection
+    .orderBy("nombre", "asc")
+    .startAfter(last)
+    .limit(3)
+    .get();
+};
+
 export const MascotasAPI = {
   createPet,
   getAllPets,
@@ -38,4 +50,6 @@ export const MascotasAPI = {
   deletePet,
   updatePet,
   getAllNotAdoptedPets,
+  getPetsPagination,
+  getLastPagination,
 };

@@ -6,7 +6,6 @@ import { MascotasAPI } from "../../api/mascotas.api";
 import { GenericSerializer } from "../../api/generic.serializer";
 import { Loading } from "../loading/loading.component";
 import Button from "@mui/material/Button";
-import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { DeletePetButton } from "../delete-pet-button/delete-pet-button.component";
 
@@ -55,8 +54,8 @@ export const AdminPetList = () => {
   return (
     <div className="admin-pet__main">
       <Header />
-      <div className="container ">
-        <div className="row mt-5 mb-4 text-center titulo">
+      <div className="container admin-pet__main-container">
+        <div className="row pt-5 pb-4 text-center titulo">
           <div className="col">
             <h2>Listado todas nuestras mascotas</h2>
           </div>
@@ -125,9 +124,14 @@ export const AdminPetList = () => {
           )}
         </div>
       </div>
-
+      {/* <div className="container">
+        <div className="row">
+          <div className="col-10">
+            <AdminTable />
+          </div>
+        </div>
+      </div> */}
       <Footer />
-      <AdminTable />
     </div>
   );
 };

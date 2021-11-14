@@ -42,48 +42,49 @@ export const FullViewPet = () => {
   return (
     <>
       <Header />
-      {pet && (
-        <div className="container mt-5">
-          <div className="row full-view__main">
-            <div className="col-lg-6">
-              <img
-                src={pet.img_url ? pet.img_url : DEFAULT_PET_IMAGE}
-                className="img-thumbnail h-675"
-                alt="Imagen Mascota"
-              ></img>
-            </div>
-            <div className="col-lg-6">
-              <FullViewInformacion pet={pet} />
+      <div className="container ">
+        {pet && (
+          <div className="container mt-5 ">
+            <div className="row ">
+              <div className="col-lg-6">
+                <img
+                  src={pet.img_url ? pet.img_url : DEFAULT_PET_IMAGE}
+                  className="img-fluid"
+                  alt="Imagen Mascota"
+                ></img>
+              </div>
+              <div className="col-lg-6 ">
+                <FullViewInformacion pet={pet} />
+                {sessionContext && sessionContext.isAdmin() && (
+                  <div className="row mt-3 offset-4 full-view__main  ">
+                    <div className="col-lg-6 ">
+                      {/* <div className="col-6"> */}
+                      <DeletePetButton
+                        pet={pet}
+                        onDeleteSuccess={handleOnDeletePet}
+                        size="big"
+                      />
+                      {/* </div> */}
+                      {/* <div className="col-6 "> */}
+                      <Button
+                        startIcon={<EditIcon />}
+                        sx={{
+                          color: "#e6be0b",
+                        }}
+                        onClick={handleOnEdit}
+                      >
+                        Editar
+                      </Button>
+                      {/* </div> */}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      )}
-      {!pet && <Loading />}
-      {sessionContext && sessionContext.isAdmin() && (
-        <div className="container">
-          <div className="row full-view__main">
-            <div className="col-2">
-              <DeletePetButton
-                pet={pet}
-                onDeleteSuccess={handleOnDeletePet}
-                size="big"
-              />
-            </div>
-            <div className="col-2">
-              <Button
-                variant="outlined"
-                startIcon={<EditIcon />}
-                sx={{
-                  color: "#e6be0b",
-                }}
-                onClick={handleOnEdit}
-              >
-                Editar
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
+        )}
+        {!pet && <Loading />}
+      </div>
       <Footer />
     </>
   );

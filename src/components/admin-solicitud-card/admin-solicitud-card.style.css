@@ -1,3 +1,7 @@
+.modal-body {
+  background-color: rgb(250, 241, 241) !important;
+}
+
 .adopcion-form {
   background: #f2f2f2;
   padding: 1rem;

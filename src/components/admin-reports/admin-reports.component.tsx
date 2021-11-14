@@ -7,6 +7,9 @@ import { PieReport } from "../pie-report/pie-report.component";
 import { MascotasAPI } from "../../api/mascotas.api";
 import { GenericSerializer } from "../../api/generic.serializer";
 import { Loading } from "../loading/loading.component";
+import { PieReportDos } from "../pie-report/pie-report-dos.component";
+
+import "./admin-reports.style.css";
 
 export const AdminReports = () => {
   const history = useHistory();
@@ -89,26 +92,42 @@ export const AdminReports = () => {
   };
 
   return (
-    <>
-      <div className="container">
-        <Header />
-        <div className="row">
-          <div className="col">
-            <h1>Reportecitos para admin</h1>
+    <section className="fondo">
+      <Header />
+      <div className="container bg-white admin-reports__container">
+        <div className="row pt-5 ">
+          <div className="col-12 text-center ">
+            <h2 className="titulo">Reportes</h2>
           </div>
         </div>
         <div className="row">
           <div className="col-6">
             {loading && <Loading />}
-            {!loading && <PieReport data={dataChartAdopciones} />}
+            {!loading && (
+              <>
+                <h3 className="text-center">
+                  <strong>Mascotas Actuales - Tamaño</strong>
+                </h3>
+                <div className="text-center">
+                  <PieReport data={dataChartSize} />
+                </div>
+              </>
+            )}
           </div>
           <div className="col-6">
             {loading && <Loading />}
-            {!loading && <PieReport data={dataChartSize} />}
+            {!loading && (
+              <>
+                <h3 className="text-center">
+                  <strong>Mascotas adoptados y en adopción</strong>
+                </h3>
+                <PieReportDos data={dataChartAdopciones} />
+              </>
+            )}
           </div>
         </div>
-        <Footer />
       </div>
-    </>
+      <Footer />
+    </section>
   );
 };

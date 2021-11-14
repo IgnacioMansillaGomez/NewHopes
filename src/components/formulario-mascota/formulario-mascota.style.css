@@ -3,8 +3,13 @@
 }
 
 .pet-form-error {
-  color: red;
+  color: rgb(211, 46, 46);
   font-weight: bold;
   padding-top: 10px;
   text-align: left;
+}
+
+.full-view-informacion__main {
+  min-height: calc(100vh - 185px);
+  background-color: #fce4ec;
 }

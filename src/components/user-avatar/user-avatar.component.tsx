@@ -62,7 +62,14 @@ export const UserAvatar = () => {
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
         <Tooltip title="Cuenta">
           <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
-            <Avatar sx={{ width: 32, height: 32 }}></Avatar>
+            <Avatar
+              sx={{
+                width: 32,
+                height: 32,
+                color: "White",
+                backgroundColor: "purple",
+              }}
+            ></Avatar>
           </IconButton>
         </Tooltip>
       </Box>

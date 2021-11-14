@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { SessionContext } from "../../contexts/session-manager.context";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Header } from "../header/header.component";
 import { GenericSerializer } from "../../api/generic.serializer";
 import { Loading } from "../loading/loading.component";
@@ -10,6 +10,8 @@ import { MascotasAPI } from "../../api/mascotas.api";
 import { AdminModalAdopcion } from "../admin-modal-adopcion/admin-modal-adopcion.component";
 import { Button } from "@mui/material";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+
+import "./admin-adopciones.style.css";
 
 export const AdminAdopciones = () => {
   const history = useHistory();
@@ -89,11 +91,11 @@ export const AdminAdopciones = () => {
   };
 
   return (
-    <>
-      <div className="container">
-        <Header />
-        <div className="container">
-          <div className="row mt-5 mb-4 text-center titulo">
+    <section className="fondo">
+      <Header />
+      <div className="container bg-white">
+        <div className="container ">
+          <div className="row pt-5 pb-4 text-center titulo">
             <div className="col">
               <h2>Listado todas las Solicitudes</h2>
             </div>
@@ -129,15 +131,23 @@ export const AdminAdopciones = () => {
                           }
                         >
                           <th scope="col">{solicitud.fecha_emision}</th>
-                          <th scope="col">{solicitud.pet.nombre}</th>
+                          <th scope="col">
+                            <Link
+                              to={`/full-view-pet/${solicitud.pet.id}`}
+                              color="main.primary"
+                              className="links"
+                            >
+                              {solicitud.pet.nombre}
+                            </Link>
+                          </th>
                           <th scope="col">{solicitud.nombre_adoptante}</th>
                           <th scope="col">{solicitud.estado}</th>
                           <th scope="col">
                             <Button
                               startIcon={<RemoveRedEyeIcon />}
-                              title="Editar"
+                              title="Ver"
+                              color="primary"
                               sx={{
-                                color: "#A79CE7",
                                 marginRight: 8,
                               }}
                               onClick={() => handleShow(solicitud)}
@@ -160,8 +170,8 @@ export const AdminAdopciones = () => {
             )}
           </div>
         </div>
-        <Footer />
       </div>
-    </>
+      <Footer />
+    </section>
   );
 };

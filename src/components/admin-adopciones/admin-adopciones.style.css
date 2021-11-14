@@ -1,0 +1,13 @@
+.fondo {
+  min-height: calc(100vh - 185px);
+  background-color: #fce4ec;
+}
+
+.links {
+  text-decoration: none;
+  color: #b04cc2;
+}
+.links:hover {
+  color: #b66cb0;
+  text-decoration: underline;
+}

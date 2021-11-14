@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   Alert,
+  AlertTitle,
   Button,
   Collapse,
   FormControl,
@@ -32,7 +33,7 @@ export const FormularioMascota = (props: any) => {
   const { pet } = props;
   const [petId, setPetId] = useState(pet ? pet.id : undefined);
   const [name, setName] = useState(pet ? pet.nombre : "");
-  const [size, setSize] = useState(pet ? pet.tamano : "chico");
+  const [size, setSize] = useState(pet ? pet.tamano : "Chico");
   const [specie, setSpecie] = useState(pet ? pet.especie : "Perro");
   const [razaId, setRazaId] = useState(pet ? pet.id_raza : undefined);
   const [razas, setRazas] = useState([]);
@@ -175,21 +176,20 @@ export const FormularioMascota = (props: any) => {
   };
 
   return (
-    <>
+    <div className="full-view-informacion__main">
       {loading && <Loading />}
       {!loading && (
-        <div className="container">
-          <div className="row mt-3">
+        <div className="container bg-white">
+          <div className="row">
             <div className="col-lg-12">
-              <GoBack />
               <h1 className="text-center">
                 {petId ? "Editar" : "Cargar"} mascota
               </h1>
             </div>
           </div>
-          <div className="col-lg-8 offset-lg-4 mt-4">
+          <div className="container bg-white">
             <div className="form-group row ">
-              <div className="col-6">
+              <div className="col-6 offset-3">
                 <TextField
                   fullWidth
                   id="standard-basic"
@@ -197,12 +197,15 @@ export const FormularioMascota = (props: any) => {
                   variant="standard"
                   onChange={handleNameChange}
                   value={name}
+                  inputProps={{
+                    maxLength: 10,
+                  }}
                 />
               </div>
             </div>
-            <div className="form-group row mt-4">
-              <div className="col-3">
-                <FormControl component="fieldset">
+            <div className="form-group row mt-4 ">
+              <div className="col-3 offset-3 ">
+                <FormControl component="fieldset" fullWidth>
                   <FormLabel component="legend">Especie</FormLabel>
                   <RadioGroup
                     row
@@ -228,7 +231,7 @@ export const FormularioMascota = (props: any) => {
               {/* Sexo */}
 
               <div className="col-3">
-                <FormControl component="fieldset">
+                <FormControl component="fieldset" fullWidth>
                   <FormLabel component="legend">Sexo</FormLabel>
                   <RadioGroup
                     row
@@ -255,8 +258,12 @@ export const FormularioMascota = (props: any) => {
             {/* Vacunas */}
 
             <div className="form-group row ">
-              <div className="col-3">
-                <FormControl variant="standard" sx={{ mt: 3, minWidth: 190 }}>
+              <div className="col-3 offset-3">
+                <FormControl
+                  variant="standard"
+                  sx={{ mt: 3, minWidth: 190 }}
+                  fullWidth
+                >
                   <InputLabel id="demo-simple-select-standard-label">
                     Vacunas
                   </InputLabel>
@@ -275,8 +282,12 @@ export const FormularioMascota = (props: any) => {
 
               {/* Raza */}
 
-              <div className="col-3">
-                <FormControl variant="standard" sx={{ mt: 3, minWidth: 190 }}>
+              <div className="col-3 ">
+                <FormControl
+                  variant="standard"
+                  sx={{ mt: 3, minWidth: 190 }}
+                  fullWidth
+                >
                   <InputLabel id="demo-simple-select-standard-label">
                     Raza
                   </InputLabel>
@@ -286,6 +297,7 @@ export const FormularioMascota = (props: any) => {
                     onChange={handleOnChangeRace}
                     label="Raza"
                     value={razaId}
+                    defaultValue={razaId}
                   >
                     {razas.map((item: any, idx) => {
                       return (
@@ -302,8 +314,12 @@ export const FormularioMascota = (props: any) => {
             {/* Pelaje */}
 
             <div className="form-group row">
-              <div className="col-3">
-                <FormControl variant="standard" sx={{ mt: 3, minWidth: 190 }}>
+              <div className="col-3 offset-3">
+                <FormControl
+                  variant="standard"
+                  sx={{ mt: 3, minWidth: 190 }}
+                  fullWidth
+                >
                   <InputLabel id="demo-simple-select-standard-label">
                     Largo Pelaje
                   </InputLabel>
@@ -324,7 +340,11 @@ export const FormularioMascota = (props: any) => {
               {/* Edad */}
 
               <div className="col-3">
-                <FormControl variant="standard" sx={{ mt: 3, minWidth: 190 }}>
+                <FormControl
+                  variant="standard"
+                  sx={{ mt: 3, minWidth: 190 }}
+                  fullWidth
+                >
                   <InputLabel id="demo-simple-select-standard-label">
                     Edad
                   </InputLabel>
@@ -351,13 +371,64 @@ export const FormularioMascota = (props: any) => {
               </div>
             </div>
 
-            {/* COLOR PELAJE */}
+            {/* Carga Imagen */}
 
-            <div className="form-group row mt-3">
-              <div className="col-6">
+            <div className="form-group row mt-1">
+              <div className="col-3 offset-3 ">
+                <label htmlFor="contained-button-file" className="mt-5">
+                  <input
+                    accept="image/jpeg"
+                    id="contained-button-file"
+                    type="file"
+                    style={{
+                      display: "none",
+                    }}
+                    onChange={(event) => handleFile(event)}
+                  />
+                  <LoadingButton
+                    startIcon={<PhotoCameraIcon />}
+                    variant="contained"
+                    component="span"
+                    loading={loadingImage || savingPet}
+                    loadingPosition="end"
+                  >
+                    Subir Imagen
+                  </LoadingButton>
+                </label>
+              </div>
+              {/* Tamaño */}
+              <div className="col-lg-3">
                 <FormControl
                   variant="standard"
-                  sx={{ mt: 3, minWidth: 190 }}
+                  sx={{ mt: 4, minWidth: 190 }}
+                  fullWidth
+                >
+                  <InputLabel id="demo-simple-select-standard-label">
+                    Tamaño
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-standard-label"
+                    id="demo-simple-select-standard"
+                    onChange={handleSizesChange}
+                    label="Tamaño"
+                    value={size}
+                    defaultValue={size}
+                  >
+                    <MenuItem value={"Chico"}>Chico</MenuItem>
+                    <MenuItem value={"Mediano"}>Mediano</MenuItem>
+                    <MenuItem value={"Grande"}>Grande</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+            </div>
+
+            {/* Pelaje */}
+
+            <div className="form-group row mt-4">
+              <div className="col-6 offset-3">
+                <FormControl
+                  variant="standard"
+                  sx={{ minWidth: 190 }}
                   fullWidth
                 >
                   <InputLabel id="demo-simple-select-standard-label">
@@ -378,76 +449,11 @@ export const FormularioMascota = (props: any) => {
                   </Select>
                 </FormControl>
               </div>
-            </div>
-
-            {/* Tamaño */}
-
-            <div className="form-group row mt-0">
-              <div className="col-6">
-                <FormControl component="fieldset" sx={{ mt: 3 }}>
-                  <FormLabel component="legend">Tamaño</FormLabel>
-                  <RadioGroup
-                    row
-                    aria-label="Tamaño"
-                    name="cboTamano"
-                    onChange={handleSizesChange}
-                    value={size}
-                  >
-                    <FormControlLabel
-                      value="chico"
-                      control={<Radio size="small" />}
-                      label="Chico"
-                    />
-                    <FormControlLabel
-                      value="mediano"
-                      control={<Radio size="small" />}
-                      label="Mediano"
-                    />
-                    <FormControlLabel
-                      value="grande"
-                      control={<Radio size="small" />}
-                      label="Grande"
-                    />
-                    <FormControlLabel
-                      value="otro"
-                      control={<Radio size="small" />}
-                      label="Otro"
-                    />
-                  </RadioGroup>
-                </FormControl>
-              </div>
-
-              {/* Carga Imagen */}
-
-              <div className="form-group row mt-3">
-                <div className="col-lg-6">
-                  <label htmlFor="contained-button-file">
-                    <input
-                      accept="image/jpeg"
-                      id="contained-button-file"
-                      type="file"
-                      style={{
-                        display: "none",
-                      }}
-                      onChange={(event) => handleFile(event)}
-                    />
-                    <LoadingButton
-                      startIcon={<PhotoCameraIcon />}
-                      variant="contained"
-                      component="span"
-                      loading={loadingImage || savingPet}
-                      loadingPosition="end"
-                    >
-                      Subir Imagen
-                    </LoadingButton>
-                  </label>
-                </div>
-              </div>
 
               {/* Boton */}
 
-              <div className="form-group row mt-4">
-                <div className="col-6">
+              <div className="form-group row mt-4 pb-5">
+                <div className="col-6 offset-3">
                   <Button
                     variant="contained"
                     color="secondary"
@@ -463,6 +469,7 @@ export const FormularioMascota = (props: any) => {
                     <>
                       <Collapse in={open}>
                         <Alert
+                          severity="success"
                           action={
                             <IconButton
                               aria-label="close"
@@ -477,11 +484,15 @@ export const FormularioMascota = (props: any) => {
                           }
                           sx={{ mb: 2 }}
                         >
-                          ¡Mascota {petId ? "Editada" : "Agregada"} con éxito!
+                          <AlertTitle>
+                            ¡Mascota {petId ? "Editada" : "Agregada"} con éxito!
+                          </AlertTitle>
+                          This is a success alert —{" "}
+                          <strong>check it out!</strong>
                         </Alert>
                       </Collapse>
 
-                      <div>
+                      <div className="mt-1">
                         <Button
                           variant="contained"
                           endIcon={<ArrowForwardIcon />}
@@ -493,7 +504,9 @@ export const FormularioMascota = (props: any) => {
                       </div>
                     </>
                   ) : (
-                    <div className="pet-form-error">{error}</div>
+                    <div className="pet-form-error col-6 offset-3 text-center">
+                      {error}
+                    </div>
                   )}
                 </div>
               </div>
@@ -501,6 +514,6 @@ export const FormularioMascota = (props: any) => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };

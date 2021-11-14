@@ -27,6 +27,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 /*Tercer componentes propios */
 
 import { auth } from "../../bd/fireAuth";
+import { ModalTerminosCondiciones } from "../modal-terminos-condiciones/modal-terminos-condiciones.component";
 
 /*Y al final el css*/
 
@@ -63,9 +64,6 @@ export const Register = () => {
       })
       //Manejo de errores en creación de usuario
       .catch((error) => {
-        // const errorCode = error.code;
-        // const errorMessage = error.message;
-        console.log(error);
         if (error.code === "auth/invalid-email") {
           setMensajeError("Email inválido");
         } else if (error.code === "auth/weak-password") {
@@ -96,73 +94,73 @@ export const Register = () => {
       });
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: "primary.main" }}></Avatar>
+        <Typography component="h1" variant="h5">
+          Registrarse
+        </Typography>
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          variant="standard"
+          type="email"
+          id="email"
+          label="Correo electrónico"
+          name="email"
+          autoComplete="email"
+          autoFocus
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          variant="standard"
+          name="password"
+          label="Contraseña"
+          type="password"
+          id="password"
+          autoComplete="current-password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button
+          type="button"
+          fullWidth
+          variant="contained"
+          onClick={crearUsuario}
+          sx={{ mt: 3 }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>
-          <Typography component="h1" variant="h5">
-            Registrarse
-          </Typography>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            variant="standard"
-            type="email"
-            id="email"
-            label="Correo electrónico"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            variant="standard"
-            name="password"
-            label="Contraseña"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button
-            type="button"
-            fullWidth
-            variant="contained"
-            onClick={crearUsuario}
-            sx={{ mt: 3 }}
-          >
-            Registrarse con correo
-          </Button>
-          <Button
-            variant="contained"
-            type="button"
-            fullWidth
-            sx={{ mt: 1, mb: 2 }}
-            endIcon={<FcGoogle />}
-            onClick={registroGoogle}
-          >
-            Ingresar con Google
-          </Button>
-          {mensajeError ? <div>{mensajeError}</div> : <span></span>}
-          <Grid container>
-            <Grid item>
-              <Link to="/login">Ya tienes cuenta? Inicia sesion</Link>
-            </Grid>
+          Registrarse con correo
+        </Button>
+        <Button
+          variant="contained"
+          type="button"
+          fullWidth
+          sx={{ mt: 1, mb: 2 }}
+          endIcon={<FcGoogle />}
+          onClick={registroGoogle}
+        >
+          Registrarse con Google
+        </Button>
+        <p>Al registrarse esta aceptando nuestros Terminos y Condiciones</p>
+        <ModalTerminosCondiciones />
+        {mensajeError ? <div>{mensajeError}</div> : <span></span>}
+        <Grid container>
+          <Grid item>
+            <Link to="/login">Ya tienes cuenta? Inicia sesion</Link>
           </Grid>
-        </Box>
-      </Container>
-    </ThemeProvider>
+        </Grid>
+      </Box>
+    </Container>
   );
 };

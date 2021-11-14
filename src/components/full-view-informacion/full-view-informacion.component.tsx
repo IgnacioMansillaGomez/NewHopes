@@ -23,11 +23,11 @@ export const FullViewInformacion = (props: any) => {
   return (
     <div className="container full-view-informacion__main">
       <div className="row ">
-        <div className="col-lg-10 mb-5">
-          <h1 className="text-center">¡Conoce a {pet.nombre}!</h1>
+        <div className="col-lg-12 mb-5">
+          <h1 className="text-center fw-bold">¡Conoce a {pet.nombre}!</h1>
         </div>
       </div>
-      <div className="col-lg-9">
+      <div className="col-lg-12">
         <div className="form-group row mt-3">
           <div className="col-lg-6">
             <ListGroup variant="flush">
@@ -136,7 +136,7 @@ export const FullViewInformacion = (props: any) => {
               fullWidth
               id="standard-basic"
               variant="standard"
-              defaultValue={pet.tamano}
+              defaultValue={pet.tamano.charAt(0).toUpperCase()}
               InputProps={{
                 readOnly: true,
               }}
