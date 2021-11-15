@@ -19,7 +19,12 @@ export const ModalTerminosCondiciones = () => {
 
   return (
     <div>
-      <Button variant="text" onClick={handleClickOpen}>
+      <Button
+        variant="outlined"
+        fullWidth
+        onClick={handleClickOpen}
+        sx={{ mt: 0.9 }}
+      >
         Leer Términos y Condiciones
       </Button>
       <Dialog
@@ -28,7 +33,7 @@ export const ModalTerminosCondiciones = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
+        <DialogTitle id="alert-dialog-title" sx={{ mt: 1 }}>
           Términos y Condiciones New Hopes
         </DialogTitle>
         <DialogContent>

@@ -22,12 +22,14 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { FcGoogle } from "react-icons/fc";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 
 /*Tercer componentes propios */
 
 import { auth } from "../../bd/fireAuth";
 import { ModalTerminosCondiciones } from "../modal-terminos-condiciones/modal-terminos-condiciones.component";
+import { Header } from "../header/header.component";
+import { Footer } from "../../footer/footer.component";
 
 /*Y al final el css*/
 
@@ -76,91 +78,78 @@ export const Register = () => {
       });
   };
 
-  //Registro a través del provider Google
-  const provider = new GoogleAuthProvider(); //Definimos el provider
-  auth.languageCode = "es"; //Seteamos el idioma
-  const registroGoogle = () =>
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential?.accessToken;
-        const user: any = result.user.email;
-        setEmail(user);
-        history.push("/home");
-      })
-      .catch((error) => {
-        const credential: any = GoogleAuthProvider.credentialFromError(error);
-        setMensajeError(credential);
-      });
-
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Avatar sx={{ m: 1, bgcolor: "primary.main" }}></Avatar>
-        <Typography component="h1" variant="h5">
-          Registrarse
-        </Typography>
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          variant="standard"
-          type="email"
-          id="email"
-          label="Correo electrónico"
-          name="email"
-          autoComplete="email"
-          autoFocus
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          variant="standard"
-          name="password"
-          label="Contraseña"
-          type="password"
-          id="password"
-          autoComplete="current-password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Button
-          type="button"
-          fullWidth
-          variant="contained"
-          onClick={crearUsuario}
-          sx={{ mt: 3 }}
-        >
-          Registrarse con correo
-        </Button>
-        <Button
-          variant="contained"
-          type="button"
-          fullWidth
-          sx={{ mt: 1, mb: 2 }}
-          endIcon={<FcGoogle />}
-          onClick={registroGoogle}
-        >
-          Registrarse con Google
-        </Button>
-        <p>Al registrarse esta aceptando nuestros Terminos y Condiciones</p>
-        <ModalTerminosCondiciones />
-        {mensajeError ? <div>{mensajeError}</div> : <span></span>}
-        <Grid container>
-          <Grid item>
-            <Link to="/login">Ya tienes cuenta? Inicia sesion</Link>
-          </Grid>
-        </Grid>
-      </Box>
-    </Container>
+    <>
+      <Header />
+      <div className="container login-cont__main bg-white">
+        <div className="row ">
+          <div className="col">
+            <Container component="main" maxWidth="xs">
+              <CssBaseline />
+              <Box
+                sx={{
+                  marginTop: 8,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <Avatar sx={{ m: 1, bgcolor: "primary.main" }}></Avatar>
+                <Typography component="h1" variant="h5">
+                  Registrarse
+                </Typography>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  variant="standard"
+                  type="email"
+                  id="email"
+                  label="Correo electrónico"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  variant="standard"
+                  name="password"
+                  label="Contraseña"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <Button
+                  type="button"
+                  fullWidth
+                  variant="contained"
+                  onClick={crearUsuario}
+                  sx={{ mt: 3, mb: 0.9 }}
+                >
+                  Registrarse con correo
+                </Button>
+                <Grid container>
+                  <Grid item>
+                    <Link to="/login">Ya tienes cuenta? Inicia sesion</Link>
+                  </Grid>
+                </Grid>
+                <p>
+                  Al registrarse esta aceptando nuestros
+                  <strong> Terminos y Condiciones</strong>
+                  <ModalTerminosCondiciones />
+                </p>
+                {mensajeError ? <div>{mensajeError}</div> : <span></span>}
+              </Box>
+            </Container>
+          </div>
+        </div>
+      </div>
+
+      <Footer />
+    </>
   );
 };

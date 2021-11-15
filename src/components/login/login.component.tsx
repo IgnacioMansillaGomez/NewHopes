@@ -18,8 +18,12 @@ import { useHistory } from "react-router-dom";
 
 import { SessionContext } from "../../contexts/session-manager.context";
 import { Header } from "../header/header.component";
-import { ModalAdopcion } from "../modal-adopcion/modal-adopcion.component";
 import { Footer } from "../../footer/footer.component";
+
+import "./login.style.css";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "../../bd/fireAuth";
+import { FcGoogle } from "react-icons/fc";
 
 export const Login: React.FC = (props) => {
   const theme = createTheme();
@@ -51,11 +55,27 @@ export const Login: React.FC = (props) => {
         });
     }
   };
+  //Registro a través del provider Google
+  const provider = new GoogleAuthProvider(); //Definimos el provider
+  auth.languageCode = "es"; //Seteamos el idioma
+  const registroGoogle = () =>
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken;
+        const user: any = result.user.email;
+        setEmail(user);
+        history.push("/home");
+      })
+      .catch((error) => {
+        const credential: any = GoogleAuthProvider.credentialFromError(error);
+        setMensajeError(credential);
+      });
 
   return (
     <>
       <Header />
-      <div className="container login-cont__main">
+      <div className="container login-cont__main bg-white">
         <div className="row ">
           <div className="col">
             <Container component="main" maxWidth="xs">
@@ -99,6 +119,7 @@ export const Login: React.FC = (props) => {
                   variant="standard"
                   sx={{ mt: 3 }}
                 />
+
                 <Button
                   type="button"
                   fullWidth
@@ -107,6 +128,16 @@ export const Login: React.FC = (props) => {
                   sx={{ mt: 3 }}
                 >
                   Ingresar
+                </Button>
+                <Button
+                  variant="contained"
+                  type="button"
+                  fullWidth
+                  sx={{ mt: 1.5, mb: 1 }}
+                  endIcon={<FcGoogle />}
+                  onClick={registroGoogle}
+                >
+                  Ingresar con Google
                 </Button>
                 {mensajeError ? <div>{mensajeError}</div> : <span></span>}
                 <Grid container>

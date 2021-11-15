@@ -8,6 +8,8 @@ import { Footer } from "../../footer/footer.component";
 import { SolicitudesAPI } from "../../api/solicitudes.api";
 import { MascotasAPI } from "../../api/mascotas.api";
 
+import "./adopciones.style.css";
+
 export const Adopciones = () => {
   const history = useHistory();
   const sessionContext = useContext(SessionContext);
@@ -70,11 +72,11 @@ export const Adopciones = () => {
   };
 
   return (
-    <>
-      <div className="container">
-        <Header />
-        <div className="container">
-          <div className="row mt-5 mb-4 text-center titulo">
+    <section className="adopciones__main">
+      <Header />
+      <div className="container-fluid ">
+        <div className="container adopciones-cont__main">
+          <div className="row pt-5 pb-4 text-center titulo">
             <div className="col">
               <h2>Mis Adopciones</h2>
             </div>
@@ -118,8 +120,8 @@ export const Adopciones = () => {
             )}
           </div>
         </div>
-        <Footer />
       </div>
-    </>
+      <Footer />
+    </section>
   );
 };

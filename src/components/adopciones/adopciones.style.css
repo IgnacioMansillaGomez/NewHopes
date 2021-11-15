@@ -1,0 +1,8 @@
+.adopciones-cont__main {
+  min-height: calc(100vh - 185px);
+  background-color: #fff;
+}
+
+.adopciones__main {
+  background-color: #fce4ec;
+}
