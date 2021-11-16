@@ -7,6 +7,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
+  sendEmailVerification,
 } from "firebase/auth";
 import { Avatar } from "@mui/material";
 import Button from "@mui/material/Button";
@@ -21,7 +22,6 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { FcGoogle } from "react-icons/fc";
 import { createTheme } from "@mui/material/styles";
 
 /*Tercer componentes propios */
@@ -60,9 +60,8 @@ export const Register = () => {
   const crearUsuario = () => {
     //Promesa
     createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then((userCredential: any) => {
         const user = userCredential.user;
-        console.log(user);
       })
       //Manejo de errores en creación de usuario
       .catch((error) => {

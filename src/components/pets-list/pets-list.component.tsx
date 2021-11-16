@@ -13,70 +13,32 @@ import { Footer } from "../../footer/footer.component";
 import "./pet-list.style.css";
 import { Button } from "@mui/material";
 export const PetsList = () => {
-  const [petsList, setPetsList] = useState<any[]>([]);
+  const [petsList, setPetsList] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [lastPet, setLastPet] = useState<any>();
+  // const [lastPet, setLastPet] = useState<any>();
 
   useEffect(() => {
-    // getPets();
-    setLoading(true);
-    MascotasAPI.getPetsPagination().then((item) => {
-      const ps = item.docs.map((i) => i.data());
-      const last = item.docs[item.docs.length - 1];
-      setPetsList(ps);
-      setLastPet(last);
-      setLoading(false);
-    });
+    getPets();
   }, []);
 
-  const nextPet = () => {
-    MascotasAPI.getLastPagination(lastPet).then((item) => {
-      const ps = item.docs.map((i) => i.data());
-      const last = item.docs[item.docs.length - 1];
-      setPetsList((petsList) => [...petsList, ...ps]);
-      setLastPet(last);
+  const getPets = () => {
+    setLoading(true);
+    MascotasAPI.getAllNotAdoptedPets().then((response: any) => {
+      if (response.size !== 0) {
+        const ps = GenericSerializer.serializeAll(response);
+        setPetsList(ps);
+        setLoading(false);
+      }
     });
   };
 
-  // const petsRef = MascotasAPI.getPetsPagination();
-  // const petRefLast =
-
-  // const getPets = () => {
-  //   setLoading(true);
-  //   MascotasAPI.getAllNotAdoptedPets().then((response: any) => {
-  //     if (response.size !== 0) {
-  //       const pets = GenericSerializer.serializeAll(response);
-  //       setPetsList(pets);
-  //       setLoading(false);
-  //     } else {
-  //       setLoading(false);
-  //       console.log("No hay registros");
-  //     }
+  // const nextPet = () => {
+  //   MascotasAPI.getLastPagination(lastPet).then((item) => {
+  //     const ps = item.docs.map((i) => i.data());
+  //     const last = item.docs[item.docs.length - 1];
+  //     setPetsList((petsList) => [...petsList, ...ps]);
+  //     setLastPet(last);
   //   });
-  // };
-  // petsRef.then((response: any) => {
-  //   if (response.size !== 0) {
-  //     const pets = GenericSerializer.serializeAll(response);
-
-  //     const lastPet = petsList.length - 1;
-  //     setPetsList(pets);
-  //     setLastPet(lastPet);
-  //     setLoading(false);
-  //   } else {
-  //     setLoading(false);
-  //   }
-  // });
-  // };
-
-  // const updateState = (response: any) => {
-  //   const pets = GenericSerializer.serializeAll(response);
-  //   const lastPet = petsList.length - 1;
-  //   setPetsList((pets) => [...petsList, ...pets]);
-  //   setLastPet(lastPet);
-  //   setLoading(false);
-  // };
-
-  //
   // };
 
   return (
@@ -113,11 +75,13 @@ export const PetsList = () => {
               })}
             </>
           )}
-          <div className="row">
-            <Button onClick={nextPet} className="mt-1">
-              Ver mas
-            </Button>
-          </div>
+          {/* <div className="row justify-content-center">
+            <div className="col-7">
+              <Button onClick={nextPet} fullWidth>
+                Ver mas
+              </Button>
+            </div>
+          </div> */}
 
           {petsList.length === 0 && !loading && (
             <div className="container">
@@ -132,9 +96,8 @@ export const PetsList = () => {
           )}
         </div>
       </div>
+
       <Footer />
     </div>
-
-    // </div>
   );
 };

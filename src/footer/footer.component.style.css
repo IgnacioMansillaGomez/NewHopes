@@ -1,12 +1,25 @@
 .cont {
-  /* background: rgb(204, 196, 252);
-  background: linear-gradient(
-    0deg,
-    rgba(204, 196, 252, 1) 0%,
-    rgba(167, 156, 231, 1) 0%
-  ); */
-  background-color: #d26e9a;
+  background-color: #d1789f;
 }
 .text {
   font-size: 1.2rem;
+}
+.text-contact {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  color: rgb(231, 231, 231);
+  font-size: 2rem;
+  font-weight: bolder;
+  text-decoration: underline;
+}
+
+.p-2 {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+
+  text-decoration: none;
+  color: #1e1e1f;
+  font-size: 1rem;
+}
+
+.p-2:hover {
+  color: azure;
 }

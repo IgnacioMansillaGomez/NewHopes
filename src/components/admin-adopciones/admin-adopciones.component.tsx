@@ -93,7 +93,7 @@ export const AdminAdopciones = () => {
   return (
     <section className="fondo">
       <Header />
-      <div className="container bg-white">
+      <div className="container bg-white fondo">
         <div className="container ">
           <div className="row pt-5 pb-4 text-center titulo">
             <div className="col">

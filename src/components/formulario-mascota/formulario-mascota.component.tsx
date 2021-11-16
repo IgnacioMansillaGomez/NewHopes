@@ -465,49 +465,50 @@ export const FormularioMascota = (props: any) => {
                   </Button>
                 </div>
                 <div className="row">
-                  {showSuccessMessage ? (
-                    <>
-                      <Collapse in={open}>
-                        <Alert
-                          severity="success"
-                          action={
-                            <IconButton
-                              aria-label="close"
-                              color="inherit"
-                              size="small"
-                              onClick={() => {
-                                setOpen(false);
-                              }}
-                            >
-                              <CloseIcon fontSize="inherit" />
-                            </IconButton>
-                          }
-                          sx={{ mb: 2 }}
-                        >
-                          <AlertTitle>
-                            ¡Mascota {petId ? "Editada" : "Agregada"} con éxito!
-                          </AlertTitle>
-                          This is a success alert —{" "}
-                          <strong>check it out!</strong>
-                        </Alert>
-                      </Collapse>
+                  <div className="col-10">
+                    {showSuccessMessage ? (
+                      <>
+                        <Collapse in={open}>
+                          <Alert
+                            severity="success"
+                            action={
+                              <IconButton
+                                aria-label="close"
+                                color="inherit"
+                                size="small"
+                                onClick={() => {
+                                  setOpen(false);
+                                }}
+                              >
+                                <CloseIcon fontSize="inherit" />
+                              </IconButton>
+                            }
+                            sx={{ mb: 2 }}
+                          >
+                            <AlertTitle>
+                              ¡Mascota {petId ? "Editada" : "Agregada"} con
+                              éxito!
+                            </AlertTitle>
+                          </Alert>
+                        </Collapse>
 
-                      <div className="mt-1">
-                        <Button
-                          variant="contained"
-                          endIcon={<ArrowForwardIcon />}
-                          onClick={handleGoList}
-                          fullWidth
-                        >
-                          Ir hacia listado de Mascotas
-                        </Button>
+                        <div className="mt-1">
+                          <Button
+                            variant="contained"
+                            endIcon={<ArrowForwardIcon />}
+                            onClick={handleGoList}
+                            fullWidth
+                          >
+                            Ir hacia listado de Mascotas
+                          </Button>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="pet-form-error col-6 offset-3 text-center">
+                        {error}
                       </div>
-                    </>
-                  ) : (
-                    <div className="pet-form-error col-6 offset-3 text-center">
-                      {error}
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

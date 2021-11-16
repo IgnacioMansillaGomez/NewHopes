@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Figure, ListGroup } from "react-bootstrap";
 import { DEFAULT_PET_IMAGE } from "../../constants/constants";
 import TextField from "@mui/material/TextField";
-import { GoBack } from "../go-back/go-back.component";
 import { Button } from "@mui/material";
 import { ModalAdopcion } from "../modal-adopcion/modal-adopcion.component";
 import { useRaza } from "../../hooks/use-raza.hook";
@@ -136,7 +135,7 @@ export const FullViewInformacion = (props: any) => {
               fullWidth
               id="standard-basic"
               variant="standard"
-              defaultValue={pet.tamano.charAt(0).toUpperCase()}
+              defaultValue={pet.tamano}
               InputProps={{
                 readOnly: true,
               }}
