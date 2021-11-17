@@ -66,14 +66,12 @@ export const AdminReports = () => {
       } else {
         noAdoptadas++;
       }
-      if (pet.tamano === "chico") {
+      if (pet.tamano === "Chico") {
         tamanoChico++;
-      } else if (pet.tamano === "mediano") {
+      } else if (pet.tamano === "Mediano") {
         tamanoMediano++;
-      } else if (pet.tamano === "grande") {
+      } else if (pet.tamano === "Grande") {
         tamanoGrande++;
-      } else {
-        tamanoOtro++;
       }
     });
     const dataAdopciones: any = [
@@ -85,7 +83,7 @@ export const AdminReports = () => {
       { name: "Chico", value: tamanoChico },
       { name: "Mediano", value: tamanoMediano },
       { name: "Grande", value: tamanoGrande },
-      { name: "Otro", value: tamanoOtro },
+      // { name: "Otro", value: tamanoOtro },
     ];
     setDataChartSize(dataTamano);
     setLoading(false);
