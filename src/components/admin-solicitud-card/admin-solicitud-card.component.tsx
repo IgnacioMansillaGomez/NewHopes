@@ -18,6 +18,7 @@ import "./admin-solicitud-card.style.css";
 import { SolicitudesAPI } from "../../api/solicitudes.api";
 import { MessageModal } from "../message-modal/message-moda.component";
 import { MascotasAPI } from "../../api/mascotas.api";
+import { DEFAULT_PET_IMAGE } from "../../constants/constants";
 
 export const AdminSolicitudCard = (props: any) => {
   const { solicitud, handleClose, solicitudesProcesadas } = props;
@@ -74,139 +75,245 @@ export const AdminSolicitudCard = (props: any) => {
     <>
       <div className="container">
         <div className="row">
-          <div className="col-12">
-            <h2>Datos de {solicitud.pet.nombre}</h2>
-          </div>
-        </div>
-
-        {/* NOMBRE Y APELLIDO */}
-
-        <div className="row mt-5">
           <div className="col-6">
-            <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-              <AccountCircle sx={{ color: "action.active", mr: 1, my: 0 }} />
-              {solicitud.nombre_adoptante}
-            </Box>
+            <h2 className="text-center">Datos Adoptante</h2>
           </div>
           <div className="col-6">
-            <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-              <AccountCircle sx={{ color: "action.active", mr: 1, my: 0 }} />
-              {solicitud.apellido_adoptante}
-            </Box>
+            <h2 className="text-center">Datos Adoptante</h2>
           </div>
         </div>
-
-        {/* Sexo */}
-
-        <div className="row mt-4">
-          <div className="col-10">
-            <FormControl component="fieldset">
-              <FormLabel component="legend">Genero</FormLabel>
-              {solicitud.sexo_adoptante}
-            </FormControl>
-          </div>
-        </div>
-
-        {/* TELEFONO */}
-
         <div className="row mt-3">
-          <div className="col-12">
-            <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-              <PhoneAndroidIcon
-                sx={{ color: "action.active", mr: 1, my: 0.5 }}
+          <div className="col-6">
+            <div className="card">
+              <div className="card-body">
+                <p className="card-text">
+                  <Box sx={{ display: "flex", alignItems: "flex-center" }}>
+                    <AccountCircle
+                      sx={{ color: "action.active", mr: 1, my: 0 }}
+                    />
+                    <p>
+                      <strong>Nombre Completo: </strong>
+                    </p>
+                    <p>
+                      {solicitud.nombre_adoptante}{" "}
+                      {solicitud.apellido_adoptante}
+                    </p>
+                  </Box>
+                </p>
+                <p className="card-text">
+                  {/* Sexo */}
+                  <Box sx={{ display: "flex", alignItems: "flex-center" }}>
+                    <AccountCircle
+                      sx={{ color: "action.active", mr: 1, my: 0 }}
+                    />
+                    <p>
+                      <strong>Genero: </strong>
+                    </p>
+                    <p>{solicitud.sexo_adoptante}</p>
+                  </Box>
+                </p>
+                <p className="card-text">
+                  <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                    <PhoneAndroidIcon
+                      sx={{ color: "action.active", mr: 1, my: 1.5 }}
+                    />
+                    <p>
+                      <strong>Telefono: </strong>
+                    </p>
+                    <p>{solicitud.telefono_adoptante}</p>
+                  </Box>
+                </p>
+                <p className="card-text">
+                  <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                    <MailIcon sx={{ color: "action.active", mr: 1, my: 1.5 }} />
+                    <p>
+                      <strong>E-mail: </strong>
+                    </p>
+                    <p>{solicitud.email_adoptante}</p>
+                  </Box>
+                </p>
+                <p className="card-text">
+                  <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                    <HomeIcon sx={{ color: "action.active", mr: 1, my: 1.5 }} />
+                    <p>
+                      <strong>Ciudad: </strong>
+                    </p>
+                    <p>{solicitud.ciudad_adoptante}</p>
+                  </Box>
+                </p>
+                <p className="card-text">
+                  <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                    <ApartmentIcon
+                      sx={{ color: "action.active", mr: 1, my: 1.5 }}
+                    />
+                    <p>
+                      <strong>Calle: </strong>
+                    </p>
+                    <p>{solicitud.calle_adoptante}</p>
+                  </Box>
+                </p>
+                <p className="card-text">
+                  <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                    <PetsIcon sx={{ color: "action.active", mr: 1, my: 1.5 }} />
+                    <p>
+                      <strong>Mascotas: </strong>
+                    </p>
+                    <p>{solicitud.mascotas_adoptante}</p>
+                  </Box>
+                </p>
+                <p className="card-text">
+                  <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                    <FaceIcon sx={{ color: "action.active", mr: 1, my: 1.5 }} />
+                    <p>
+                      <strong>Niños: </strong>
+                    </p>
+                    <p>{solicitud.ninos_adoptante}</p>
+                  </Box>
+                </p>
+                <p className="card-text">
+                  <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                    <WorkIcon sx={{ color: "action.active", mr: 1, my: 1.5 }} />
+                    <p>
+                      <strong>Ocupacion: </strong>
+                    </p>
+                    <p>{solicitud.ocupacion_adoptante}</p>
+                  </Box>
+                </p>
+                <p className="card-text">
+                  <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                    <HomeWorkIcon
+                      sx={{ color: "action.active", mr: 1, my: 1.5 }}
+                    />
+                    <p>
+                      <strong>Vivienda: </strong>
+                    </p>
+                    <p>{solicitud.vivienda_adoptante}</p>
+                  </Box>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="col-6">
+            <div className="card">
+              <img
+                src={
+                  solicitud.pet.img_url
+                    ? solicitud.pet.img_url
+                    : DEFAULT_PET_IMAGE
+                }
+                alt="Imagen Mascota"
               />
-              {solicitud.telefono_adoptante}
-            </Box>
+              <div className="card-body">
+                <p className="card-text">
+                  <Box sx={{ display: "flex", alignItems: "flex-center" }}>
+                    <AccountCircle
+                      sx={{ color: "action.active", mr: 1, my: 0 }}
+                      color="success"
+                    />
+                    <p>
+                      <strong>Nombre Mascota: </strong>
+                    </p>
+                    <p>{solicitud.pet.nombre}</p>
+                  </Box>
+                </p>
+                <p className="card-text">
+                  {/* Sexo */}
+                  <Box sx={{ display: "flex", alignItems: "flex-center" }}>
+                    <AccountCircle
+                      sx={{ color: "action.active", mr: 1, my: 0 }}
+                    />
+                    <p>
+                      <strong>Genero: </strong>
+                    </p>
+                    <p>{solicitud.sexo_adoptante}</p>
+                  </Box>
+                </p>
+                <p className="card-text">
+                  <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                    <PhoneAndroidIcon
+                      sx={{ color: "action.active", mr: 1, my: 1.5 }}
+                    />
+                    <p>
+                      <strong>Telefono: </strong>
+                    </p>
+                    <p>{solicitud.telefono_adoptante}</p>
+                  </Box>
+                </p>
+                <p className="card-text">
+                  <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                    <MailIcon sx={{ color: "action.active", mr: 1, my: 1.5 }} />
+                    <p>
+                      <strong>E-mail: </strong>
+                    </p>
+                    <p>{solicitud.email_adoptante}</p>
+                  </Box>
+                </p>
+                <p className="card-text">
+                  <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                    <HomeIcon sx={{ color: "action.active", mr: 1, my: 1.5 }} />
+                    <p>
+                      <strong>Ciudad: </strong>
+                    </p>
+                    <p>{solicitud.ciudad_adoptante}</p>
+                  </Box>
+                </p>
+                <p className="card-text">
+                  <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                    <ApartmentIcon
+                      sx={{ color: "action.active", mr: 1, my: 1.5 }}
+                    />
+                    <p>
+                      <strong>Calle: </strong>
+                    </p>
+                    <p>{solicitud.calle_adoptante}</p>
+                  </Box>
+                </p>
+                <p className="card-text">
+                  <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                    <PetsIcon sx={{ color: "action.active", mr: 1, my: 1.5 }} />
+                    <p>
+                      <strong>Mascotas: </strong>
+                    </p>
+                    <p>{solicitud.mascotas_adoptante}</p>
+                  </Box>
+                </p>
+                <p className="card-text">
+                  <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                    <FaceIcon sx={{ color: "action.active", mr: 1, my: 1.5 }} />
+                    <p>
+                      <strong>Niños: </strong>
+                    </p>
+                    <p>{solicitud.ninos_adoptante}</p>
+                  </Box>
+                </p>
+                <p className="card-text">
+                  <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                    <WorkIcon sx={{ color: "action.active", mr: 1, my: 1.5 }} />
+                    <p>
+                      <strong>Ocupacion: </strong>
+                    </p>
+                    <p>{solicitud.ocupacion_adoptante}</p>
+                  </Box>
+                </p>
+                <p className="card-text">
+                  <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                    <HomeWorkIcon
+                      sx={{ color: "action.active", mr: 1, my: 1.5 }}
+                    />
+                    <p>
+                      <strong>Vivienda: </strong>
+                    </p>
+                    <p>{solicitud.vivienda_adoptante}</p>
+                  </Box>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-
-        <div className="row mt-5">
-          {/* E-MAIL */}
-          <div className="col-12">
-            <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-              <MailIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
-              {solicitud.email_adoptante}
-            </Box>
-          </div>
-        </div>
-
-        {/* Ciudad y direccion */}
-
-        <div className="row mt-5">
-          <div className="col-6">
-            <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-              <HomeIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
-              {solicitud.ciudad_adoptante}
-            </Box>
-          </div>
-          <div className="col-6">
-            <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-              <ApartmentIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
-              {solicitud.calle_adoptante}
-            </Box>
-          </div>
-        </div>
-
-        {/* Animales */}
-
-        <div className="row mt-5">
-          <div className="col-6">
-            <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-              <FormControl component="fieldset">
-                <FormLabel component="legend">
-                  <PetsIcon sx={{ color: "action.active", mr: 1, my: 0.7 }} />
-                  ¿Tiene mascota/as *?
-                </FormLabel>
-                {solicitud.mascotas_adoptante}
-              </FormControl>
-            </Box>
-          </div>
-          <div className="col-6">
-            <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-              <FormControl component="fieldset">
-                <FormLabel component="legend">
-                  <FaceIcon sx={{ color: "action.active", mr: 1, my: 0.7 }} />
-                  ¿Niños en su hogar *?
-                </FormLabel>
-                {solicitud.ninos_adoptante}
-              </FormControl>
-            </Box>
-          </div>
-        </div>
-
-        {/* Ocupacion */}
-
-        <div className="row mt-3">
-          <div className="col-12">
-            <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-              <WorkIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
-              {solicitud.ocupacion_adoptante}
-            </Box>
-          </div>
-        </div>
-
-        {/* tipo vivienda */}
-
-        <div className="row mt-5">
-          <div className="col-12">
-            <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-              <HomeWorkIcon sx={{ color: "action.active", mr: 1, my: 1 }} />
-              <FormControl
-                variant="standard"
-                sx={{ m: 1, mt: 0, minWidth: 120 }}
-                fullWidth
-              >
-                <InputLabel id="demo-simple-select-standard-label">
-                  Tipo Vivienda
-                </InputLabel>
-                {solicitud.vivienda_adoptante}
-              </FormControl>
-            </Box>
-          </div>
-        </div>
-
-        {/* Boton Enviar */}
       </div>
+      {/*</div>
+      </div> */}
+
       <div className="row mt-5">
         <div className="col-12 d-flex justify-content-around">
           {/* estados: Pendiente, Aceptada, Rechazada, Finalizada */}

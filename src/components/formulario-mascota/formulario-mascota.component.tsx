@@ -150,7 +150,7 @@ export const FormularioMascota = (props: any) => {
   const handleOnSave = () => {
     const pet = {
       nombre: name,
-      fecha_publicacion: new Date().toDateString(),
+      fecha_publicacion: new Date().toLocaleDateString("es-AR"),
       especie: specie,
       tamano: size,
       vacunas: vaccinated,
@@ -464,8 +464,8 @@ export const FormularioMascota = (props: any) => {
                     {petId ? "Guardar" : "Crear"} Mascota
                   </Button>
                 </div>
-                <div className="row">
-                  <div className="col-10">
+                <div className="row mt-2">
+                  <div className="col-6 offset-3">
                     {showSuccessMessage ? (
                       <>
                         <Collapse in={open}>

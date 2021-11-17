@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Figure, ListGroup } from "react-bootstrap";
-import { DEFAULT_PET_IMAGE } from "../../constants/constants";
+import { ListGroup } from "react-bootstrap";
+
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import { ModalAdopcion } from "../modal-adopcion/modal-adopcion.component";

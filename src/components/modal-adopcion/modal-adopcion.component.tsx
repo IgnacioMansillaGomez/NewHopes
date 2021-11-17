@@ -1,6 +1,4 @@
-import { AnyCnameRecord } from "dns";
-import React, { useState } from "react";
-import { Button, Form, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { FormularioAdopcion } from "../formulario-adopcion/formulario-adopcion.component";
 
 import "./modal-adopcion.style.css";

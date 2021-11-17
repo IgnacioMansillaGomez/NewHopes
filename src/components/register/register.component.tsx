@@ -3,12 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 /*Segundo TODO lo que es libreria externa*/
-import {
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-  GoogleAuthProvider,
-  sendEmailVerification,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Avatar } from "@mui/material";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";

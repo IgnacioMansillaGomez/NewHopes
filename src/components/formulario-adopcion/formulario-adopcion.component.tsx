@@ -26,7 +26,7 @@ import PetsIcon from "@mui/icons-material/Pets";
 import WorkIcon from "@mui/icons-material/Work";
 import FaceIcon from "@mui/icons-material/Face";
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
-import { Form } from "react-bootstrap";
+
 import SendIcon from "@mui/icons-material/Send";
 import { useParams } from "react-router-dom";
 import { SolicitudesAPI } from "../../api/solicitudes.api";
@@ -100,10 +100,6 @@ export const FormularioAdopcion = (props: any) => {
     setNinos(e.target.value);
   };
 
-  const handleCantidadNinosChange = (e: any) => {
-    setCantidadNinos(e.target.value);
-  };
-
   const validar = (e: any) => {
     e.preventDefault();
     const emailPattern =
@@ -153,7 +149,7 @@ export const FormularioAdopcion = (props: any) => {
   const handleOnSend = () => {
     const peticion = {
       nombre_adoptante: nombreAdoptante,
-      fecha_emision: new Date().toDateString(),
+      fecha_emision: new Date().toLocaleDateString("es-AR"),
       apellido_adoptante: apellidoAdoptante,
       sexo_adoptante: sexo,
       telefono_celular: cellPhone,
@@ -482,35 +478,37 @@ export const FormularioAdopcion = (props: any) => {
           </div>
         </div>
       </div>
-      <div className="row">
-        <div className="col-12">
-          {showSuccessMessage ? (
-            <>
-              <Collapse in={open}>
-                <Alert
-                  action={
-                    <IconButton
-                      aria-label="close"
-                      color="inherit"
-                      size="small"
-                      onClick={() => {
-                        setOpen(false);
-                      }}
-                    >
-                      <CloseIcon fontSize="inherit" />
-                    </IconButton>
-                  }
-                  sx={{ mb: 2 }}
-                >
-                  ¡Formulario enviado exitosamente!
-                </Alert>
-              </Collapse>
-            </>
-          ) : (
-            <div className="adopcion-form">
-              <span className="adopcion-form-error">{error}</span>
-            </div>
-          )}
+      <div className="container">
+        <div className="row">
+          <div className="col-6 offset-3">
+            {showSuccessMessage ? (
+              <>
+                <Collapse in={open}>
+                  <Alert
+                    action={
+                      <IconButton
+                        aria-label="close"
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                          setOpen(false);
+                        }}
+                      >
+                        <CloseIcon fontSize="inherit" />
+                      </IconButton>
+                    }
+                    sx={{ mb: 2 }}
+                  >
+                    ¡Formulario enviado exitosamente!
+                  </Alert>
+                </Collapse>
+              </>
+            ) : (
+              <div className="adopcion-form">
+                <span className="adopcion-form-error">{error}</span>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </>

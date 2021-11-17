@@ -55,7 +55,12 @@ export const Footer = () => {
           <div className="col-12">
             <h6 className="py-3 text-center">
               Copyright
-              <a href="www.linkedin.com"> @IgnacioMansilla</a>
+              <a
+                href="https://www.linkedin.com/in/ignacio-mansilla-gomez-3502551a3/"
+                target="_blank"
+              >
+                @IgnacioMansilla
+              </a>
             </h6>
           </div>
         </div>

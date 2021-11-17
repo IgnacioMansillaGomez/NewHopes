@@ -10,7 +10,7 @@ export const AdminModalAdopcion = (props: any) => {
     <>
       <Modal show={show} handleClose={handleClose}>
         <Modal.Header closeButton onClick={handleClose}>
-          <Modal.Title>Datos Personales Adoptante</Modal.Title>
+          <Modal.Title>Datos de la Solicitud para Adopcion</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <AdminSolicitudCard

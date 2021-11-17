@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Carousel, Col, Container, Row } from "react-bootstrap";
+
 import { GenericSerializer } from "../../api/generic.serializer";
 import { MascotasAPI } from "../../api/mascotas.api";
 import { Loading } from "../loading/loading.component";
-import { GoBack } from "../go-back/go-back.component";
+
 import { Header } from "../header/header.component";
 import { PetCard } from "../pet-card/pet-card.component";
-import { DEFAULT_PET_IMAGE } from "../../constants/constants";
+
 import { CarouselPet } from "../carousel/carousel.component";
 import { Footer } from "../../footer/footer.component";
 
 import "./pet-list.style.css";
-import { Button } from "@mui/material";
+
 export const PetsList = () => {
   const [petsList, setPetsList] = useState([]);
   const [loading, setLoading] = useState(false);

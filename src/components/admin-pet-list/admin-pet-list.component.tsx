@@ -51,6 +51,23 @@ export const AdminPetList = () => {
     history.push(`/edit-pet/${id}`);
   };
 
+  const exportCvs = () => {
+    let csvContent = `#,Nombre,Especie,Tamaño,Edad,Adoptado\n`;
+    petsList.forEach((pet: any, id) => {
+      csvContent =
+        csvContent +
+        `${id + 1},${pet.nombre},${pet.especie},${pet.tamano},${
+          pet.edad_anos
+        },${pet.adoptado == "true" ? "Si" : "No"}\n`;
+    });
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", "mascotas.csv");
+    link.click();
+  };
+
   return (
     <div className="admin-pet__main">
       <Header />
@@ -75,7 +92,14 @@ export const AdminPetList = () => {
                     <th scope="col">Edad</th>
                     <th scope="col">Adoptado</th>
                     <th scope="col"></th>
-                    <th scope="col"></th>
+                    <th scope="col">
+                      <button
+                        onClick={exportCvs}
+                        className="btn btn-info btn-sm"
+                      >
+                        Exportar
+                      </button>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>

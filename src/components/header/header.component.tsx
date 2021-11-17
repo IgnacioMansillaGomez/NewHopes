@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 
 import { Container, Image, Navbar } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
@@ -21,9 +21,9 @@ export const Header = () => {
             <Navbar.Brand style={{ fontSize: "2rem" }}>New Hopes</Navbar.Brand>
           </Link>
           <img
-            src={process.env.PUBLIC_URL + "/img/logo-grande.jpg"}
+            src={process.env.PUBLIC_URL + "/img/patita.png"}
             width="30"
-            height="30"
+            height="27"
             className="d-inline-block align-top"
           />
           <Navbar.Toggle />
