@@ -41,8 +41,8 @@ export const ModalTerminosCondiciones = () => {
             Bienvenido a New Hopes proporcionado por Ignacio Mansilla. Nos
             complace ofrecerle acceso al Servicio (como se define más abajo),
             sujeto a estos términos y condiciones (los "Términos de Servicio") y
-            a la Política de Privacidad correspondiente de XXXX. Al acceder y
-            utilizar el Servicio, usted expresa su consentimiento, acuerdo y
+            a la Política de Privacidad correspondiente de New Hopes. Al acceder
+            y utilizar el Servicio, usted expresa su consentimiento, acuerdo y
             entendimiento de los Términos de Servicio y la Política de
             Privacidad. Si no está de acuerdo con los Términos de Servicio o la
             Política de Privacidad, no utilice el Servicio. Si utiliza el
