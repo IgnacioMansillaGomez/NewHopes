@@ -17,6 +17,7 @@ import ListAltIcon from "@mui/icons-material/ListAlt";
 import FeaturedPlayListIcon from "@mui/icons-material/FeaturedPlayList";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
+import TableRowsIcon from "@mui/icons-material/TableRows";
 
 export const UserAvatar = () => {
   const session = useContext(SessionContext);
@@ -141,7 +142,7 @@ export const UserAvatar = () => {
         {sessionContext && sessionContext.isAdmin() && (
           <MenuItem onClick={handleAdminTable}>
             <ListItemIcon>
-              <ListAltIcon fontSize="small" />
+              <TableRowsIcon fontSize="small" />
             </ListItemIcon>
             Tabla Admins
           </MenuItem>

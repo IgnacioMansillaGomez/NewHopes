@@ -52,7 +52,6 @@ export const AdminTablePage = () => {
       if (response.size !== 0) {
         const pets = GenericSerializer.serializeAll(response);
         setData(pets);
-        console.log(pets);
         setLoading(false);
       } else {
         setLoading(false);
@@ -80,23 +79,25 @@ export const AdminTablePage = () => {
       <ThemeProvider theme={secondTheme}>
         <section className="fondo">
           <Header />
-          <div className="container admin-reports__container ">
-            {loading && <Loading />}
-            {data.length > 0 && !loading && (
-              <div className="row mt-4">
-                <div className={classes.root} />
-                <MaterialTable
-                  title="Busqueda"
-                  columns={columns}
-                  data={data}
-                  options={{
-                    search: true,
-                    exportButton: true,
-                  }}
-                  icons={tableIcons}
-                />
-              </div>
-            )}
+          <div className="container admin-reports__container">
+            <div className="row mt-4">
+              {loading && <Loading />}
+              {data.length > 0 && !loading && (
+                <>
+                  <div className={classes.root} />
+                  <MaterialTable
+                    title="Busqueda"
+                    columns={columns}
+                    data={data}
+                    options={{
+                      search: true,
+                      exportButton: true,
+                    }}
+                    icons={tableIcons}
+                  />
+                </>
+              )}
+            </div>
           </div>
           <Footer />
         </section>
