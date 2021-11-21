@@ -10,8 +10,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import { DeletePetButton } from "../delete-pet-button/delete-pet-button.component";
 
 import "./admin-pet-list.style.css";
-import { AdminTable } from "../admin-table/admin-table.component";
 import { Footer } from "../../footer/footer.component";
+import { AdminTableDos } from "../admin-table-dos/admin-table-dos.component";
 
 export const AdminPetList = () => {
   const history = useHistory();
@@ -148,13 +148,7 @@ export const AdminPetList = () => {
           )}
         </div>
       </div>
-      {/* <div className="container">
-        <div className="row">
-          <div className="col-10">
-            <AdminTable />
-          </div>
-        </div>
-      </div> */}
+
       <Footer />
     </div>
   );

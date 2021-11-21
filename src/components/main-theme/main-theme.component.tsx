@@ -1,10 +1,10 @@
 import { createTheme } from "@mui/material/styles";
-import { purple, pink } from "@mui/material/colors";
+import { pink } from "@mui/material/colors";
 import "typeface-cormorant";
 const primaryColor = pink[800];
 const secondaryColor = pink[200];
 
-const Theme = createTheme({
+export const Theme = createTheme({
   palette: {
     primary: {
       light: "rgb(189, 67, 120)",
@@ -28,5 +28,3 @@ const Theme = createTheme({
     fontSize: 15,
   },
 });
-
-export default Theme;

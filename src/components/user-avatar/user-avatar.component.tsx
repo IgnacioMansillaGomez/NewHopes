@@ -57,6 +57,10 @@ export const UserAvatar = () => {
     history.push("/adopciones");
   };
 
+  const handleAdminTable = () => {
+    history.push("/admin-table-page");
+  };
+
   return (
     <React.Fragment>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
@@ -133,6 +137,16 @@ export const UserAvatar = () => {
             Listado Mascotas
           </MenuItem>
         )}
+
+        {sessionContext && sessionContext.isAdmin() && (
+          <MenuItem onClick={handleAdminTable}>
+            <ListItemIcon>
+              <ListAltIcon fontSize="small" />
+            </ListItemIcon>
+            Tabla Admins
+          </MenuItem>
+        )}
+
         {sessionContext && sessionContext.isAdmin() && (
           <MenuItem onClick={handleAdminAdopciones}>
             <ListItemIcon>
@@ -141,6 +155,7 @@ export const UserAvatar = () => {
             Adopciones
           </MenuItem>
         )}
+
         {sessionContext && sessionContext.isAdmin() && (
           <MenuItem onClick={handleAdminReports}>
             <ListItemIcon>

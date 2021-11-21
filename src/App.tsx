@@ -18,7 +18,9 @@ import { AdminAdopciones } from "./components/admin-adopciones/admin-adopciones.
 import { AdminReports } from "./components/admin-reports/admin-reports.component";
 import { Adopciones } from "./components/adopciones/adopciones.component";
 import { ThemeProvider } from "@mui/material";
-import Theme from "./components/main-theme/main-theme.component";
+import { Theme } from "./components/main-theme/main-theme.component";
+import { AdminTableDos } from "./components/admin-table-dos/admin-table-dos.component";
+import { AdminTablePage } from "./components/admin-table-page/admin-table-page.component";
 
 export function App() {
   return (
@@ -56,6 +58,9 @@ export function App() {
               </Route>
               <Route path="/adopciones">
                 <Adopciones />
+              </Route>
+              <Route path="/admin-table-page">
+                <AdminTablePage />
               </Route>
               <Route path="/">
                 <PetsList />
