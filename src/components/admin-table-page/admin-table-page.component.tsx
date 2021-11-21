@@ -80,24 +80,22 @@ export const AdminTablePage = () => {
         <section className="fondo">
           <Header />
           <div className="container admin-reports__container">
-            <div className="row mt-4">
-              {loading && <Loading />}
-              {data.length > 0 && !loading && (
-                <>
-                  <div className={classes.root} />
-                  <MaterialTable
-                    title="Busqueda"
-                    columns={columns}
-                    data={data}
-                    options={{
-                      search: true,
-                      exportButton: true,
-                    }}
-                    icons={tableIcons}
-                  />
-                </>
-              )}
-            </div>
+            {loading && <Loading />}
+            {data.length > 0 && !loading && (
+              <div className="row mt-4">
+                <div className={classes.root} />
+                <MaterialTable
+                  title="Busqueda"
+                  columns={columns}
+                  data={data}
+                  options={{
+                    search: true,
+                    exportButton: true,
+                  }}
+                  icons={tableIcons}
+                />
+              </div>
+            )}
           </div>
           <Footer />
         </section>
