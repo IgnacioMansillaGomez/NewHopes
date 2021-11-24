@@ -59,9 +59,11 @@ export function App() {
               <Route path="/adopciones">
                 <Adopciones />
               </Route>
+
               <Route path="/admin-table-page">
                 <AdminTablePage />
               </Route>
+
               <Route path="/">
                 <PetsList />
               </Route>

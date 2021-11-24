@@ -1,7 +1,6 @@
 import React, { forwardRef, useContext, useEffect, useState } from "react";
-import MaterialTable, { Icons } from "material-table";
 import { SessionContext } from "../../contexts/session-manager.context";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { GenericSerializer } from "../../api/generic.serializer";
 import { MascotasAPI } from "../../api/mascotas.api";
 
@@ -9,21 +8,34 @@ import "../admin-reports/admin-reports.style.css";
 
 import { Footer } from "../../footer/footer.component";
 import { Header } from "../header/header.component";
-import { tableIcons } from "../table-icons/table-icons";
 import { createStyles, makeStyles } from "@mui/styles";
-import { createTheme, Theme, ThemeProvider } from "@mui/material/styles";
+import { createMuiTheme, Theme } from "@mui/material/styles";
 import { Loading } from "../loading/loading.component";
+import { MuiThemeProvider } from "@material-ui/core";
+import { AdminTableDos } from "../admin-table-dos/admin-table-dos.component";
+const paper = "#fff";
 
-const paper = "#f2f2f2";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      backgroundColor: theme.palette.background.paper,
+      // backgroundColor: theme.palette.background.paper,
+      display: "block",
+      padding: 0,
     },
   })
 );
 
-const secondTheme = createTheme();
+const secondTheme = createMuiTheme({
+  components: {
+    MuiButtonBase: {
+      styleOverrides: {
+        root: {
+          display: "block",
+        },
+      },
+    },
+  },
+});
 
 export const AdminTablePage = () => {
   const history = useHistory();
@@ -59,32 +71,18 @@ export const AdminTablePage = () => {
     });
   };
 
-  const columns = [
-    { title: "N° Fila", field: "fila" },
-    { title: "Especie", field: "especie" },
-    {
-      title: "Nombre Mascota",
-      field: "nombre",
-    },
-    { title: "Edad", field: "edad_anos" },
-    { title: "Sexo", field: "sexo" },
-    { title: "Tamaño", field: "tamano" },
-    { title: "Adoptado", field: "adoptado" },
-  ];
-
   const classes = useStyles();
 
   return (
-    <>
-      <ThemeProvider theme={secondTheme}>
-        <section className="fondo">
-          <Header />
-          <div className="container admin-reports__container">
-            {loading && <Loading />}
-            {data.length > 0 && !loading && (
-              <div className="row mt-4">
-                <div className={classes.root} />
-                <MaterialTable
+    <section className="fondo">
+      <Header />
+      <div className="container admin-reports__container">
+        <div className="row mt-4">
+          {loading && <Loading />}
+          {data.length > 0 && !loading && (
+            <div className={classes.root}>
+              <MuiThemeProvider theme={secondTheme}>
+                {/* <MaterialTable
                   title="Busqueda"
                   columns={columns}
                   data={data}
@@ -93,13 +91,62 @@ export const AdminTablePage = () => {
                     exportButton: true,
                   }}
                   icons={tableIcons}
-                />
-              </div>
-            )}
-          </div>
-          <Footer />
-        </section>
-      </ThemeProvider>
-    </>
+                  localization={{
+                    body: {
+                      emptyDataSourceMessage: "No hay registros para mostrar",
+                      addTooltip: "Agregar",
+                      deleteTooltip: "Eliminar",
+                      editTooltip: "Editar",
+                      filterRow: {
+                        filterTooltip: "Filtrar",
+                      },
+                      editRow: {
+                        deleteText: "¿Quieres borrar esta línea?",
+                        cancelTooltip: "Cancelar",
+                        saveTooltip: "Guardar",
+                      },
+                    },
+                    grouping: {
+                      placeholder: "Tirer l'entête ...",
+                      groupedBy: "Agrupado por: ",
+                    },
+                    header: {
+                      actions: "Acciones",
+                    },
+                    pagination: {
+                      labelDisplayedRows: "{from}-{to} de {count}",
+                      labelRowsSelect: "Filas",
+                      labelRowsPerPage: "Filas por pagina: ",
+                      firstAriaLabel: "Primer Página",
+                      firstTooltip: "Primer Página",
+                      previousAriaLabel: "Página anterior",
+                      previousTooltip: "Página anterior",
+                      nextAriaLabel: "Siguiente Página",
+                      nextTooltip: "Siguiente Página",
+                      lastAriaLabel: "Última Página",
+                      lastTooltip: "Última Página",
+                    },
+                    toolbar: {
+                      addRemoveColumns: "Ajouter ou supprimer des colonnes",
+                      nRowsSelected: "{0} ligne(s) sélectionée(s)",
+                      showColumnsTitle: "Ver Columnas",
+                      showColumnsAriaLabel: "Ver Columnas",
+                      exportTitle: "Exportar",
+                      exportAriaLabel: "Exportar",
+                      exportCSVName: "Exportar en CSV",
+                      exportPDFName: "Exportar en PDF",
+                      searchTooltip: "Buscar",
+                      searchPlaceholder: "Buscar...",
+                    },
+                  }}
+                /> */}
+                <AdminTableDos />
+              </MuiThemeProvider>
+            </div>
+          )}
+        </div>
+      </div>
+      <Footer />
+    </section>
   );
 };

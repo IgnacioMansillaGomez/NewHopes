@@ -50,16 +50,15 @@ export const UserAvatar = () => {
   const handleAdminReports = () => {
     history.push("/admin-reports");
   };
-  const handlePetList = () => {
-    history.push("/");
-  };
-
   const handleMyAdoptions = () => {
     history.push("/adopciones");
   };
 
   const handleAdminTable = () => {
     history.push("/admin-table-page");
+  };
+  const handlePetList = () => {
+    history.push("/");
   };
 
   return (

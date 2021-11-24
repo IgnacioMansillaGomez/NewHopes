@@ -8,10 +8,10 @@ import { Loading } from "../loading/loading.component";
 import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
 import { DeletePetButton } from "../delete-pet-button/delete-pet-button.component";
+import DownloadIcon from "@mui/icons-material/Download";
 
 import "./admin-pet-list.style.css";
 import { Footer } from "../../footer/footer.component";
-import { AdminTableDos } from "../admin-table-dos/admin-table-dos.component";
 
 export const AdminPetList = () => {
   const history = useHistory();
@@ -85,20 +85,24 @@ export const AdminPetList = () => {
               <table className="table">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
+                    <th scope="col"></th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Especie</th>
                     <th scope="col">Tamaño</th>
                     <th scope="col">Edad</th>
                     <th scope="col">Adoptado</th>
-                    <th scope="col"></th>
-                    <th scope="col">
-                      <button
+                    <th scope="col-6" className="ps-5 !important">
+                      Acciones
+                    </th>
+                    <th scope="col" className="d-flex justify-content-end">
+                      <Button
+                        variant="contained"
+                        endIcon={<DownloadIcon />}
                         onClick={exportCvs}
-                        className="btn btn-info btn-sm"
+                        size="small"
                       >
-                        Exportar
-                      </button>
+                        Descargar
+                      </Button>
                     </th>
                   </tr>
                 </thead>
@@ -121,8 +125,6 @@ export const AdminPetList = () => {
                         <th scope="col">
                           {pet.adoptado === "true" ? "Si" : "No"}
                         </th>
-                        <th scope="col"></th>
-
                         <th scope="col">
                           <Button
                             startIcon={<EditIcon />}
@@ -139,6 +141,7 @@ export const AdminPetList = () => {
                             Borrar
                           </DeletePetButton>
                         </th>
+                        <th scope="col"></th>
                       </tr>
                     );
                   })}

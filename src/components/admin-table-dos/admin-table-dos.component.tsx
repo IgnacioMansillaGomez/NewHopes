@@ -1,33 +1,71 @@
-import React, { forwardRef, useContext, useEffect, useState } from "react";
-import MaterialTable, { Icons } from "material-table";
-import { SessionContext } from "../../contexts/session-manager.context";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { GenericSerializer } from "../../api/generic.serializer";
 import { MascotasAPI } from "../../api/mascotas.api";
-import {
-  AddBox,
-  ArrowUpward,
-  Check,
-  ChevronLeft,
-  ChevronRight,
-  Clear,
-  DeleteOutline,
-  Edit,
-  FilterList,
-  FirstPage,
-  LastPage,
-  Remove,
-  SaveAlt,
-  Search,
-  ViewColumn,
-} from "@material-ui/icons";
+import { SessionContext } from "../../contexts/session-manager.context";
+import MUIDataTable from "mui-datatables";
 
 export const AdminTableDos = () => {
   const history = useHistory();
   const sessionContext = useContext(SessionContext);
-  const [petsList, setPetsList] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
+  const [petList, setPetList] = useState([]);
+
+  const columns = [
+    {
+      name: "nombre",
+      label: "Nombre Mascota",
+      options: {
+        filter: true,
+        sort: true,
+        draggable: false,
+      },
+    },
+    {
+      name: "especie",
+      label: "Especie",
+      options: {
+        filter: true,
+        sort: false,
+        draggable: false,
+      },
+    },
+    {
+      name: "sexo",
+      label: "Sexo",
+      options: {
+        filter: true,
+        sort: false,
+        draggable: false,
+      },
+    },
+    {
+      name: "adoptado",
+      label: "Adoptado",
+      options: {
+        filter: true,
+        sort: false,
+        draggable: false,
+      },
+    },
+    {
+      name: "tamano",
+      label: "Tamaño",
+      options: {
+        filter: true,
+        sort: false,
+        draggable: false,
+      },
+    },
+    {
+      name: "edad_anos",
+      label: "Edad",
+      options: {
+        filter: true,
+        sort: false,
+        draggable: false,
+      },
+    },
+  ];
 
   useEffect(() => {
     if (sessionContext && sessionContext.session) {
@@ -44,84 +82,63 @@ export const AdminTableDos = () => {
     getPets();
   }, []);
 
-  const getPets = async () => {
-    setLoading(true);
-    await MascotasAPI.getAllPets().then((response: any) => {
+  const getPets = () => {
+    MascotasAPI.getAllPets().then((response: any) => {
       if (response.size !== 0) {
-        const pets = GenericSerializer.serializeAll(response);
-        setData(pets);
-        console.log(pets);
-        setLoading(false);
-      } else {
-        setLoading(false);
+        const pet = GenericSerializer.serializeAll(response);
+        if (pet.sexo === "true" ? "Macho" : "Hembra") setPetList(pet);
       }
     });
   };
-  // const columns = {[
-  //   { name: "N° Fila", selector: (i = 1) => i++ },
-  //   { name: "Especie", selector: (row: any) => row.especie },
-  //   {
-  //     name: "Nombre Mascota",
-  //     selector: (row: any) => row.nombre,
-  //     sortable: true,
-  //   },
-  //   { name: "Edad", selector: (row: any) => row.edad_anos },
-  //   { name: "Sexo", selector: (row: any) => row.sexo },
-  //   { name: "Tamaño", selector: (row: any) => row.tamano },
-  //   { name: "Vacunas", selector: (row: any) => row.vacunas },
-  //   { name: "Adoptado", selector: (row: any) => row.adoptado },
 
-  // ]};
-
-  const columns = [
-    { title: "N° Fila", field: "fila" },
-    { title: "Especie", field: "especie" },
-    {
-      title: "Nombre Mascota",
-      field: "nombre",
+  const options = {
+    textLabels: {
+      body: {
+        noMatch: "No se encontraron registros",
+        toolTip: "Ordenar",
+        columnHeaderTooltip: (column: any) => `Ordenar por ${column.label}`,
+      },
+      pagination: {
+        next: "Página Siguiente",
+        previous: "Página Anterior",
+        rowsPerPage: "Filas por Página:",
+        displayRows: "of",
+      },
+      toolbar: {
+        search: "Buscar",
+        downloadCsv: "Descargar CSV",
+        print: "Imprimir",
+        viewColumns: "Ver columnas",
+        filterTable: "Filtros",
+      },
+      filter: {
+        all: "TODOS",
+        title: "FILTROS",
+        reset: "REINICIAR",
+      },
+      viewColumns: {
+        title: "Mostrar Columnas",
+        titleAria: "Mostar/Esconder Columnas Tabla",
+      },
+      selectedRows: {
+        text: "row(s) selected",
+        delete: "Delete",
+        deleteAria: "Delete Selected Rows",
+      },
     },
-    { title: "Edad", field: "edad_anos" },
-    { title: "Sexo", field: "sexo" },
-    { title: "Tamaño", field: "tamano" },
-    { title: "Adoptado", field: "adoptado" },
-  ];
-  const tableIcons: Icons = {
-    Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
-    Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
-    Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-    Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
-    DetailPanel: forwardRef((props, ref) => (
-      <ChevronRight {...props} ref={ref} />
-    )),
-    Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
-    Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
-    Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
-    FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
-    LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
-    NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
-    PreviousPage: forwardRef((props, ref) => (
-      <ChevronLeft {...props} ref={ref} />
-    )),
-    ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-    Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
-    SortArrow: forwardRef((props, ref) => <ArrowUpward {...props} ref={ref} />),
-    ThirdStateCheck: forwardRef((props, ref) => (
-      <Remove {...props} ref={ref} />
-    )),
-    ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
+
+    fixedHeader: true,
+    selectableRowsOnClick: false,
+    selectableRowsHideCheckboxes: true,
   };
 
   return (
     <>
-      <MaterialTable
-        title="Basic Search Preview"
+      <MUIDataTable
+        title={"Lista Mascotas"}
+        data={petList}
         columns={columns}
-        data={data}
-        options={{
-          search: true,
-          exportButton: true,
-        }}
-        icons={tableIcons}
+        options={options}
       />
     </>
   );
