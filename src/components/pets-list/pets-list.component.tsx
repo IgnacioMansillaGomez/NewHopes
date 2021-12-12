@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { GenericSerializer } from "../../api/generic.serializer";
 import { MascotasAPI } from "../../api/mascotas.api";
@@ -14,32 +14,53 @@ import "./pet-list.style.css";
 
 export const PetsList = () => {
   const [petsList, setPetsList] = useState([]);
-  const [loading, setLoading] = useState(false);
-  // const [lastPet, setLastPet] = useState<any>();
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
-    getPets();
-  }, []);
+    if (search.length > 0) {
+      handleSearch(search);
+    } else {
+      getPets();
+    }
+
+    // getPetsByName(search);
+  }, [search]);
 
   const getPets = () => {
     setLoading(true);
     MascotasAPI.getAllNotAdoptedPets().then((response: any) => {
-      if (response.size !== 0) {
-        const ps = GenericSerializer.serializeAll(response);
-        setPetsList(ps);
-        setLoading(false);
+      if (response.size > 0) {
+        const pet = GenericSerializer.serializeAll(response);
+        setPetsList(pet);
+      } else {
+        setPetsList([]);
       }
+      setLoading(false);
     });
   };
 
-  // const nextPet = () => {
-  //   MascotasAPI.getLastPagination(lastPet).then((item) => {
-  //     const ps = item.docs.map((i) => i.data());
-  //     const last = item.docs[item.docs.length - 1];
-  //     setPetsList((petsList) => [...petsList, ...ps]);
-  //     setLastPet(last);
-  //   });
-  // };
+  const handleSearch = (search: any) => {
+    //setLoading(true);
+    MascotasAPI.getPetsFilterByName(search).then((response: any) => {
+      if (response.size > 0) {
+        const petsFilterByName = GenericSerializer.serializeAll(response);
+
+        setPetsList(petsFilterByName);
+      } else {
+        setPetsList([]);
+      }
+      setLoading(false);
+    });
+    // setSearchResults();
+  };
+
+  const getSearch = (event: any) => {
+    setSearch(event.target.value);
+  };
+
+  console.log(petsList);
 
   return (
     <div className="container-fluid p-0 home">
@@ -60,15 +81,28 @@ export const PetsList = () => {
       </div>
 
       <div className="container bg-light">
+        {/* <input type="text" onSubmit={handleSearch}>
+          Buscar
+        </input> */}
         <div className="row pet-list__main">
-          {/* <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-1"> */}
-
+          <div className="ui search">
+            <div className="ui icon input">
+              <input
+                type="text"
+                placeholder="Buscar por nombre"
+                className="prompt"
+                value={search}
+                onChange={getSearch}
+              />
+              <i className="search icon"></i>
+            </div>
+          </div>
           {petsList.length > 0 && (
             <>
               {/* usamos el metodo 'map' para recorrer el array petsList y por cada pet retornamos el componente PetCard pasandole como props "pet" el cual tiene el valor de UNA pet , a cada elemento que dibuje en html el metodo 'map' hay que enviarle una KEY obligatoriamente para que react sepa detectar dicho elemento */}
-              {petsList.map((pet: any, id) => {
+              {petsList.map((pet: any, index) => {
                 return (
-                  <div className="col-lg-3 col-md-3 col-6" key={id}>
+                  <div className="col-lg-3 col-md-3 col-6" key={pet.id}>
                     <PetCard sx={{ flex: 1 }} pet={pet} />
                   </div>
                 );

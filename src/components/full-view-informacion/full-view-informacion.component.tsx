@@ -162,7 +162,7 @@ export const FullViewInformacion = (props: any) => {
         </div>
         {/* Boton */}
         {pet.adoptado ? (
-          pet.adoptado === "false" && (
+          pet.adoptado === "No" && (
             <div className="form-group row mt-5 offset-1">
               <div className="col-lg-10">
                 <Button

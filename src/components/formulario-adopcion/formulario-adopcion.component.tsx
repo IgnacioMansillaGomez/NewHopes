@@ -268,7 +268,7 @@ export const FormularioAdopcion = (props: any) => {
                   type="text"
                   fullWidth
                   inputProps={{
-                    maxLength: 20,
+                    maxLength: 25,
                   }}
                 />
               </Box>
@@ -290,10 +290,10 @@ export const FormularioAdopcion = (props: any) => {
                   variant="standard"
                   value={cellPhone}
                   onChange={handleCellPhoneChange}
-                  type="number"
+                  type="text"
                   fullWidth
                   inputProps={{
-                    maxLength: 12,
+                    maxLength: 15,
                   }}
                 />
               </Box>
@@ -311,7 +311,7 @@ export const FormularioAdopcion = (props: any) => {
                   type="email"
                   fullWidth
                   inputProps={{
-                    maxLength: 30,
+                    maxLength: 40,
                   }}
                 />
               </Box>
@@ -333,7 +333,7 @@ export const FormularioAdopcion = (props: any) => {
                   onChange={handleCiudadChange}
                   fullWidth
                   inputProps={{
-                    maxLength: 10,
+                    maxLength: 20,
                   }}
                 />
               </Box>

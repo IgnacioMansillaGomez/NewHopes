@@ -13,6 +13,8 @@ export const PetCard = (props: any) => {
   const [pet, setPet] = useState(props.pet);
   const raza = useRaza(pet.id_raza);
 
+  console.log(props);
+
   return (
     <div className="container">
       <Card

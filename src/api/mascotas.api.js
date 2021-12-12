@@ -1,4 +1,5 @@
 import { getFirestore } from "../bd/fireData";
+import { query, where } from "firebase/firestore";
 
 const dataBase = getFirestore(); //Asignamos el modulo getFirestore() a la constante dataBase.
 const itemCollection = dataBase.collection("mascotas"); //Accedemos a la colección que pasamos como parametro en este 'mascotas' y lo asignamos a la variable itemCollection
@@ -27,13 +28,14 @@ const updatePet = (id, pet) => {
 };
 
 const getAllNotAdoptedPets = () => {
-  const filter = itemCollection.where("adoptado", "==", "false");
+  const filter = itemCollection.where("adoptado", "==", "No");
   return filter.get();
 };
 
-// const getPetsPagination = () => {
-//   return itemCollection.orderBy("nombre", "asc").limit(5).get();
-// };
+const getPetsFilterByName = (nombre) => {
+  const filtro = itemCollection.where("nombre", "==", nombre);
+  return filtro.get();
+};
 
 // const getLastPagination = (last) => {
 //   return itemCollection
@@ -50,6 +52,7 @@ export const MascotasAPI = {
   deletePet,
   updatePet,
   getAllNotAdoptedPets,
+  getPetsFilterByName,
   // getPetsPagination,
   // getLastPagination,
 };

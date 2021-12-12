@@ -2,6 +2,13 @@
   background-color: rgb(250, 241, 241) !important;
 }
 
+.modal__layout {
+  display: flex !important;
+  justify-content: center !important;
+  flex-direction: column !important;
+  padding: 30px 30px !important;
+}
+
 .adopcion-form {
   background: #f2f2f2;
   padding: 1rem;

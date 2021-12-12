@@ -40,10 +40,10 @@ export const FormularioMascota = (props: any) => {
   const [allRazas, setAllRazas] = useState([]);
   const [hair, setHair] = useState(pet ? pet.pelaje : "Corto");
   const [vaccinated, setVaccinated] = useState(
-    pet && pet.vacunas === 1 ? true : false
+    pet ? pet.vacunas : "Sin vacunas"
   );
-  const [edad, setEdad] = useState(pet ? pet.edad_anos : 0);
-  const [sexo, setSexo] = useState(pet ? pet.sexo === "false" : false);
+  const [edad, setEdad] = useState(pet ? pet.edad_anos : "1");
+  const [sexo, setSexo] = useState(pet ? pet.sexo : "Macho");
   const [colorPelaje, setColorPelaje] = useState(pet ? pet.color : "Blanco");
   const [imageUrl, setImageUrl] = useState("");
   const [loadingImage, setLoadingImage] = useState(false);
@@ -160,12 +160,12 @@ export const FormularioMascota = (props: any) => {
       sexo: sexo,
       color: colorPelaje,
       img_url: imageUrl,
-      adoptado: "false",
+      adoptado: "No",
     };
-    setSavingPet(true);
+    setSavingPet(false);
     if (petId) {
       MascotasAPI.updatePet(petId, pet).then((res) => {
-        setSavingPet(false);
+        setSavingPet(true);
         setShowSuccessMessage(true);
       });
     } else {
@@ -197,8 +197,9 @@ export const FormularioMascota = (props: any) => {
                   variant="standard"
                   onChange={handleNameChange}
                   value={name}
+                  defaultValue={name}
                   inputProps={{
-                    maxLength: 10,
+                    maxLength: 20,
                   }}
                 />
               </div>
@@ -212,6 +213,7 @@ export const FormularioMascota = (props: any) => {
                     aria-label="gender"
                     name="cboSpecie"
                     onChange={handleSpecieChange}
+                    value={specie}
                     defaultValue={specie}
                   >
                     <FormControlLabel
@@ -238,15 +240,16 @@ export const FormularioMascota = (props: any) => {
                     aria-label="Sexo"
                     name="cboSexo"
                     onChange={handleSexoChange}
+                    value={sexo}
                     defaultValue={sexo}
                   >
                     <FormControlLabel
-                      value={true}
+                      value="Macho"
                       control={<Radio size="small" />}
                       label="Macho"
                     />
                     <FormControlLabel
-                      value={false}
+                      value="Hembra"
                       control={<Radio size="small" />}
                       label="Hembra"
                     />
@@ -272,10 +275,11 @@ export const FormularioMascota = (props: any) => {
                     id="demo-simple-select-standard"
                     onChange={handleVaccinatedChange}
                     label="Vacunas"
-                    value={vaccinated ? 1 : 0}
+                    value={vaccinated}
+                    defaultValue={vaccinated}
                   >
-                    <MenuItem value={0}>Sin vacunas</MenuItem>
-                    <MenuItem value={1}>Con vacunas</MenuItem>
+                    <MenuItem value="Sin vacunas">Sin vacunas</MenuItem>
+                    <MenuItem value="Con vacunas">Con vacunas</MenuItem>
                   </Select>
                 </FormControl>
               </div>
@@ -355,17 +359,17 @@ export const FormularioMascota = (props: any) => {
                     label="Edad"
                     value={edad}
                   >
-                    <MenuItem value={0}>Menos de 1 año</MenuItem>
-                    <MenuItem value={1}>1 año</MenuItem>
-                    <MenuItem value={2}>2 años</MenuItem>
-                    <MenuItem value={3}>3 años</MenuItem>
-                    <MenuItem value={4}>4 años</MenuItem>
-                    <MenuItem value={5}>5 años</MenuItem>
-                    <MenuItem value={6}>6 años</MenuItem>
-                    <MenuItem value={7}>7 años</MenuItem>
-                    <MenuItem value={8}>8 años</MenuItem>
-                    <MenuItem value={9}>9 años</MenuItem>
-                    <MenuItem value={10}>10 o más años</MenuItem>
+                    <MenuItem value={"0"}>Menos de 1 año</MenuItem>
+                    <MenuItem value={"1"}>1 año</MenuItem>
+                    <MenuItem value={"2"}>2 años</MenuItem>
+                    <MenuItem value={"3"}>3 años</MenuItem>
+                    <MenuItem value={"4"}>4 años</MenuItem>
+                    <MenuItem value={"5"}>5 años</MenuItem>
+                    <MenuItem value={"6"}>6 años</MenuItem>
+                    <MenuItem value={"7"}>7 años</MenuItem>
+                    <MenuItem value={"8"}>8 años</MenuItem>
+                    <MenuItem value={"9"}>9 años</MenuItem>
+                    <MenuItem value={"10"}>10 o más años</MenuItem>
                   </Select>
                 </FormControl>
               </div>
@@ -442,7 +446,7 @@ export const FormularioMascota = (props: any) => {
                     value={colorPelaje}
                   >
                     <MenuItem value="Blanco">Blanco</MenuItem>
-                    <MenuItem value="Medio">Gris</MenuItem>
+                    <MenuItem value="Gris">Gris</MenuItem>
                     <MenuItem value="Marrón">Chocolate</MenuItem>
                     <MenuItem value="Negro">Negro</MenuItem>
                     <MenuItem value="Dorado">Dorado</MenuItem>
