@@ -78,7 +78,7 @@ export const FullViewInformacion = (props: any) => {
               fullWidth
               id="standard-basic"
               variant="standard"
-              defaultValue={`${pet.sexo ? "Macho" : "Hembra"}`}
+              defaultValue={pet.sexo}
               InputProps={{
                 readOnly: true,
               }}

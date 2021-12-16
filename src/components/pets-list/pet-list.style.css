@@ -11,3 +11,9 @@
 .pet-list__main {
   min-height: calc(100vh - 185px);
 }
+
+.tamano {
+  max-width: 20%;
+  padding-right: 20px;
+  padding-left: 20px;
+}

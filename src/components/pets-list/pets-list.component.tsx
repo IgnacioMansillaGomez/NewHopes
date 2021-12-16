@@ -10,7 +10,10 @@ import { PetCard } from "../pet-card/pet-card.component";
 import { CarouselPet } from "../carousel/carousel.component";
 import { Footer } from "../../footer/footer.component";
 
+import SearchIcon from "@mui/icons-material/Search";
+
 import "./pet-list.style.css";
+import { FormControl, Input, InputAdornment } from "@mui/material";
 
 export const PetsList = () => {
   const [petsList, setPetsList] = useState([]);
@@ -60,8 +63,6 @@ export const PetsList = () => {
     setSearch(event.target.value);
   };
 
-  console.log(petsList);
-
   return (
     <div className="container-fluid p-0 home">
       <Header />
@@ -85,29 +86,32 @@ export const PetsList = () => {
           Buscar
         </input> */}
         <div className="row pet-list__main">
-          <div className="ui search">
-            <div className="ui icon input">
-              <input
-                type="text"
-                placeholder="Buscar por nombre"
-                className="prompt"
-                value={search}
-                onChange={getSearch}
-              />
-              <i className="search icon"></i>
-            </div>
-          </div>
+          <FormControl fullWidth sx={{ p: 5 }} variant="standard">
+            <Input
+              type="text"
+              id="standard-adornment-amount"
+              value={search}
+              onChange={getSearch}
+              placeholder="Buscar por nombre"
+              startAdornment={
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              }
+            />
+          </FormControl>
+
           {petsList.length > 0 && (
-            <>
+            <div className="row">
               {/* usamos el metodo 'map' para recorrer el array petsList y por cada pet retornamos el componente PetCard pasandole como props "pet" el cual tiene el valor de UNA pet , a cada elemento que dibuje en html el metodo 'map' hay que enviarle una KEY obligatoriamente para que react sepa detectar dicho elemento */}
               {petsList.map((pet: any, index) => {
                 return (
-                  <div className="col-lg-3 col-md-3 col-6" key={pet.id}>
+                  <div className="col tamano" key={pet.id}>
                     <PetCard sx={{ flex: 1 }} pet={pet} />
                   </div>
                 );
               })}
-            </>
+            </div>
           )}
           {/* <div className="row justify-content-center">
             <div className="col-7">

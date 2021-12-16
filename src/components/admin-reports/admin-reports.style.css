@@ -1,4 +1,4 @@
-.fondo {
+/* .fondo {
   background-color: #fce4ec;
 }
 
@@ -9,4 +9,12 @@
 
 .admin-reports__container {
   min-height: calc(100vh - 185px);
+} */
+
+#pie {
+  height: 440px;
+}
+
+#pie * {
+  margin: 0 auto;
 }

@@ -7,8 +7,7 @@ import { PieReport } from "../pie-report/pie-report.component";
 import { MascotasAPI } from "../../api/mascotas.api";
 import { GenericSerializer } from "../../api/generic.serializer";
 import { Loading } from "../loading/loading.component";
-import { PieReportDos } from "../pie-report/pie-report-dos.component";
-
+import { PieReportAdopciones } from "../pie-report/pie-report-adopciones";
 import "./admin-reports.style.css";
 
 export const AdminReports = () => {
@@ -78,12 +77,13 @@ export const AdminReports = () => {
       { name: "Mascotas Adoptadas", value: adoptadas },
       { name: "Mascotas No Adoptadas", value: noAdoptadas },
     ];
+
     setDataChartAdopciones(dataAdopciones);
     const dataTamano: any = [
       { name: "Chico", value: tamanoChico },
       { name: "Mediano", value: tamanoMediano },
       { name: "Grande", value: tamanoGrande },
-      // { name: "Otro", value: tamanoOtro },
+      { name: "Otro", value: tamanoOtro },
     ];
     setDataChartSize(dataTamano);
     setLoading(false);
@@ -119,7 +119,7 @@ export const AdminReports = () => {
                 <h3 className="text-center">
                   <strong>Mascotas adoptados y en adopción</strong>
                 </h3>
-                <PieReportDos data={dataChartAdopciones} />
+                <PieReportAdopciones data={dataChartAdopciones} />
               </>
             )}
           </div>

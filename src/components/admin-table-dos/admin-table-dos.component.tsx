@@ -4,11 +4,46 @@ import { GenericSerializer } from "../../api/generic.serializer";
 import { MascotasAPI } from "../../api/mascotas.api";
 import { SessionContext } from "../../contexts/session-manager.context";
 import MUIDataTable from "mui-datatables";
+import { Button } from "@mui/material";
+import { DeletePetButton } from "../delete-pet-button/delete-pet-button.component";
 
 export const AdminTableDos = () => {
   const history = useHistory();
   const sessionContext = useContext(SessionContext);
   const [petList, setPetList] = useState([]);
+  const [informacion, setInformacion] = useState([]);
+
+  useEffect(() => {
+    if (sessionContext && sessionContext.session) {
+      const sesion = sessionContext?.session;
+      if (sesion?.uid === "") {
+        history.push("/login");
+      } else if (!sessionContext?.isAdmin()) {
+        history.push("/not-allowed");
+      }
+    }
+  }, [sessionContext]);
+
+  useEffect(() => {
+    getPets();
+  }, []);
+
+  const getPets = () => {
+    MascotasAPI.getAllPets().then((response: any) => {
+      if (response.size !== 0) {
+        const pet = GenericSerializer.serializeAll(response);
+        setPetList(pet);
+      }
+    });
+  };
+
+  const handleOnEditPet = (id: any) => {
+    history.push(`/edit-pet/${id}`);
+  };
+
+  const handleOnDeletePet = () => {
+    history.push("/pets-list");
+  };
 
   const columns = [
     {
@@ -65,31 +100,37 @@ export const AdminTableDos = () => {
         draggable: false,
       },
     },
+    {
+      name: "accion_borrar",
+      label: "Borrar",
+      options: {
+        // customBodyRender: () => {
+        //   return <DeletePetButton onDeleteSuccess={getPets} size="small" />;
+        // },
+        filter: false,
+        sort: false,
+        draggable: false,
+      },
+    },
+    {
+      name: "accion_editar",
+      label: "Editar",
+      options: {
+        // customBodyRender: () => {
+        //   return (
+        //     <DeletePetButton
+        //       // pet={pet}
+        //       onDeleteSuccess={handleOnEditPet}
+        //       size="big"
+        //     />
+        //   );
+        // },
+        filter: false,
+        sort: false,
+        draggable: false,
+      },
+    },
   ];
-
-  useEffect(() => {
-    if (sessionContext && sessionContext.session) {
-      const sesion = sessionContext?.session;
-      if (sesion?.uid === "") {
-        history.push("/login");
-      } else if (!sessionContext?.isAdmin()) {
-        history.push("/not-allowed");
-      }
-    }
-  }, [sessionContext]);
-
-  useEffect(() => {
-    getPets();
-  }, []);
-
-  const getPets = () => {
-    MascotasAPI.getAllPets().then((response: any) => {
-      if (response.size !== 0) {
-        const pet = GenericSerializer.serializeAll(response);
-        if (pet.sexo === "true" ? "Macho" : "Hembra") setPetList(pet);
-      }
-    });
-  };
 
   const options = {
     textLabels: {

@@ -1,7 +1,6 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/storage";
-import { FIREBASE_API_KEY } from "../constants/constants";
 
 const app = firebase.initializeApp({
   apiKey: "AIzaSyDjOTzwU_KNl7mLU_CvQl2JrAFYX93ws9k",
@@ -21,12 +20,6 @@ export const getFirebase = () => {
 export const getFirestore = () => {
   return firebase.firestore(app);
 };
-
-// var storage = app.storage("gs://newhopes-d1c9c.appspot.com").ref();
-
-// export const getStorage = () => {
-//   return storage;
-// };
 
 export const getStorage = () => {
   return firebase.storage();

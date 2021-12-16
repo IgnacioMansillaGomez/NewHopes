@@ -8,7 +8,6 @@ import {
   FormControlLabel,
   FormLabel,
   IconButton,
-  Input,
   InputLabel,
   MenuItem,
   Radio,
@@ -358,8 +357,9 @@ export const FormularioMascota = (props: any) => {
                     onChange={handleAgeChange}
                     label="Edad"
                     value={edad}
+                    defaultValue={edad}
                   >
-                    <MenuItem value={"0"}>Menos de 1 año</MenuItem>
+                    <MenuItem value={"0"}>Mesino</MenuItem>
                     <MenuItem value={"1"}>1 año</MenuItem>
                     <MenuItem value={"2"}>2 años</MenuItem>
                     <MenuItem value={"3"}>3 años</MenuItem>
