@@ -172,7 +172,7 @@ export const FormularioAdopcion = (props: any) => {
   };
   return (
     <>
-      <div className="container">
+      <div className="container shadow p-3  bg-body rounded">
         <div className="row">
           <div className="col-12">
             <h2 className="text-center">
@@ -452,32 +452,33 @@ export const FormularioAdopcion = (props: any) => {
           </div>
         </div>
         {/* Boton Enviar */}
-      </div>
-      <div className="container">
-        <div className="row mt-5 ">
-          <div className="col-lg-12 d-flex justify-content-end ">
-            <div className="col-7">
-              <Button
-                variant="contained"
-                color="error"
-                onClick={props.handleClosed}
-              >
-                Cancelar
-              </Button>
-            </div>
-            <div className="col-5">
-              <Button
-                variant="contained"
-                color="secondary"
-                endIcon={<SendIcon />}
-                onClick={validar}
-              >
-                Enviar Formulario
-              </Button>
+        <div className="container">
+          <div className="row mt-5 ">
+            <div className="col-lg-12 d-flex justify-content-end ">
+              <div className="col-7">
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={props.handleClosed}
+                >
+                  Cancelar
+                </Button>
+              </div>
+              <div className="col-5">
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  endIcon={<SendIcon />}
+                  onClick={validar}
+                >
+                  Enviar Formulario
+                </Button>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
       <div className="container">
         <div className="row">
           <div className="col-6 offset-3">
