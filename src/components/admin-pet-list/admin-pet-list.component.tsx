@@ -91,9 +91,9 @@ export const AdminPetList = () => {
                     <th scope="col">Tamaño</th>
                     <th scope="col">Edad</th>
                     <th scope="col">Adoptado</th>
-                    <th scope="col-6" className="ps-5 !important">
+                    {/* <th scope="col-6" className="ps-5 !important">
                       Acciones
-                    </th>
+                    </th> */}
                     <th scope="col" className="d-flex justify-content-end">
                       <Button
                         variant="contained"
@@ -125,7 +125,7 @@ export const AdminPetList = () => {
                         <th scope="col">
                           {pet.adoptado === "true" ? "Si" : "No"}
                         </th>
-                        <th scope="col">
+                        {/* <th scope="col">
                           <Button
                             startIcon={<EditIcon />}
                             title="Editar"
@@ -140,8 +140,8 @@ export const AdminPetList = () => {
                           <DeletePetButton pet={pet} onDeleteSuccess={getPets}>
                             Borrar
                           </DeletePetButton>
-                        </th>
-                        <th scope="col"></th>
+                        </th> */}
+                        {/* <th scope="col"></th> */}
                       </tr>
                     );
                   })}

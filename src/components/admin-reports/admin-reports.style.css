@@ -6,10 +6,10 @@
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   text-decoration: underline;
 }
-
+*/
 .admin-reports__container {
   min-height: calc(100vh - 185px);
-} */
+}
 
 #pie {
   height: 440px;
