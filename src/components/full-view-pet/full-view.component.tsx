@@ -53,32 +53,8 @@ export const FullViewPet = () => {
                   alt="Imagen Mascota"
                 ></img>
               </div>
-              <div className="col-lg-6 ">
+              <div className="col-lg-6 shadow p-3  bg-body rounded mb-5">
                 <FullViewInformacion pet={pet} />
-                {sessionContext && sessionContext.isAdmin() && (
-                  <div className="row mt-3 offset-4 mb-5">
-                    <div className="col-lg-6 ">
-                      {/* <div className="col-6"> */}
-                      <DeletePetButton
-                        pet={pet}
-                        onDeleteSuccess={handleOnDeletePet}
-                        size="big"
-                      />
-                      {/* </div> */}
-                      {/* <div className="col-6 "> */}
-                      <Button
-                        startIcon={<EditIcon />}
-                        sx={{
-                          color: "#e6be0b",
-                        }}
-                        onClick={handleOnEdit}
-                      >
-                        Editar
-                      </Button>
-                      {/* </div> */}
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
           </div>
