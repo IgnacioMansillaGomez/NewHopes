@@ -54,7 +54,7 @@ export const PetsList = () => {
       } else {
         setPetsList([]);
       }
-      setLoading(false);
+      // setLoading(false);
     });
     // setSearchResults();
   };
