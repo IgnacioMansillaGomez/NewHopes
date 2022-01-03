@@ -6,12 +6,12 @@ import { SessionContext } from "../../contexts/session-manager.context";
 import MUIDataTable from "mui-datatables";
 import { Button } from "@mui/material";
 import { DeletePetButton } from "../delete-pet-button/delete-pet-button.component";
+import EditIcon from "@mui/icons-material/Edit";
 
 export const AdminTableDos = () => {
   const history = useHistory();
   const sessionContext = useContext(SessionContext);
   const [petList, setPetList] = useState([]);
-  const [informacion, setInformacion] = useState([]);
 
   useEffect(() => {
     if (sessionContext && sessionContext.session) {
@@ -29,22 +29,17 @@ export const AdminTableDos = () => {
   }, []);
 
   const getPets = () => {
+    setPetList([]);
     MascotasAPI.getAllPets().then((response: any) => {
       if (response.size !== 0) {
-        const pet = GenericSerializer.serializeAll(response);
-        setPetList(pet);
+        const pets = GenericSerializer.serializeAll(response);
+        setPetList(pets);
       }
     });
   };
-
   const handleOnEditPet = (id: any) => {
     history.push(`/edit-pet/${id}`);
   };
-
-  const handleOnDeletePet = () => {
-    history.push("/pets-list");
-  };
-
   const columns = [
     {
       name: "nombre",
@@ -85,6 +80,7 @@ export const AdminTableDos = () => {
     {
       name: "tamano",
       label: "Tamaño",
+
       options: {
         filter: true,
         sort: false,
@@ -102,11 +98,18 @@ export const AdminTableDos = () => {
     },
     {
       name: "accion_borrar",
-      label: "Borrar",
+      label: " ",
       options: {
-        // customBodyRender: () => {
-        //   return <DeletePetButton onDeleteSuccess={getPets} size="small" />;
-        // },
+        customBodyRender: (value: any, tableMeta: any, updateValue: any) => {
+          return (
+            <DeletePetButton
+              pet={tableMeta.tableData[tableMeta.rowIndex]}
+              onDeleteSuccess={getPets} //Es una referencia a la FUNCION no la estamos ejecutando!
+            >
+              Borrar
+            </DeletePetButton>
+          );
+        },
         filter: false,
         sort: false,
         draggable: false,
@@ -114,17 +117,25 @@ export const AdminTableDos = () => {
     },
     {
       name: "accion_editar",
-      label: "Editar",
+      label: " ",
       options: {
-        // customBodyRender: () => {
-        //   return (
-        //     <DeletePetButton
-        //       // pet={pet}
-        //       onDeleteSuccess={handleOnEditPet}
-        //       size="big"
-        //     />
-        //   );
-        // },
+        customBodyRender: (value: any, tableMeta: any, updateValue: any) => {
+          return (
+            <Button
+              startIcon={<EditIcon />}
+              title="Editar"
+              sx={{
+                color: "#eb9234",
+                marginRight: 8,
+              }}
+              onClick={() =>
+                handleOnEditPet(tableMeta.tableData[tableMeta.rowIndex].id)
+              }
+            >
+              Editar
+            </Button>
+          );
+        },
         filter: false,
         sort: false,
         draggable: false,
