@@ -19,8 +19,8 @@ import { AdminReports } from "./components/admin-reports/admin-reports.component
 import { Adopciones } from "./components/adopciones/adopciones.component";
 import { ThemeProvider } from "@mui/material";
 import { Theme } from "./components/main-theme/main-theme.component";
-import { AdminTableDos } from "./components/admin-table-dos/admin-table-dos.component";
 import { AdminTablePage } from "./components/admin-table-page/admin-table-page.component";
+import { PreguntasFrecuentes } from "./components/preguntas-frecuentes/preguntas-frecuentes";
 
 export function App() {
   return (
@@ -62,6 +62,10 @@ export function App() {
 
               <Route path="/admin-table-page">
                 <AdminTablePage />
+              </Route>
+
+              <Route path="/preguntas-frecuentes">
+                <PreguntasFrecuentes />
               </Route>
 
               <Route path="/">

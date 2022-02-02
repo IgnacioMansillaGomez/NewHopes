@@ -8,14 +8,20 @@ import { MascotasAPI } from "../../api/mascotas.api";
 import { GenericSerializer } from "../../api/generic.serializer";
 import { Loading } from "../loading/loading.component";
 import { PieReportAdopciones } from "../pie-report/pie-report-adopciones";
+
 import "./admin-reports.style.css";
+import { PieReportNoAdopciones } from "../pie-report/pie-report-no-adopciones";
+
+// import { TextField } from "@mui/material";
 
 export const AdminReports = () => {
   const history = useHistory();
   const sessionContext = useContext(SessionContext);
   const [petsList, setPetsList] = useState([]);
+  const [petsListDos, setPetsListDos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [dataChartAdopciones, setDataChartAdopciones] = useState([]);
+  const [dataChartNoAdopciones, setDataChartNoAdopciones] = useState([]);
   const [dataChartSize, setDataChartSize] = useState([]);
 
   useEffect(() => {
@@ -31,6 +37,7 @@ export const AdminReports = () => {
 
   useEffect(() => {
     getPets();
+    // getPetsNoAdopted();
   }, []);
 
   useEffect(() => {
@@ -38,6 +45,12 @@ export const AdminReports = () => {
       processData();
     }
   }, [petsList]);
+
+  // useEffect(() => {
+  //   if (petsListDos.length > 0) {
+  //     processData();
+  //   }
+  // }, [petsListDos]);
 
   const getPets = () => {
     setLoading(true);
@@ -50,6 +63,18 @@ export const AdminReports = () => {
       }
     });
   };
+
+  // const getPetsNoAdopted = () => {
+  //   setLoading(true);
+  //   MascotasAPI.getAllNotAdoptedPets().then((response: any) => {
+  //     if (response.size !== 0) {
+  //       const pets = GenericSerializer.serializeAll(response);
+  //       setPetsListDos(pets);
+  //     } else {
+  //       setLoading(false);
+  //     }
+  //   });
+  // };
 
   const processData = () => {
     let adoptadas = 0;
@@ -75,10 +100,14 @@ export const AdminReports = () => {
     });
     const dataAdopciones: any = [
       { name: "Mascotas Adoptadas", value: adoptadas },
+    ];
+
+    const dataNoAdopciones: any = [
       { name: "Mascotas No Adoptadas", value: noAdoptadas },
     ];
 
     setDataChartAdopciones(dataAdopciones);
+    setDataChartNoAdopciones(dataNoAdopciones);
     const dataTamano: any = [
       { name: "Chico", value: tamanoChico },
       { name: "Mediano", value: tamanoMediano },
@@ -98,7 +127,7 @@ export const AdminReports = () => {
             <h2 className="titulo">Reportes</h2>
           </div>
         </div>
-        <div className="row">
+        <div className="row mb-5">
           <div className="col-6">
             {loading && <Loading />}
             {!loading && (
@@ -106,6 +135,7 @@ export const AdminReports = () => {
                 <h3 className="text-center">
                   <strong>Mascotas Actuales - Tamaño</strong>
                 </h3>
+
                 <div className="text-center">
                   <PieReport data={dataChartSize} />
                 </div>
@@ -117,9 +147,23 @@ export const AdminReports = () => {
             {!loading && (
               <>
                 <h3 className="text-center">
-                  <strong>Mascotas adoptados y en adopción</strong>
+                  <strong>Mascotas No Adoptadas</strong>
                 </h3>
-                <PieReportAdopciones data={dataChartAdopciones} />
+                <PieReportNoAdopciones data={dataChartAdopciones} />
+              </>
+            )}
+          </div>
+        </div>
+
+        <div className="row mb-5">
+          <div className="col-6">
+            {loading && <Loading />}
+            {!loading && (
+              <>
+                <h3 className="text-center">
+                  <strong>Mascotas en Adopción</strong>
+                </h3>
+                <PieReportAdopciones data={dataChartNoAdopciones} />
               </>
             )}
           </div>

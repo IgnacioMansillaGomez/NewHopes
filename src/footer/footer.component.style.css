@@ -9,7 +9,7 @@
   color: rgb(231, 231, 231);
   font-size: 2rem;
   font-weight: bolder;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .p-2 {
@@ -22,4 +22,5 @@
 
 .p-2:hover {
   color: azure;
+  cursor: pointer;
 }

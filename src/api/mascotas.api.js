@@ -4,6 +4,12 @@ import { query, where, orderBy } from "firebase/firestore";
 const dataBase = getFirestore(); //Asignamos el modulo getFirestore() a la constante dataBase.
 const itemCollection = dataBase.collection("mascotas"); //Accedemos a la colección que pasamos como parametro en este 'mascotas' y lo asignamos a la variable itemCollection
 
+const q1 = (date) => {
+  const filterDate = itemCollection.where("fecha_publicacion", "==", date);
+
+  return filterDate.get();
+};
+
 /* Arrow Function que retorna una QuerySnapshot que es el estado actual que tiene itemCollection en la base de datos */
 const getAllPets = () => {
   return itemCollection.get();
@@ -33,6 +39,12 @@ const getAllNotAdoptedPets = () => {
   return filter.get();
 };
 
+const getAllAdoptedPets = () => {
+  const filter = itemCollection.where("adoptado", "==", "Si");
+
+  return filter.get();
+};
+
 const getPetsFilterByName = (nombre) => {
   const filtro = itemCollection.where("nombre", "==", nombre);
   return filtro.get();
@@ -54,6 +66,5 @@ export const MascotasAPI = {
   updatePet,
   getAllNotAdoptedPets,
   getPetsFilterByName,
-  // getPetsPagination,
-  // getLastPagination,
+  getAllAdoptedPets,
 };

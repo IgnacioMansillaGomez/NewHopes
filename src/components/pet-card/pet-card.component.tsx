@@ -41,7 +41,7 @@ export const PetCard = (props: any) => {
           <hr />
           <Typography variant="body1" color="text.secondary">
             <li>Especie: {pet.especie}</li>
-            <li>Sexo: {pet.sexo === "true" ? "Macho" : "Hembra"}</li>
+            <li>Sexo: {pet.sexo === "true" ? "Hembra" : "Macho"}</li>
             <li>Raza: {raza?.nombre_raza || undefined}</li>
             <li>Edad: {pet.edad_anos} años</li>
           </Typography>

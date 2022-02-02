@@ -4,10 +4,18 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import EmailIcon from "@mui/icons-material/Email";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import HelpIcon from "@mui/icons-material/Help";
+import { useHistory } from "react-router";
 
 import "./footer.component.style.css";
 
 export const Footer = () => {
+  const history = useHistory();
+
+  const handlePreguntasFrecuentes = () => {
+    history.push("/preguntas-frecuentes");
+  };
+
   return (
     <>
       <div className="container-fluid text-dark cont">
@@ -17,7 +25,7 @@ export const Footer = () => {
           </div>
         </div>
         <div className="row justify-content-center">
-          <div className="col-5">
+          <div className="col-7">
             <a className="p-2" target="_blank" href="https://www.facebook.com/">
               <FacebookIcon sx={{ color: "#7e57c2" }} />
               Facebook
@@ -48,6 +56,15 @@ export const Footer = () => {
             >
               <LocalPhoneIcon sx={{ color: "#7e57c2" }} />
               +54 9 3512000068
+            </a>
+            |
+            <a
+              className="p-2"
+              target="_blank"
+              onClick={handlePreguntasFrecuentes}
+            >
+              <HelpIcon sx={{ color: "#7e57c2" }} />
+              Preguntas Frecuentes
             </a>
           </div>
         </div>
